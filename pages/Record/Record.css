@@ -1,0 +1,90 @@
+.record-name {
+    place-items: center;
+    display: grid;
+    font-size: 55px;
+    font-weight: bold;
+    margin-block-start: 5vh;
+}
+
+.record-wapper {
+    display: block;
+    width: 680px;
+    height: 500px;
+    background-color: white;
+    border: 1px solid black;
+    margin: 24px 390px ;
+    border-radius: 10px;
+}
+
+.record-inputs {
+    padding: 30px 60px;
+}
+
+.record-login {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.record-nick {
+    font-size: 22px;
+    font-weight: bold;
+    margin-block-start: 1vh;
+}
+
+.record-password {
+    font-size: 22px;
+    font-weight: bold;
+    margin-block-start: 1vh;
+}
+
+.reapPassword {
+    font-size: 22px;
+    font-weight: bold;
+    margin-block-start: 1vh;
+}
+
+#recordLogin {
+    padding: 10px 195px;
+    background-color: #D2EEDA;
+    margin-block-start: 2vh;
+}
+
+#recordNick {
+    padding: 10px 195px;
+    background-color: #D2EEDA;
+    margin-block-start: 2vh;
+}
+
+#recordPassword {
+    padding: 10px 195px;
+    background-color: #D2EEDA;
+    margin-block-start: 2vh;
+}
+
+#recordReapPas {
+    padding: 10px 195px;
+    background-color: #D2EEDA;
+    margin-block-start: 2vh;
+}
+
+.button-rec {
+    background-color: #BDF3BF;
+    width: 400px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-left: 150px;
+}
+
+.buttony-BackRec {
+    background-color: #DDC2F3;
+    border-radius: 7px;
+    width: 250px;
+    height: 75px;
+    margin: 8px 750px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-block-start: -1vh;
+
+}
