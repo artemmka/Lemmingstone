@@ -16,7 +16,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const server = useContext(ServerContext);
     let coeffs: TCoeffs;
-    let points: TPoint[]; 
+    let points: TPoint[];
     let game: Game | null = null;
     // инициализация канваса
     let canvas: Canvas | null = null;
@@ -44,7 +44,6 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             canvas.drawSpline(points, coeffs);
         }
     }
-
 
     // функция отрисовки одного кадра сцены
     function render(FPS: number): void {
@@ -89,7 +88,6 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
 
     useEffect(() => {
         // инициализация игры
-        game = new Game();
         canvas = Canvas({
             parentId: GAME_FIELD,
             WIDTH: WINDOW.WIDTH * SPRITE_SIZE,
@@ -101,6 +99,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                 mouseRightClick,
             },
         });
+        game = new Game(canvas);
         printMap(canvas);
         return () => {
             // деинициализировать все экземпляры
@@ -117,29 +116,58 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
 
     useEffect(() => {
         const keyDownHandler = (event: KeyboardEvent) => {
-            const delta = 0.2;
             const keyCode = event.keyCode ? event.keyCode : event.which ? event.which : 0;
-            switch (keyCode) {
-                case 65: // a
-                    game?.move(-delta, 0);
-                break
-                case 68: // d
-                    game?.move(delta, 0);
-                break
-                case 87: // w
-                    game?.move(0, -delta);
-                break
-                case 83: // s
-                    game?.move(0, delta);
-                break
+            if (game) {
+                switch (keyCode) {
+                    case 65: // a
+                        game.actions.moveLeft = true;
+                        break
+                    case 68: // d
+                        game.actions.moveRight = true;
+                        break;
+                    case 87: // w
+                        game.actions.moveUp = true;
+                        break
+                    case 83: // s
+                        game.actions.moveDown = true;
+                        break
+                    case 32: // Space
+                        game.jump();
+                        game.actions.jump = false;
+                        break
+                }
+            }
+        }
+        const keyUpHandler = (event: KeyboardEvent) => {
+            const keyCode = event.keyCode ? event.keyCode : event.which ? event.which : 0;
+            if (game) {
+                switch (keyCode) {
+                    case 65: // a
+                        game.actions.moveLeft = false;
+                        break
+                    case 68: // d
+                        game.actions.moveRight = false;
+                        break;
+                    case 87: // w
+                        game.actions.moveUp = false;
+                        break
+                    case 83: // s
+                        game.actions.moveDown = false;
+                        break
+                    case 32: // Space
+                        game.actions.jump = true;
+                        break
+                }
             }
         }
 
 
         document.addEventListener('keydown', keyDownHandler);
+        document.addEventListener('keyup', keyUpHandler);
 
         return () => {
             document.removeEventListener('keydown', keyDownHandler);
+            document.removeEventListener('keydown', keyUpHandler);
         }
     });
 
