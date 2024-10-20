@@ -49,7 +49,6 @@ class Game {
 
     jump() {
         if (this.actions.jump && this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'down')) {
-            console.log('rabotaet');
             const jumpDuration = setInterval(() => {
                     this.dy = 0;
                     this.dy = -0.2;
