@@ -197,10 +197,7 @@ class Canvas {
     }
 
     
-    drawSpline(points:TPoint[], coeffs:TCoeffs): void {
-
-        //this.line(10, -5, 10, 5, "#000000", 10);
-        
+    drawSpline(points:TPoint[], coeffs:TCoeffs): void {        
         this.contextV.strokeStyle = 'red';
         this.contextV.lineWidth = 3;
         
@@ -220,6 +217,11 @@ class Canvas {
             this.contextV.stroke();
             this.contextV.closePath();
         }
+    }
+
+    getPixelColor (x:number, y:number) {
+        const imageData = this.contextV.getImageData(x, y, 1, 1).data;
+        return [imageData[0], imageData[1], imageData[2], imageData[3]];
     }
     
     // копируем изображение с виртуального канваса на основной
