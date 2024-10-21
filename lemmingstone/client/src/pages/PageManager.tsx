@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 
 import Preloader from './Preloader/Preloader';
 import Login from './Login/Login';
-import Chat from './Chat/Chat';
+import Lobby from './Lobby/Lobby';
 import GamePage from './Game/Game';
 import NotFound from './NotFound/NotFound';
 
 export enum PAGES {
     PRELOADER,
     LOGIN,
-    CHAT,
+    LOBBY,
     GAME,
     NOT_FOUND,
 }
@@ -25,7 +25,7 @@ const PageManager: React.FC = () => {
         <>
             {page === PAGES.PRELOADER && <Preloader setPage={setPage} />}
             {page === PAGES.LOGIN && <Login setPage={setPage} />}
-            {page === PAGES.CHAT && <Chat setPage={setPage} />}
+            {page === PAGES.LOBBY && <Lobby setPage={setPage} />}
             {page === PAGES.GAME && <GamePage setPage={setPage} />}
             {page === PAGES.NOT_FOUND && <NotFound setPage={setPage} />}
         </>

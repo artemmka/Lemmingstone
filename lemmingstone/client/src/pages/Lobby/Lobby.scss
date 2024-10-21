@@ -20,3 +20,12 @@
         max-width: 500px;
     }
 }
+
+.lemming {
+    background-color: aliceblue;
+    border: 1px solid red;
+
+    &:hover {
+        background-color: yellow;
+    }
+}

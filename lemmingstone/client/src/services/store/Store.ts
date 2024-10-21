@@ -1,4 +1,4 @@
-import { TMessages, TUser } from "../server/types";
+import { TLemming, TMessages, TUser } from "../server/types";
 
 const TOKEN = 'token';
 
@@ -6,6 +6,7 @@ class Store {
     user: TUser | null = null;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
+    lemming: TLemming = null!;
 
     setToken(token: string): void {
         localStorage.setItem(TOKEN, token);
@@ -50,9 +51,15 @@ class Store {
     getChatHash(): string {
         return this.chatHash;
     }
-
     setChatHash(hash: string): void {
         this.chatHash = hash;
+    }
+
+    getLemming(): TLemming {
+        return this.lemming;
+    }
+    setLemming(lemming: TLemming): void {
+        this.lemming = lemming;
     }
 }
 

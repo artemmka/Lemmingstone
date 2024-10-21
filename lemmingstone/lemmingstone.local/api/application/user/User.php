@@ -1,7 +1,7 @@
 <?php
 
 class User {
-     private $db;
+    private $db;
     function __construct($db) {
         $this->db = $db;
     }
@@ -10,10 +10,10 @@ class User {
         return $this->db->getUserByToken($token);
     }
 
-    public function login($login, $hash, /*$rnd*/) {
+    public function login($login, $hash, $rnd) {
         $user = $this->db->getUserByLogin($login);
         if ($user) {
-            if ($user->password === $hash) {
+            if (md5($user->password . $rnd) === $hash) {
                 $token = md5(rand());
                 $this->db->updateToken($user->id, $token);
                 return [

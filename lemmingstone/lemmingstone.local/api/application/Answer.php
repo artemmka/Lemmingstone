@@ -26,6 +26,7 @@ class Answer {
         '1006' => 'user with this email is already registered',
         '4001' => 'an incorrect array of points was passed',
         '4002' => 'insufficient number of points to build a spline', 
+        '2001' => 'error to set lemming for user',
         '9000' => 'unknown error'
     );
 
