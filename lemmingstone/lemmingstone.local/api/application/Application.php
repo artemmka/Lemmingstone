@@ -77,6 +77,10 @@ class Application {
         return $this->map->generateMap();
     }
 
+    public function getCatalog(){
+        return $this->shop->getCatalog();
+    }
+
     // неповторимый оригинал
     public function getLemmings($params) {
         if ($params['token']) {
