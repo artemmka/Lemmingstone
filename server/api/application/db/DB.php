@@ -10,7 +10,7 @@ class DB {
         $pass = 'root';
         $db = 'lemmings';
         $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
-        $this->pdo = new PDO($connect, $user, $pass);
+        //$this->pdo = new PDO($connect, $user, $pass);
     }
 
     public function __destruct() {
@@ -38,25 +38,33 @@ class DB {
     }
 
     public function getUserByLogin($login) {
-        // $user = new stdClass();
-        // $user->id = 1;
-        // $user->password = md5('vasya'.'111');
-        // $user->name = 'Vasya Pupkin';
-        // return $user;
-        return $this->query("SELECT * FROM users WHERE login=?", [$login]);
+        $user = new stdClass();
+        $user->id = 1;
+        $user->password = md5('vasya'.'111');
+        $user->name = 'Vasya Pupkin';
+        return $user;
+        //return $this->query("SELECT * FROM users WHERE login=?", [$login]);
     }
 
     public function getUserByToken($token) {
-        return $this->query("SELECT * FROM users WHERE token=?", [$token]);
+        $user = new stdClass();
+        $user->id = 1;
+        return $user;
+        //return $this->query("SELECT * FROM users WHERE token=?", [$token]);
     }
 
     public function updateToken($userId, $token) {
-       $this->execute("UPDATE users SET token=? WHERE id=?", [$token, $userId]);
+       //$this->execute("UPDATE users SET token=? WHERE id=?", [$token, $userId]);
     }
 
     public function registration($login, $password, $name) {
-        $stmt = $this->pdo->prepare("INSERT INTO users (login, password, name) VALUES (?, ?, ?)");
-        $stmt->execute([$login, $password, $name]); // Проверьте, что password не равен null
+        $this->execute("INSERT INTO users (login,password,name) VALUES (?, ?, ?)",[$login, $hash, $name]);
+    }
+
+    public function changeName($userId, $name){
+        //$this->execute("UPDATE users SET name=? WHERE id=?", [$name, $userId]);
+        $user->name = $name;
+        return $name;
     }
 
     public function getChatHash() {
@@ -77,5 +85,26 @@ class DB {
                                 LEFT JOIN users as u on u.id = m.user_id 
                                 ORDER BY m.created DESC"
         );
+    }
+
+    public function getLemmings() {
+        $lem1 = new stdClass();
+        $lem1->id = 1;
+        $lem1->name = 'Разведчик';
+        $lem1->hp = 100;
+        $lem1->speed = 3;
+        $lem1->slots = 1;
+
+        $lem2 = new stdClass();
+        $lem2->id = 2;
+        $lem2->name = 'Силач';
+        $lem2->hp = 101;
+        $lem2->speed = 1;
+        $lem2->slots = 2;
+        return [$lem1, $lem2];
+    }
+
+    public function setLemmingForUser($userId, $lemmingId) {
+        return true;
     }
 }

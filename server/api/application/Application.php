@@ -72,12 +72,10 @@ class Application {
         return ['error' => 242];
     }
 
-    // жалкая пародия
     public function generateMap() {
         return $this->map->generateMap();
     }
 
-    // неповторимый оригинал
     public function getLemmings($params) {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
@@ -99,4 +97,16 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function changeName($params){
+        if($params['token'] && $params['name']){
+            $user = $this->user->getUser($params['token']);
+            if($user){
+                return $this->user->changeName($params['token'], $params['name']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
 }
