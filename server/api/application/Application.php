@@ -109,4 +109,15 @@ class Application {
         return ['error' => 242];
     }
 
+    public function changePassword($params){
+        if($params['token'] && $params['oldPassword'] && $params['newPassword']){
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->user->changePassword($params['token'], $params['oldPassword'], $params['newPassword']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
 }

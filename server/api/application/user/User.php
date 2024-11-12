@@ -67,4 +67,18 @@ class User {
         }
         return ['error => 705'];
     }
+
+    public function changePassword($token,$oldPassword,$newPassword){
+        $user = $this->db->getUserByToken($token);
+        if($user){
+            if(md5($user->login . $oldPassword) === $user->password){
+                $hash = md5($user->login . $newPassword);
+                $this->db->changePassword($user->id,$hash);
+                return true;
+            }
+            return ['error' => 1002];
+        }
+        return ['error' => 705];
+    }
+    
 }

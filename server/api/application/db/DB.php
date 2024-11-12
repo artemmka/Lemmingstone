@@ -8,9 +8,9 @@ class DB {
         $port = '3306';
         $user = 'root';
         $pass = 'root';
-        $db = 'lemmings';
+        $db = 'lemming_stone';
         $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
-        //$this->pdo = new PDO($connect, $user, $pass);
+        $this->pdo = new PDO($connect, $user, $pass);
     }
 
     public function __destruct() {
@@ -38,23 +38,15 @@ class DB {
     }
 
     public function getUserByLogin($login) {
-        $user = new stdClass();
-        $user->id = 1;
-        $user->password = md5('vasya'.'111');
-        $user->name = 'Vasya Pupkin';
-        return $user;
-        //return $this->query("SELECT * FROM users WHERE login=?", [$login]);
+        return $this->query("SELECT * FROM users WHERE login=?", [$login]);
     }
 
     public function getUserByToken($token) {
-        $user = new stdClass();
-        $user->id = 1;
-        return $user;
-        //return $this->query("SELECT * FROM users WHERE token=?", [$token]);
+        return $this->query("SELECT * FROM users WHERE token=?", [$token]);
     }
 
     public function updateToken($userId, $token) {
-       //$this->execute("UPDATE users SET token=? WHERE id=?", [$token, $userId]);
+       $this->execute("UPDATE users SET token=? WHERE id=?", [$token, $userId]);
     }
 
     public function registration($login, $password, $name) {
@@ -62,9 +54,11 @@ class DB {
     }
 
     public function changeName($userId, $name){
-        //$this->execute("UPDATE users SET name=? WHERE id=?", [$name, $userId]);
-        $user->name = $name;
-        return $name;
+       $this->execute("UPDATE users SET name=? WHERE id=?", [$name, $userId]);
+    }
+
+    public function changePassword($userId,$hash){
+        $this->execute("UPDATE users SET password=? WHERE id=?", [$hash, $userId]);
     }
 
     public function getChatHash() {
