@@ -192,6 +192,18 @@ class Canvas {
         this.contextV.fillRect(this.xs(x), this.ys(y), width, height);
     }
 
+    cutCircle(x: number, y: number, radius: number) {
+        this.contextV.strokeStyle = '#305160';
+        this.contextV.fillStyle = '#305160';
+        this.contextV.globalCompositeOperation = 'source-atop';
+        this.contextV.beginPath();
+        this.contextV.arc(this.xs(x), this.ys(y), radius, 0, 2 * Math.PI);
+        this.contextV.fill();
+        this.contextV.stroke();
+        this.contextV.closePath();
+        this.contextV.globalCompositeOperation = 'source-over';
+    }
+
     spriteFull(image: HTMLImageElement, dx: number, dy: number, sx: number, sy: number, size: number): void {
         this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx), this.ys(dy), size, size);
     }
@@ -206,7 +218,7 @@ class Canvas {
         for (let i = 0; i < points.length - 1; i++) {
             this.contextV.lineTo(this.xs(points[i].x), this.ys(points[i].y));
         }
-        this.contextV.lineTo(this.xs(points[points.length-1].x), this.ys(50));
+        this.contextV.lineTo(this.xs(points[points.length - 1].x), this.ys(50));
         this.contextV.lineTo(this.xs(points[0].x), this.ys(50));
         this.contextV.lineTo(this.xs(points[0].x), this.ys(points[0].y));
         this.contextV.fill();
