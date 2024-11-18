@@ -5,10 +5,10 @@ class DB {
 
     function __construct() {
         $host = 'localhost';
-        $port = '3306';
+        $port = '8889';
         $user = 'root';
-        $pass = 'root';
-        $db = 'lemming_stone';
+        $pass = '00000000';
+        $db = 'lemmingstone';
         $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
         $this->pdo = new PDO($connect, $user, $pass);
     }
