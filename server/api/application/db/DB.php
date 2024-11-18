@@ -98,6 +98,25 @@ class DB {
         return [$lem1, $lem2];
     }
 
+    public function getCatalog(){
+        $card1 = new stdClass();
+        $card1->id = 1;
+        $card1->name = 'Тротил';
+        $card1->price = 2;
+
+        $card2 = new stdClass();
+        $card2->id = 2;
+        $card2->name = 'Лестница';
+        $card2->price = 1;
+
+        $card3 = new stdClass();
+        $card3->id = 3;
+        $card3->name = 'Лопата';
+        $card3->price = 1;
+       
+        return [$card1,$card2,$card3];
+    }
+
     public function setLemmingForUser($userId, $lemmingId) {
         return true;
     }
