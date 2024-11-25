@@ -7,4 +7,8 @@ class Shop {
         $this->db = $db;
     }
 
+    public function getCatalog(){
+        return $this->db->getCatalog();
+    }
+
 }
