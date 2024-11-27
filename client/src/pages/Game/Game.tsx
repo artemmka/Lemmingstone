@@ -45,42 +45,41 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         }
     }
 
-    function printExplodes() {
-        if (game) {
-            const { explosions } = game.getScene();
-            explosions.forEach(explode => {
-                canvas?.cutCircle(explode.x, explode.y, 200);
-            })
-            console.log(explosions);
-        }
-    }
-
-    function calcSplines(points: TPoint[], coeffs: TCoeffs): TPoint[] {
-
+    function calcSplines(points:TPoint[], coeffs:TCoeffs): TPoint[] {
+        
         const dx = WINDOW.WIDTH / 1200;
         const pointsToDraw: TPoint[] = [];
-
+        
         for (let i = 0; i < points.length - 1; i++) {
             for (let x = points[i].x; x <= points[i + 1].x; x += dx) {
                 const t = x - points[i].x;
                 const y = coeffs.a[i] + coeffs.b[i] * t + coeffs.c[i] * t ** 2 + coeffs.d[i] * t ** 3;
-                pointsToDraw.push({ x: x, y: y });
+                pointsToDraw.push({x: x, y: y});
             }
         }
         return pointsToDraw;
+    }
+
+    function printExplosions () {
+        if (game) {
+            const explosions = game.explosions;
+            explosions.forEach(explosion => canvas?.printExplosion(explosion.x, explosion.y, 250));
+        }
     }
 
     // функция отрисовки одного кадра сцены
     function render(FPS: number): void {
         if (canvas && game) {
             canvas.clear();
+            canvas.clearMap();
             const { kapitoshka } = game.getScene();
 
             /************************/
             /* нарисовать Капитошку */
             /************************/
             const { x, y } = kapitoshka;
-            
+            printKapitoshka(canvas, { x, y }, getSprite(1));
+
             /******************/
             /* нарисовать FPS */
             /******************/
@@ -88,12 +87,9 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
             /* отрендерить картинку */
             /************************/
-            
-            //console.log(explosions);
-            
+
             canvas.drawSpline(pointsToDraw);
-            printExplodes();
-            printKapitoshka(canvas, { x, y }, getSprite(1));
+            printExplosions();
 
             canvas.render();
         }
@@ -185,8 +181,8 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                     case 32: // Space
                         game.actions.jump = true;
                         break
-                    case 88: //x
-                        game.explosion();
+                    case 88: // x
+                        game.explode();
                         break
                 }
             }
