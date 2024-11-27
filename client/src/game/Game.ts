@@ -11,7 +11,7 @@ class Game {
         moveDown: false,
         jump: true
     }
-    public explosions: TPoint[] = [{x: 5, y: 0}];
+    public explosions: TPoint[];
     public dx = 0;
     public dy = 0;
     private moving: NodeJS.Timer;
@@ -35,7 +35,7 @@ class Game {
     getScene() {
         return {
             kapitoshka: this.kapitoshka,
-            explosions: this.explosions
+            explosions: this.explosions,
         };
     }
 
@@ -64,11 +64,8 @@ class Game {
         }
     }
 
-    explosion() {
-        const x = this.kapitoshka.x;
-        const y = this.kapitoshka.y;
-        this.explosions.push({ x, y });
-        console.log(this.explosions);
+    explode() {
+        this.explosions.push({ x: this.kapitoshka.x, y: this.kapitoshka.y });
     }
 
     move(dx: number, dy: number): void {

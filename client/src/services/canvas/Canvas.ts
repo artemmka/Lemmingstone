@@ -27,6 +27,8 @@ class Canvas {
     context: CanvasRenderingContext2D;
     canvasV: HTMLCanvasElement;
     contextV: CanvasRenderingContext2D;
+    canvasMap: HTMLCanvasElement;
+    contextMap: CanvasRenderingContext2D;
     // общая ширина и высота канвасов
     WIDTH: number;
     HEIGHT: number;
@@ -67,6 +69,11 @@ class Canvas {
         this.canvasV.width = this.WIDTH;
         this.canvasV.height = this.HEIGHT;
         this.contextV = this.canvasV.getContext('2d')!;
+        // Map canvas
+        this.canvasMap = document.createElement('canvas');
+        this.canvasMap.width = this.WIDTH;
+        this.canvasMap.height = this.HEIGHT;
+        this.contextMap = this.canvasMap.getContext('2d')!;
         // задаем окошко
         this.WINDOW = WINDOW;
         this.callbacks = callbacks;
@@ -161,6 +168,23 @@ class Canvas {
         this.contextV.fillRect(0, 0, this.WIDTH, this.HEIGHT);
     }
 
+    clearMap(): void {
+        this.contextMap.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+    }
+
+    printExplosion(x: number, y: number, radius: number): void {
+        this.contextMap.strokeStyle = '#305160';
+        this.contextMap.fillStyle = '#305160';
+        this.contextMap.globalCompositeOperation = 'destination-out';
+        this.contextMap.beginPath();
+        this.contextMap.arc(this.xs(x), this.ys(y), radius, 0, 2 * Math.PI);
+        this.contextMap.fill();
+        this.contextMap.stroke();
+        this.contextMap.closePath();
+        this.contextMap.fillStyle = 'red';
+        this.contextMap.globalCompositeOperation = 'source-over';
+    }
+
     clearImage(image: HTMLImageElement): void {
         this.contextV.drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
     }
@@ -192,52 +216,43 @@ class Canvas {
         this.contextV.fillRect(this.xs(x), this.ys(y), width, height);
     }
 
-    cutCircle(x: number, y: number, radius: number) {
-        this.contextV.strokeStyle = '#305160';
-        this.contextV.fillStyle = '#305160';
-        this.contextV.globalCompositeOperation = 'source-atop';
-        this.contextV.beginPath();
-        this.contextV.arc(this.xs(x), this.ys(y), radius, 0, 2 * Math.PI);
-        this.contextV.fill();
-        this.contextV.stroke();
-        this.contextV.closePath();
-        this.contextV.globalCompositeOperation = 'source-over';
-    }
-
     spriteFull(image: HTMLImageElement, dx: number, dy: number, sx: number, sy: number, size: number): void {
         this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx), this.ys(dy), size, size);
     }
 
 
     drawSpline(points: TPoint[]): void {
-        this.contextV.strokeStyle = 'red';
-        this.contextV.lineWidth = 10;
-        this.contextV.fillStyle = 'red';
+        this.contextMap.strokeStyle = 'red';
+        this.contextMap.lineWidth = 10;
+        this.contextMap.fillStyle = 'red';
 
-        this.contextV.beginPath();
+        this.contextMap.beginPath();
         for (let i = 0; i < points.length - 1; i++) {
-            this.contextV.lineTo(this.xs(points[i].x), this.ys(points[i].y));
+            this.contextMap.lineTo(this.xs(points[i].x), this.ys(points[i].y));
         }
-        this.contextV.lineTo(this.xs(points[points.length - 1].x), this.ys(50));
-        this.contextV.lineTo(this.xs(points[0].x), this.ys(50));
-        this.contextV.lineTo(this.xs(points[0].x), this.ys(points[0].y));
-        this.contextV.fill();
+        this.contextMap.lineTo(this.xs(points[points.length - 1].x), this.ys(50));
+        this.contextMap.lineTo(this.xs(points[0].x), this.ys(50));
+        this.contextMap.lineTo(this.xs(points[0].x), this.ys(points[0].y));
+        this.contextMap.fill();
 
         // this.line(points[points.length-1].x, points[points.length-1].y, points[points.length-1].x, -50, 'red', 10);
         // this.line(points[points.length-1].x, -50, points[0].x, -50, 'red', 10);
         // this.line(points[0].x, -50, points[0].x, points[0].y, 'red', 10);
-        this.contextV.stroke();
-        this.contextV.closePath();
+        this.contextMap.stroke();
+        this.contextMap.closePath();
     }
 
     getPixelColor(x: number, y: number) {
-        const imageData = this.contextV.getImageData(x, y, 1, 1).data;
+        const imageData = this.contextMap.getImageData(x, y, 1, 1).data;
         return [imageData[0], imageData[1], imageData[2], imageData[3]];
     }
 
     // копируем изображение с виртуального канваса на основной
     render(): void {
+        //this.contextV.globalCompositeOperation = 'lighter';
+        this.contextV.drawImage(this.canvasMap, 0, 0);
         this.context.drawImage(this.canvasV, 0, 0);
+        //this.contextV.globalCompositeOperation = 'source-over';
     }
 }
 
