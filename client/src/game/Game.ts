@@ -11,6 +11,7 @@ class Game {
         moveDown: false,
         jump: true
     }
+    public explosions: TPoint[];
     public dx = 0;
     public dy = 0;
     private moving: NodeJS.Timer;
@@ -22,6 +23,7 @@ class Game {
         this.canvas = canvas;
         this.moving = setInterval(() => this.velocity(), 5);
         this.WINDOW = WINDOW;
+        this.explosions = [];
     }
 
     destructor() {
@@ -33,6 +35,7 @@ class Game {
     getScene() {
         return {
             kapitoshka: this.kapitoshka,
+            explosions: this.explosions,
         };
     }
 
@@ -59,6 +62,10 @@ class Game {
             }, 5);
             setTimeout(() => clearInterval(jumpDuration), 150);
         }
+    }
+
+    explode() {
+        this.explosions.push({ x: this.kapitoshka.x, y: this.kapitoshka.y });
     }
 
     move(dx: number, dy: number): void {
