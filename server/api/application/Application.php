@@ -27,6 +27,12 @@ class Application {
 
     public function login($params) {
         if ($params['login'] && $params['hash'] && $params['rnd']) {
+            if(strlen($params['login']) < 6 || strlen($params['login']) > 15){
+                return['error' => 802];
+            }
+            if(strlen($params['password']) < 8 || strlen($params['password']) > 20){
+                return['error' => 803];
+            }
             return $this->user->login($params['login'], $params['hash'], $params['rnd']);
         }
         return ['error' => 242];
@@ -45,6 +51,12 @@ class Application {
 
     public function registration($params) {
         if ($params['login'] && $params['password'] && $params['name']) {
+            if(strlen($params['login']) < 6 || strlen($params['login']) > 15){
+                return['error' => 802];
+            }
+            if(strlen($params['password']) < 8  || strlen($params['password']) > 20){
+                return['error' => 803];
+            }
             return $this->user->registration($params['login'], $params['password'], $params['name']);
         }
         return ['error' => 242];
