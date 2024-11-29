@@ -30,9 +30,6 @@ class Application {
             if(strlen($params['login']) < 6 || strlen($params['login']) > 15){
                 return['error' => 802];
             }
-            if(strlen($params['password']) < 8 || strlen($params['password']) > 20){
-                return['error' => 803];
-            }
             return $this->user->login($params['login'], $params['hash'], $params['rnd']);
         }
         return ['error' => 242];
