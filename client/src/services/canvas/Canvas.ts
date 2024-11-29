@@ -196,34 +196,33 @@ class Canvas {
         this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx), this.ys(dy), size, size);
     }
 
-    
-    drawSpline(points:TPoint[], coeffs:TCoeffs): void {        
+
+    drawSpline(points: TPoint[]): void {
         this.contextV.strokeStyle = 'red';
-        this.contextV.lineWidth = 3;
-        
-        const dx = this.WINDOW.WIDTH/1200;
-        
+        this.contextV.lineWidth = 10;
+        this.contextV.fillStyle = 'red';
+
+        this.contextV.beginPath();
         for (let i = 0; i < points.length - 1; i++) {
-            this.contextV.beginPath();
-            for (let x = points[i].x; x <= points[i + 1].x; x += dx) {
-                const t = x - points[i].x;
-                const y = coeffs.a[i] + coeffs.b[i] * t + coeffs.c[i] * t ** 2 + coeffs.d[i] * t ** 3;
-                if (x >= points[i].x) {
-                    this.contextV.lineTo(this.xs(x), this.ys(y));
-                } else {
-                    this.contextV.lineTo(this.xs(x), this.ys(y));
-                }
-            }
-            this.contextV.stroke();
-            this.contextV.closePath();
+            this.contextV.lineTo(this.xs(points[i].x), this.ys(points[i].y));
         }
+        this.contextV.lineTo(this.xs(points[points.length-1].x), this.ys(50));
+        this.contextV.lineTo(this.xs(points[0].x), this.ys(50));
+        this.contextV.lineTo(this.xs(points[0].x), this.ys(points[0].y));
+        this.contextV.fill();
+
+        // this.line(points[points.length-1].x, points[points.length-1].y, points[points.length-1].x, -50, 'red', 10);
+        // this.line(points[points.length-1].x, -50, points[0].x, -50, 'red', 10);
+        // this.line(points[0].x, -50, points[0].x, points[0].y, 'red', 10);
+        this.contextV.stroke();
+        this.contextV.closePath();
     }
 
-    getPixelColor (x:number, y:number) {
+    getPixelColor(x: number, y: number) {
         const imageData = this.contextV.getImageData(x, y, 1, 1).data;
         return [imageData[0], imageData[1], imageData[2], imageData[3]];
     }
-    
+
     // копируем изображение с виртуального канваса на основной
     render(): void {
         this.context.drawImage(this.canvasV, 0, 0);

@@ -15,8 +15,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     const { WINDOW, SPRITE_SIZE } = CONFIG;
     const { setPage } = props;
     const server = useContext(ServerContext);
-    let coeffs: TCoeffs;
-    let points: TPoint[];
+    let pointsToDraw: TPoint[];
     let game: Game | null = null;
     // инициализация канваса
     let canvas: Canvas | null = null;
@@ -39,10 +38,26 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     async function printMap(canvas: Canvas): Promise<any> {
         const coeffsAndPoints = await server.generateMap();
         if (coeffsAndPoints) {
-            coeffs = coeffsAndPoints.coeffs;
-            points = coeffsAndPoints.points;
-            canvas.drawSpline(points, coeffs);
+            const coeffs = coeffsAndPoints.coeffs;
+            const points = coeffsAndPoints.points;
+            pointsToDraw = calcSplines(points, coeffs);
+            canvas.drawSpline(pointsToDraw);
         }
+    }
+
+    function calcSplines(points:TPoint[], coeffs:TCoeffs): TPoint[] {
+        
+        const dx = WINDOW.WIDTH / 1200;
+        const pointsToDraw: TPoint[] = [];
+        
+        for (let i = 0; i < points.length - 1; i++) {
+            for (let x = points[i].x; x <= points[i + 1].x; x += dx) {
+                const t = x - points[i].x;
+                const y = coeffs.a[i] + coeffs.b[i] * t + coeffs.c[i] * t ** 2 + coeffs.d[i] * t ** 3;
+                pointsToDraw.push({x: x, y: y});
+            }
+        }
+        return pointsToDraw;
     }
 
     // функция отрисовки одного кадра сцены
@@ -65,7 +80,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /* отрендерить картинку */
             /************************/
 
-            canvas.drawSpline(points, coeffs);
+            canvas.drawSpline(pointsToDraw);
 
             canvas.render();
         }
@@ -99,7 +114,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                 mouseRightClick,
             },
         });
-        game = new Game(canvas);
+        game = new Game(canvas, WINDOW);
         printMap(canvas);
         return () => {
             // деинициализировать все экземпляры

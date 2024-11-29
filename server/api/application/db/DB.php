@@ -5,10 +5,10 @@ class DB {
 
     function __construct() {
         $host = 'localhost';
-        $port = '3306';
+        $port = '8889';
         $user = 'root';
-        $pass = 'root';
-        $db = 'lemming_stone';
+        $pass = '00000000';
+        $db = 'lemmingstone';
         $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
         $this->pdo = new PDO($connect, $user, $pass);
     }
@@ -49,7 +49,7 @@ class DB {
        $this->execute("UPDATE users SET token=? WHERE id=?", [$token, $userId]);
     }
 
-    public function registration($login, $password, $name) {
+    public function registration($login, $hash, $name) {
         $this->execute("INSERT INTO users (login,password,name) VALUES (?, ?, ?)",[$login, $hash, $name]);
     }
 
@@ -96,6 +96,25 @@ class DB {
         $lem2->speed = 1;
         $lem2->slots = 2;
         return [$lem1, $lem2];
+    }
+
+    public function getCatalog(){
+        $card1 = new stdClass();
+        $card1->id = 1;
+        $card1->name = 'Тротил';
+        $card1->price = 2;
+
+        $card2 = new stdClass();
+        $card2->id = 2;
+        $card2->name = 'Лестница';
+        $card2->price = 1;
+
+        $card3 = new stdClass();
+        $card3->id = 3;
+        $card3->name = 'Лопата';
+        $card3->price = 1;
+       
+        return [$card1,$card2,$card3];
     }
 
     public function setLemmingForUser($userId, $lemmingId) {

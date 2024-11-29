@@ -14,16 +14,20 @@ class Game {
     public dx = 0;
     public dy = 0;
     private moving: NodeJS.Timer;
-    private canvas: Canvas | null
+    private canvas: Canvas | null;
+    private WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number };
 
-    constructor(canvas: Canvas) {
+    constructor(canvas: Canvas, WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number }) {
         this.kapitoshka = { x: 2, y: 5 };
         this.canvas = canvas;
-        this.moving = setInterval(() => this.velocity(), 10);
+        this.moving = setInterval(() => this.velocity(), 5);
+        this.WINDOW = WINDOW;
     }
 
     destructor() {
         clearInterval(this.moving);
+        this.WINDOW.LEFT = 0;
+        this.WINDOW.TOP = 0;
     }
 
     getScene() {
@@ -34,33 +38,44 @@ class Game {
 
     doActions() {
         if (this.actions.moveLeft && this.dx >= -0.1) {
-            this.dx -= 0.03;
+            this.dx -= 0.015;
         }
         if (this.actions.moveRight && this.dx <= 0.1) {
-            this.dx += 0.03;
+            this.dx += 0.015;
         }
         if (this.actions.moveDown && this.dy <= 0.07) {
-            this.dy += 0.03;
+            this.dy += 0.015;
         }
         if (this.actions.moveUp && this.dy >= -0.1) {
-            this.dy -= 0.07;
+            this.dy -= 0.02;
         }
     }
 
     jump() {
         if (this.actions.jump && this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'down')) {
             const jumpDuration = setInterval(() => {
-                    this.dy = 0;
-                    this.dy = -0.2;
+                this.dy = 0;
+                this.dy = -0.15;
             }, 5);
             setTimeout(() => clearInterval(jumpDuration), 150);
         }
     }
 
     move(dx: number, dy: number): void {
-        if ((dx > 0 && this.kapitoshka.x + dx <= WIDTH - 1 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right')) ||
+        if ((this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right') || this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'left')) && this.dx != 0) {
+            this.dy = 0;
+            this.dy -= 0.04;
+        }
+        if ((dx > 0 && this.kapitoshka.x + dx <= (this.WINDOW.LEFT + this.WINDOW.WIDTH) && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right')) ||
             (dx < 0 && this.kapitoshka.x - dx >= 0 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'left'))
         ) {
+            if (((this.kapitoshka.x > (this.WINDOW.LEFT + this.WINDOW.WIDTH / 2 - 0.5)) && (this.kapitoshka.x < (this.WINDOW.LEFT + ((this.WINDOW.WIDTH / 2) + 0.5)))) &&
+                (
+                    (dx > 0 && this.WINDOW.LEFT < 50) ||
+                    (dx < 0 && this.WINDOW.LEFT > 0))
+            ) {
+                this.WINDOW.LEFT += dx;
+            }
             this.kapitoshka.x += dx;
         }
         if ((dy > 0 && this.kapitoshka.y + dy <= HEIGHT - 1 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'down')) ||
@@ -73,19 +88,19 @@ class Game {
     velocity() {
         this.doActions();
         if (this.dx > 0) {
-            this.dx = this.dx - 0.01;
+            this.dx = this.dx - 0.007;
             if (this.dx < 0) {
                 this.dx = 0;
             }
         }
         if (this.dx < 0) {
-            this.dx = this.dx + 0.01;
+            this.dx = this.dx + 0.007;
             if (this.dx > 0) {
                 this.dx = 0;
             }
         }
         if (this.dy < 0.1) {
-            this.dy += 0.03;
+            this.dy += 0.015;
         }
         this.move(this.dx, this.dy);
     }
@@ -117,9 +132,12 @@ class Game {
                 break;
             }
             case 'down': {
-                for (let i = 0; i < 64; i++) {
-                    if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y) + 64)[0] === 255) {
-                        return true;
+                for (let j = 0; j < 2; j++) {
+                    for (let i = 0; i < 64; i++) {
+                        this.canvas?.text(x, y, '1', 'white');
+                        if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y) + 64 - j)[0] === 255) {
+                            return true;
+                        }
                     }
                 }
                 break;
