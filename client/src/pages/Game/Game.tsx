@@ -90,6 +90,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
 
             canvas.drawSpline(pointsToDraw);
             printExplosions();
+            canvas.printGround(WINDOW.LEFT, WINDOW.TOP);
 
             canvas.render();
         }

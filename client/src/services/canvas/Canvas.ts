@@ -1,5 +1,6 @@
 import { TPoint, TWINDOW } from "../../config";
 import { TCoeffs } from "../server/types";
+import groundSprite from "../../assets/img/ground.png"
 
 enum EDIRECTION {
     UP,
@@ -29,6 +30,8 @@ class Canvas {
     contextV: CanvasRenderingContext2D;
     canvasMap: HTMLCanvasElement;
     contextMap: CanvasRenderingContext2D;
+    canvasGround: HTMLCanvasElement;
+    contextGround: CanvasRenderingContext2D;
     // общая ширина и высота канвасов
     WIDTH: number;
     HEIGHT: number;
@@ -74,6 +77,11 @@ class Canvas {
         this.canvasMap.width = this.WIDTH;
         this.canvasMap.height = this.HEIGHT;
         this.contextMap = this.canvasMap.getContext('2d')!;
+        // Ground canvas
+        this.canvasGround = document.createElement('canvas');
+        this.canvasGround.width = this.WIDTH;
+        this.canvasGround.height = this.HEIGHT;
+        this.contextGround = this.canvasGround.getContext('2d')!;
         // задаем окошко
         this.WINDOW = WINDOW;
         this.callbacks = callbacks;
@@ -185,6 +193,24 @@ class Canvas {
         this.contextMap.globalCompositeOperation = 'source-over';
     }
 
+
+    printGround(x: number, y: number): void {
+        this.contextGround.clearRect(0, 0, this.canvasGround.width, this.canvasGround.height);
+        const ground = new Image();
+        ground.src = groundSprite;
+        const groundPattern = this.contextGround.createPattern(ground, 'repeat');
+        this.contextGround.save();
+        if (groundPattern) {
+        this.contextGround.fillStyle = groundPattern;
+        }
+        this.contextGround.translate(this.xs(x), this.ys(y));
+        this.contextGround.beginPath();
+        this.contextGround.fillRect(0, 0, this.canvasGround.width, this.canvasGround.height);
+        this.contextGround.stroke();
+        this.contextGround.closePath();
+        this.contextGround.restore()
+    }
+
     clearImage(image: HTMLImageElement): void {
         this.contextV.drawImage(image, 0, 0, this.WIDTH, this.HEIGHT);
     }
@@ -249,10 +275,11 @@ class Canvas {
 
     // копируем изображение с виртуального канваса на основной
     render(): void {
-        //this.contextV.globalCompositeOperation = 'lighter';
-        this.contextV.drawImage(this.canvasMap, 0, 0);
+        this.contextGround.globalCompositeOperation = 'destination-in';
+        this.contextGround.drawImage(this.canvasMap, 0, 0);
+        this.contextGround.globalCompositeOperation = 'source-over';
+        this.contextV.drawImage(this.canvasGround, 0, 0);
         this.context.drawImage(this.canvasV, 0, 0);
-        //this.contextV.globalCompositeOperation = 'source-over';
     }
 }
 
