@@ -22,22 +22,22 @@ const Settings: React.FC<IBasePage> = (props: IBasePage) => {
 
             <div className='settings-id'>
                 <div className='settings-number3'> ID Игрока: </div>
-                <input id='idRef' ref={idRef} placeholder='2879'/>
+                <input className='settings-idRef1' id='idRef' ref={idRef} placeholder='2879'/>
                 <div className='settings-text2'> Ник: </div>
-                <input id='nickRef' ref={nickRef} placeholder='Хомяк' />
+                <input className='settings-nickRef1' id='nickRef' ref={nickRef} placeholder='Хомяк' />
             </div>
             <div className='settings-inputs'>
                 <div className='settings-text1'> Изменить ник </div>
-                <input id='newNickRef' ref={newNickRef} />
+                <input className='settings-newNickRef1' id='newNickRef' ref={newNickRef} />
                 <div className='settings-number1'> Изменить пароль </div>
-                <input id='passwordRef' ref={passwordRef} type='password'/>
+                <input className='settings-passwordRef1' id='passwordRef' ref={passwordRef} type='password'/>
                 <div className='settings-number2'> Повторить новый пароль </div>
-                <input id='newPasswordRef' ref={newPasswordRef} type='password'/>
-                <button className='settings-b1' onClick={saveCliclHandler}> Сохранить </button>
+                <input className='settings-newPasswordRef1' id='newPasswordRef' ref={newPasswordRef} type='password'/>
+                <button className='settings-b1' id='b1' onClick={saveCliclHandler}> Сохранить </button>
             </div>
 
             <div className='settings-buttons'>
-                <button className='settings-b2' onClick={backClickHandler}> На главную </button>
+                <button className='settings-b2' id='b2' onClick={backClickHandler}> На главную </button>
             </div>
 
         </div>

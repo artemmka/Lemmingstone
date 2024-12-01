@@ -16,23 +16,23 @@
         border-radius: 10px;
         margin-block-start: 20vh;
 
-        #idRef {
-            background-color: #D2EEDA;
-            width: 190px;
-            height: 35px;
-            border-radius: 5px;
-            margin: 10px 20px;
-            border: 1px solid black;
-        }
+    }
+    &-idRef1 {
+        background-color: #D2EEDA;
+        width: 190px;
+        height: 35px;
+        border-radius: 5px;
+        margin: 10px 20px;
+        border: 1px solid black;
+    }
 
-        #nickRef {
-            background-color: #D2EEDA;
-            width: 190px;
-            height: 35px;
-            border-radius: 5px;
-            margin: 10px 20px;
-            border: 1px solid black;
-        }
+    &-nickRef1 {
+        background-color: #D2EEDA;
+        width: 190px;
+        height: 35px;
+        border-radius: 5px;
+        margin: 10px 20px;
+        border: 1px solid black;
     }
 
     &-number3 {
@@ -58,33 +58,33 @@
         margin: 24px 590px ;
         border-radius: 10px;
         margin-block-start: -50vh;
+    }
 
-        #newNickRef{
-            width: 580px;
-            height: 55px;
-            background-color: #D2EEDA;
-            margin-block-start: 2vh;
-            margin-left: 40px;
-            border: 1px solid black;
-        }
+    &-newNickRef1{
+        width: 580px;
+        height: 55px;
+        background-color: #D2EEDA;
+        margin-block-start: 2vh;
+        margin-left: 40px;
+        border: 1px solid black;
+    }
 
-        #passwordRef{
-            width: 580px;
-            height: 55px;
-            background-color: #D2EEDA;
-            margin-block-start: 3vh;
-            margin-left: 40px;
-            border: 1px solid black;
-        }
+    &-passwordRef1{
+        width: 580px;
+        height: 55px;
+        background-color: #D2EEDA;
+        margin-block-start: 3vh;
+        margin-left: 40px;
+        border: 1px solid black;
+    }
 
-        #newPasswordRef{
-            width: 580px;
-            height: 55px;
-            background-color: #D2EEDA;
-            margin-block-start: 3vh;
-            margin-left: 40px;
-            border: 1px solid black;
-        }
+    &-newPasswordRef1{
+        width: 580px;
+        height: 55px;
+        background-color: #D2EEDA;
+        margin-block-start: 3vh;
+        margin-left: 40px;
+        border: 1px solid black;
     }
 
     &-text1{

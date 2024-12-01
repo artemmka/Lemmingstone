@@ -16,27 +16,31 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
 
 
     return (<div className='account'>
-        <div className='account-name'> Регистрация </div>
-
+        <h1> Регистрация </h1>
 
         <div className='account-wapper'>
         <div className='account-inputs'>
-            <div className='account-text1'> Введите логин </div>
-            <input id='login' ref={loginRef} />
-            <div className='account-nick'> Введите ник </div>
+            <h1> Введите логин </h1>
+            <input className='account-login1' id='login' ref={loginRef} />
+            <h1> Введите ник </h1>
             <input id='nick' ref={passwordRef}/>
-            <div className='account-number1'> Введите пароль </div>
+            <h1> Введите пароль </h1>
             <input id='password' ref={newLoginRef} type="password"/>
-            <div className='account-number2'> Повторите пароль </div>
+            <h1> Повторите пароль </h1>
             <input id='newPassword' ref={newPasswordRef} type="password"/>
+
+            <div className='account-button1'>
+                
+            <button id='button-account1' onClick={loginClickHandle}> Зарегистрироваться </button>
+
+            </div>
         </div>
 
-        <div className='account-buttons'>
-
-            <button className='account-b1' onClick={loginClickHandle}> Зарегистрироваться </button>
-            <button className='account-b2' onClick={backClickHandle}> На главную </button>
-
         </div>
+
+        <div className='account-button2'>
+
+            <button id='button-accont2' onClick={backClickHandle}> На главную </button>
 
         </div>
     </div>)

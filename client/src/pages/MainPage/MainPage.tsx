@@ -15,12 +15,12 @@ const MainPage: React.FC<IBasePage> = (props: IBasePage) => {
 
     return (
         <div className='mainPage'>
-            <div className='mainPage-img'></div>
+            <div className='mainPage-img' id='img'></div>
             
             <div className='mainPage-buttons'>
-                <button className='mainPage-b1' onClick={loginonClickHandle}> Авторизация </button>
-                <button className='mainPage-b2' onClick={accountonClickHandle}> Регистрация </button>
-                <button className='mainPage-b3' onClick={settingsonClickHandle}> Настройки </button>
+                <button className='mainPage-b1' id='b1' onClick={loginonClickHandle}> Авторизация </button>
+                <button className='mainPage-b2' id='b2' onClick={accountonClickHandle}> Регистрация </button>
+                
             </div>
 
 
