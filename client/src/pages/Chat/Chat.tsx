@@ -48,7 +48,7 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = () => setPage(PAGES.LOGIN);
 
     if (!user) {
-        return (<div className='chat'>
+        return (<div className='chat' id='chat-page-test'>
             <h1>Чат</h1>
             <h1>Что-то пошло не так =(</h1>
             <Button onClick={toGameClickHandler} text='В игру!' />
@@ -56,7 +56,7 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
         </div>)
     }
 
-    return (<div className='chat'>
+    return (<div className='chat' id='chat-page-test'>
         <h1>Чат</h1>
         <div className='chat-user-info'>
             <span>Привет!</span>

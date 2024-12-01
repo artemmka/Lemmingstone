@@ -18,9 +18,9 @@ const MainPage: React.FC<IBasePage> = (props: IBasePage) => {
             <div className='mainPage-img'></div>
             
             <div className='mainPage-buttons'>
-                <button className='mainPage-b1' onClick={loginonClickHandle}> Авторизация </button>
-                <button className='mainPage-b2' onClick={accountonClickHandle}> Регистрация </button>
-                <button className='mainPage-b3' onClick={settingsonClickHandle}> Настройки </button>
+                <button className='mainPage-b1' id='test-main_page-button-auth' onClick={loginonClickHandle}> Авторизация </button>
+                <button className='mainPage-b2' id='test-main_page-button-registration' onClick={accountonClickHandle}> Регистрация </button>
+                <button className='mainPage-b3' id='test-main_page-button-settings' onClick={settingsonClickHandle}> Настройки </button>
             </div>
 
 
