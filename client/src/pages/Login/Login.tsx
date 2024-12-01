@@ -23,7 +23,7 @@ const Login: React.FC<IBasePage> = (props: IBasePage) => {
     }
     const backClickHandler = () => setPage(PAGES.MAINPAGE);
 
-    return (<div className='login'>
+    return (<div className='login' id='page-login-auth'>
         <div className='login-name'> Авторизация </div>
         <div className='login-wrapper'>
             <div className='login-inputs'>
