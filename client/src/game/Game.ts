@@ -11,6 +11,7 @@ class Game {
         moveDown: false,
         jump: true
     }
+    public explosions: TPoint[];
     public dx = 0;
     public dy = 0;
     private moving: NodeJS.Timer;
@@ -18,10 +19,11 @@ class Game {
     private WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number };
 
     constructor(canvas: Canvas, WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number }) {
-        this.kapitoshka = { x: 2, y: 5 };
+        this.kapitoshka = { x: 2, y: -5 };
         this.canvas = canvas;
         this.moving = setInterval(() => this.velocity(), 5);
         this.WINDOW = WINDOW;
+        this.explosions = [];
     }
 
     destructor() {
@@ -33,6 +35,7 @@ class Game {
     getScene() {
         return {
             kapitoshka: this.kapitoshka,
+            explosions: this.explosions,
         };
     }
 
@@ -61,6 +64,12 @@ class Game {
         }
     }
 
+    explode() {
+        this.explosions.push({ x: this.kapitoshka.x, y: this.kapitoshka.y });
+    }
+
+
+    //Надо будет как-то разнести на несколько функций
     move(dx: number, dy: number): void {
         if ((this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right') || this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'left')) && this.dx != 0) {
             this.dy = 0;
@@ -78,10 +87,11 @@ class Game {
             }
             this.kapitoshka.x += dx;
         }
-        if ((dy > 0 && this.kapitoshka.y + dy <= HEIGHT - 1 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'down')) ||
-            (dy < 0 && this.kapitoshka.y - dy >= 0 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'up'))
+        if ((dy > 0 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'down')) ||
+            (dy < 0 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'up'))
         ) {
             this.kapitoshka.y += dy;
+            this.WINDOW.TOP = this.kapitoshka.y - this.WINDOW.HEIGHT/2 - 0.5;
         }
     }
 

@@ -60,10 +60,18 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         return pointsToDraw;
     }
 
+    function printExplosions () {
+        if (game) {
+            const explosions = game.explosions;
+            explosions.forEach(explosion => canvas?.printExplosion(explosion.x, explosion.y, 250));
+        }
+    }
+
     // функция отрисовки одного кадра сцены
     function render(FPS: number): void {
         if (canvas && game) {
             canvas.clear();
+            canvas.clearMap();
             const { kapitoshka } = game.getScene();
 
             /************************/
@@ -81,6 +89,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
 
             canvas.drawSpline(pointsToDraw);
+            printExplosions();
 
             canvas.render();
         }
@@ -171,6 +180,9 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                         break
                     case 32: // Space
                         game.actions.jump = true;
+                        break
+                    case 88: // x
+                        game.explode();
                         break
                 }
             }
