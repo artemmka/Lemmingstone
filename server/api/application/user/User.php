@@ -36,8 +36,7 @@ class User {
         return ['error' => 1003];
     }
 
-   public function registration($login, $password, $name) {
-    $hash = md5($login . $password); 
+   public function registration($login, $hash, $name) {
     $user = $this->db->getUserByLogin($login); // Убедитесь, что здесь второй параметр убран
     if ($user) {
         return ['error' => 1001]; // Ошибка, если пользователь уже существует
