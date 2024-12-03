@@ -62,4 +62,14 @@ class Map {
         ];
     }
 
+    public function respawnObjects($existingObjects, $numNewObjects, $xMin, $xMax, $yMin, $yMax) {
+        $existingObjects = array_filter($existingObjects, function($object) {
+            return !$object['removed']; 
+        });
+
+        $newObjects = $this->generateRandomPoints($numNewObjects, $xMin, $xMax, $yMin, $yMax);
+
+        return array_merge($existingObjects, $newObjects);
+    }
+
 }
