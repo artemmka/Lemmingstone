@@ -9,10 +9,9 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
     const loginRef = useRef<HTMLInputElement>(null);
     const nameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const newLoginRef = useRef<HTMLInputElement>(null);
     const newPasswordRef = useRef<HTMLInputElement>(null);
 
-    const loginClickHandle = () => setPage(PAGES.GAME);
+    const loginClickHandle = () => setPage(PAGES.CHAT);
     const backClickHandle = () => setPage(PAGES.MAINPAGE);
 
 
@@ -25,9 +24,9 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
             <h1> Введите логин </h1>
             <input className='account-login1' id='login' ref={loginRef} />
             <h1> Введите ник </h1>
-            <input id='nick' ref={passwordRef}/>
+            <input id='nick' ref={nameRef}/>
             <h1> Введите пароль </h1>
-            <input id='password' ref={newLoginRef} type="password"/>
+            <input id='password' ref={passwordRef} type="password"/>
             <h1> Повторите пароль </h1>
             <input id='newPassword' ref={newPasswordRef} type="password"/>
 
