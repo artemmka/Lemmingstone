@@ -1,6 +1,5 @@
 import React, { useContext, useRef } from 'react';
 import { ServerContext } from '../../App';
-import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../PageManager';
 
 import './Login.scss';
@@ -23,7 +22,7 @@ const Login: React.FC<IBasePage> = (props: IBasePage) => {
     }
     const backClickHandler = () => setPage(PAGES.MAINPAGE);
 
-    return (<div className='login'>
+    return (<div className='login' id='page-login-auth'>
         <h1> Авторизация </h1>
         <div className='login-wrapper'>
             <div className='login-inputs'>

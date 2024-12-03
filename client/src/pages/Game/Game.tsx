@@ -198,9 +198,11 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         }
     });
 
-    return (<div className='game'>
+    return (<div className='game' id='test-game-page'>
         <h1>Игра</h1>
+        <div id='test-button-game'>
         <Button onClick={backClickHandler} text='Назад' />
+        </div>
         <div id={GAME_FIELD} className={GAME_FIELD}></div>
     </div>)
 }

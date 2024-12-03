@@ -1,5 +1,6 @@
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import { IBasePage, PAGES } from '../PageManager';
+
 
 import './Account.scss';
 
@@ -15,7 +16,7 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandle = () => setPage(PAGES.MAINPAGE);
 
 
-    return (<div className='account'>
+    return (<div className='account' id='test-account-page'>
         <h1> Регистрация </h1>
 
         <div className='account-wapper'>
@@ -31,7 +32,7 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
 
             <div className='account-button1'>
                 
-            <button id='button-account1' onClick={loginClickHandle}> Зарегистрироваться </button>
+            <button id='account-registrarion-button' onClick={loginClickHandle}> Зарегистрироваться </button>
 
             </div>
         </div>
@@ -40,7 +41,7 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
 
         <div className='account-button2'>
 
-            <button id='button-accont2' onClick={backClickHandle}> На главную </button>
+            <button id='registration-button-to-the-main-page' onClick={backClickHandle}> На главную </button>
 
         </div>
     </div>)

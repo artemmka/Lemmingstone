@@ -8,6 +8,7 @@ import NotFound from './NotFound/NotFound';
 import MainPage from './MainPage/MainPage';
 import Account from './Account/Account';
 import Settings from './Settings/Settings';
+import Lobby from './Lobby/Lobby';
 
 export enum PAGES {
     PRELOADER,
@@ -18,6 +19,7 @@ export enum PAGES {
     CHAT,
     GAME,
     NOT_FOUND,
+    LOBBY
 }
 
 export interface IBasePage {
@@ -37,6 +39,7 @@ const PageManager: React.FC = () => {
             {page === PAGES.MAINPAGE && <MainPage setPage={setPage} />}
             {page === PAGES.ACCOUNT && <Account setPage={setPage}/> }
             {page === PAGES.SETTINGS && <Settings setPage={setPage}/> }
+            {page === PAGES.LOBBY && <Lobby setPage={setPage}/> }
         </>
     );
 }

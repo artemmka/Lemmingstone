@@ -9,7 +9,7 @@ const MainPage: React.FC<IBasePage> = (props: IBasePage) => {
 
     const accountonClickHandle = () => setPage(PAGES.ACCOUNT);
     const loginonClickHandle = () => setPage(PAGES.LOGIN);
-    const settingsonClickHandle = () => setPage(PAGES.SETTINGS);
+    
 
 
 
@@ -18,9 +18,9 @@ const MainPage: React.FC<IBasePage> = (props: IBasePage) => {
             <div className='mainPage-img' id='img'></div>
             
             <div className='mainPage-buttons'>
-                <button className='mainPage-b1' id='b1' onClick={loginonClickHandle}> Авторизация </button>
-                <button className='mainPage-b2' id='b2' onClick={accountonClickHandle}> Регистрация </button>
-                
+                <button className='mainPage-b1' id='test-main_page-button-auth' onClick={loginonClickHandle}> Авторизация </button>
+                <button className='mainPage-b2' id='test-main_page-button-registration' onClick={accountonClickHandle}> Регистрация </button>
+               
             </div>
 
 

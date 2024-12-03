@@ -56,7 +56,7 @@ const Chat: React.FC<IBasePage> = (props: IBasePage) => {
         </div>)
     }
 
-    return (<div className='chat'>
+    return (<div className='chat' id='chat-page-test'>
         <h1>Чат</h1>
         <div className='chat-user-info'>
             <span>Привет!</span>

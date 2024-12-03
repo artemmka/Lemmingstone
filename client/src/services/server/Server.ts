@@ -1,7 +1,8 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser } from "./types";
+import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser, TLemming} from './types';
+
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -107,6 +108,14 @@ class Server {
     async generateMap(): Promise<TPointsAndSplines | null> {
         const coeffs = await this.request<TPointsAndSplines>('generateMap');
         return coeffs 
+    }
+
+    getLemmings(): Promise<TLemming[] | null> {
+        return this.request<TLemming[]>('getLemmings');
+    }
+
+    startGame(lemmingId: number): Promise<boolean | null> {
+        return this.request('startGame', { lemmingId: `${lemmingId}` })
     }
 }
 
