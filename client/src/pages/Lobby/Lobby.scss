@@ -1,0 +1,49 @@
+.lobby {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    h1 {
+        font-size: 55px;
+        font-weight: bold;
+    }
+
+    &-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-block-start: 2%;
+    }
+
+
+    &-inputs {
+        display: flex;
+        flex-direction: column;
+
+        input {
+            margin: 10px;
+            padding: 0 10px 5px 10px;
+            background-color: aquamarine;
+            width: 300px;
+        }
+    }
+
+    &-buttons {
+        display: flex;
+        justify-content: space-between;
+        max-width: 500px;
+    }
+}
+
+.lemming {
+     background-color: #DDC2F3;
+    border: 1px solid black;
+    border-radius: 5px;
+
+    
+
+    &:hover {
+        background-color: #D2EEDA;
+    }
+}

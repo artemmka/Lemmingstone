@@ -50,19 +50,8 @@ class Application {
     }
 
     public function registration($params) {
-<<<<<<< HEAD
-        if ($params['login'] && $params['password'] && $params['name']) {
-            if(strlen($params['login']) < 6 || strlen($params['login']) > 15){
-                return['error' => 802];
-            }
-            if(strlen($params['password']) < 8  || strlen($params['password']) > 20){
-                return['error' => 803];
-            }
-            return $this->user->registration($params['login'], $params['password'], $params['name']);
-=======
         if ($params['login'] && $params['hash'] && $params['name']) {
             return $this->user->registration($params['login'], $params['hash'], $params['name']);
->>>>>>> 94ddc3cf2ce6f6d7091ee1e7e083e2a8bdc84c04
         }
         return ['error' => 242];
     }

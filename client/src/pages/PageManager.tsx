@@ -7,6 +7,8 @@ import GamePage from './Game/Game';
 import NotFound from './NotFound/NotFound';
 import MainPage from './MainPage/MainPage';
 import Account from './Account/Account';
+import Settings from './Settings/Settings';
+import Lobby from './Lobby/Lobby';
 
 
 export enum PAGES {
@@ -37,6 +39,8 @@ const PageManager: React.FC = () => {
             {page === PAGES.NOT_FOUND && <NotFound setPage={setPage} />}
             {page === PAGES.MAINPAGE && <MainPage setPage={setPage} />}
             {page === PAGES.ACCOUNT && <Account setPage={setPage}/> }
+            {page === PAGES.SETTINGS && <Settings setPage={setPage}/>}
+            {page === PAGES.LOBBY && <Lobby setPage={setPage}/>}
         </>
     );
 }
