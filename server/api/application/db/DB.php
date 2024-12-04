@@ -4,6 +4,16 @@ class DB {
     private $pdo;
 
     function __construct() {
+        $host = '127.0.0.1';
+        $port = '3306';
+        $user = 'root';
+        $pass = '';
+        $db = 'lemmingstone';
+        $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
+        $this->pdo = new PDO($connect, $user, $pass);
+    }
+
+    /*function __construct() {
         $host = 'localhost';
         $port = '8889';
         $user = 'root';
@@ -11,7 +21,7 @@ class DB {
         $db = 'lemmingstone';
         $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
         $this->pdo = new PDO($connect, $user, $pass);
-    }
+    }*/
 
     public function __destruct() {
         $this->pdo = null;
@@ -82,39 +92,13 @@ class DB {
     }
 
     public function getLemmings() {
-        $lem1 = new stdClass();
-        $lem1->id = 1;
-        $lem1->name = 'Разведчик';
-        $lem1->hp = 100;
-        $lem1->speed = 3;
-        $lem1->slots = 1;
-
-        $lem2 = new stdClass();
-        $lem2->id = 2;
-        $lem2->name = 'Силач';
-        $lem2->hp = 101;
-        $lem2->speed = 1;
-        $lem2->slots = 2;
-        return [$lem1, $lem2];
+        $sql = "SELECT id, name, hp, speed, slots_count AS slots, image FROM lemming_type";
+        return $this->queryAll($sql);
     }
 
-    public function getCatalog(){
-        $card1 = new stdClass();
-        $card1->id = 1;
-        $card1->name = 'Тротил';
-        $card1->price = 2;
-
-        $card2 = new stdClass();
-        $card2->id = 2;
-        $card2->name = 'Лестница';
-        $card2->price = 1;
-
-        $card3 = new stdClass();
-        $card3->id = 3;
-        $card3->name = 'Лопата';
-        $card3->price = 1;
-       
-        return [$card1,$card2,$card3];
+    public function getCatalog() {
+        $sql = "SELECT id, type_id, cost FROM market";
+        return $this->queryAll($sql);
     }
 
     public function setLemmingForUser($userId, $lemmingId) {

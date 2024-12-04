@@ -55,6 +55,7 @@
 | speed | float | |
 | slots_count | integer | 1 by default |
 | image | string | |
+| hp | integer | |
 
 
 **Таблица user_lemming**
@@ -207,5 +208,5 @@
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| type_id | integer | |
+| type_id | string | |
 | cost | integer | |
