@@ -28,23 +28,26 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
     const backClickHandler = () => setPage(PAGES.MAINPAGE);
 
     return (<div className='account' id='page-account'>
-        <div className='account-name' > Регистрация </div>
+        <h1> Регистрация </h1>
         <div className='account-wapper'>
             <div className='account-inputs'>
-                <div className='account-text1'> Введите логин </div>
+                <h1> Введите логин </h1>
                 <input id='login' ref={loginRef} />
-                <div className='account-nick'> Введите ник </div>
+                <h1> Введите ник </h1>
                 <input id='nick' ref={nameRef} />
-                <div className='account-number1'> Введите пароль </div>
+                <h1> Введите пароль </h1>
                 <input id='password' ref={passwordRef} type="password" />
-                <div className='account-number2'> Повторите пароль </div>
+                <h1> Повторите пароль </h1>
                 <input id='newPassword' ref={repeatedPasswordRef} type="password" />
+
+                <div className='account-button1'>
+                    <button id='account-registration-button' onClick={doRegistrationHandler}> Зарегистрироваться </button>
+                </div>
             </div>
 
-            <div className='account-buttons'>
+            <div className='account-button2'>
 
-                <button className='account-b1' id='account-registration-button' onClick={doRegistrationHandler}> Зарегистрироваться </button>
-                <button className='account-b2' id='registration-button-to-the-main-page' onClick={backClickHandler}> На главную </button>
+                <button id='registration-button-to-the-main-page' onClick={backClickHandler}> На главную </button>
 
             </div>
 

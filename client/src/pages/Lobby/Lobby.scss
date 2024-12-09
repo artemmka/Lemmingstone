@@ -1,0 +1,78 @@
+.lobby {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+
+    h1 {
+        font-size: 55px;
+        font-weight: bold;
+    }
+
+    &-wrapper {
+        display: flex;
+        margin-block-start: 2%;
+
+        span {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+    }
+
+
+    &-inputs {
+        display: flex;
+        flex-direction: column;
+
+        input {
+            margin: 10px;
+            padding: 0 10px 5px 10px;
+            background-color: aquamarine;
+            width: 300px;
+        }
+    }
+
+    &-buttons {
+        display: flex;
+        justify-content: space-between;
+        max-width: 500px;
+    }
+
+    &-wrapper {
+        display: flex;
+        
+        justify-content: space-between;
+        
+    }
+
+    &-img1{
+        background-image: url('../../assets/img/lemmings/lemmingbig.png');
+        width: 120px;
+        height: 150px;
+        
+    }
+
+    &-img2{
+        background-image: url('../../assets/img/lemmings/lemmingsmall.png');
+        width: 120px;
+        height: 150px;
+        
+    }
+
+ 
+}
+
+.lemming {
+    display: flex;
+    flex-direction: column;
+    background-color: #DDC2F3;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 0 100px;
+
+    &:hover {
+        background-color: #D2EEDA;
+    }
+}

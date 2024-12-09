@@ -43,3 +43,11 @@ export type TPointsAndSplines = {
     coeffs: TCoeffs,
     points: TPoint[];
 }
+
+export type TLemming = {
+    id: number;
+    name: string;
+    hp: number;
+    speed: number;
+    slots: number;
+}

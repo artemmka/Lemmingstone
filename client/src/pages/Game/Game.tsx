@@ -96,6 +96,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     }
 
     const backClickHandler = () => setPage(PAGES.CHAT);
+    const settingsClickHandler = () => setPage(PAGES.SETTINGS);
 
     /****************/
     /* Mouse Events */
@@ -201,6 +202,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     return (<div className='game' id='test-game-page'>
         <h1>Игра</h1>
         <Button onClick={backClickHandler} text='Назад' />
+        <Button onClick={settingsClickHandler} text='Настройки'/>
         <div id={GAME_FIELD} className={GAME_FIELD}></div>
     </div>)
 }

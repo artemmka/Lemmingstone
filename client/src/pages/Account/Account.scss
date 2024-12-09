@@ -1,97 +1,76 @@
 .account {
-    &-name{
-        place-items: center;
-        display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1{
         font-size: 55px;
         font-weight: bold;
         
     }
 
     &-wapper {
-        display: block;
+        display: flex;
+        flex-direction: column;
         width: 680px;
         height: 500px;
         background-color: white;
         border: 1px solid black;
-        margin: 24px 390px ;
         border-radius: 10px;
+        margin-block-start: 4vh;
     }
 
     &-inputs {
-        padding: 30px 60px;
-        font-size: 22px;
-        font-weight: bold;
-
-        
-        #login {
+         input {
+            padding: 10px 115px;
             padding: 7px 120px;
             background-color: #D2EEDA;
-            margin-block-start: 2vh;
+            margin-block-start: 2%;
             border: 1px solid black;
-        }
+            max-width: 680%;
+            max-height: 490%;
+         }
 
-        #nick{
-            padding: 7px 120px;
-            background-color: #D2EEDA;
-            margin-block-start: 2vh;
-            border: 1px solid black;
-        }
-
-        #password {
-            padding: 7px 120px;
-            background-color: #D2EEDA;
-            margin-block-start: 2vh;
-            border: 1px solid black;
-        }
-
-        #newPassword{
-            padding: 7px 120px;
-            background-color: #D2EEDA;
-            margin-block-start: 2vh;
-            border: 1px solid black;
-        }
+         h1{
+            font-size: 22px;
+            font-weight: bold;
+            margin-block-start: 1%;
+            margin-right: 55%;
+         }
     }
 
-    &-text1 {
-        margin-right: 53vh;
-        margin-block-start: -2vh;
-    }
+    &-button1 {
 
-    &-nick {
-        margin-right: 56vh;
-        margin-block-start: 1vh;
-    }
-
-    &-number1 {
-        margin-right: 51vh;
-        margin-block-start: 1vh;
-    }
-
-    &-number2 {
-        margin-right: 47vh;
-        margin-block-start: 1vh;
-    }
-
-    &-b1 {
+        button{
         background-color: #BDF3BF;
-        width: 400px;
-        height: 50px;
+        padding: 5px 10px;
         font-size: 30px;
         font-weight: bold;
-        border-radius: 8px;
+        border-radius: 10px;
         border: 1px solid black;
+        margin-block-start: 2%;
+        max-width: 680%;
+        max-height: 500%;
+        }
+
     }
 
-    &-b2 {
-        background-color: #DDC2F3;
-        border-radius: 7px;
-        width: 250px;
-        height: 75px;
-        margin: 8px 750px;
-        font-size: 30px;
-        font-weight: bold;
-        margin-block-start: -1vh;
-        border: 1px solid black;
+    &-button2{
+        button{
+            background-color: #DDC2F3;
+            border-radius: 7px;
+            padding: 10px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-block-start: -3%;
+            border: 1px solid black;
+            margin-left: 110%;
+            white-space: nowrap;
+            text-align: center;
+
+
+        }
     }
+
 
 }
