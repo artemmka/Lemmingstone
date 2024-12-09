@@ -33,11 +33,11 @@ const Settings: React.FC<IBasePage> = (props: IBasePage) => {
                 <input id='passwordRef' ref={passwordRef} type='password'/>
                 <div className='settings-number2'> Повторить новый пароль </div>
                 <input id='newPasswordRef' ref={newPasswordRef} type='password'/>
-                <button className='settings-b1' onClick={saveCliclHandler}> Сохранить </button>
+                <button className='settings-b1' id='settings-button-save' onClick={saveCliclHandler}> Сохранить </button>
             </div>
 
             <div className='settings-buttons'>
-                <button className='settings-b2' onClick={backClickHandler}> На главную </button>
+                <button className='settings-b2' id='settings-button-to-the-main-page' onClick={backClickHandler}> На главную </button>
             </div>
 
         </div>
