@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:8889
--- Время создания: Ноя 20 2024 г., 13:59
+-- Время создания: Дек 04 2024 г., 07:15
 -- Версия сервера: 8.0.35
--- Версия PHP: 8.3.9
+-- Версия PHP: 8.2.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `boss_type` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `width` int NOT NULL,
   `height` int NOT NULL,
   `speed` int NOT NULL
@@ -58,9 +58,9 @@ CREATE TABLE `global_settings` (
 CREATE TABLE `hashes` (
   `id` bigint UNSIGNED NOT NULL,
   `chat_hash` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `game_hash` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `game_hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `game_timestamp` int NOT NULL COMMENT 'Текущее время в игре',
-  `other_hashes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Какие-то другие хеши'
+  `other_hashes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Какие-то другие хеши'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -94,9 +94,9 @@ CREATE TABLE `items` (
 
 CREATE TABLE `item_type` (
   `id` int NOT NULL,
-  `type` enum('ladder','farm','lopata','dynamite','immortal') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('ladder','farm','lopata','dynamite','immortal') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `value` int NOT NULL COMMENT 'Характеристика предмета'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -120,11 +120,20 @@ CREATE TABLE `lemming_slot` (
 
 CREATE TABLE `lemming_type` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `speed` float NOT NULL,
   `slots_count` int DEFAULT '1',
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `lemming_type`
+--
+
+INSERT INTO `lemming_type` (`id`, `name`, `speed`, `slots_count`, `image`, `hp`) VALUES
+(1, 'Разведчик', 3, 1, NULL, 100),
+(2, 'Силач', 1, 2, NULL, 101);
 
 -- --------------------------------------------------------
 
@@ -134,10 +143,10 @@ CREATE TABLE `lemming_type` (
 
 CREATE TABLE `map` (
   `id` int NOT NULL,
-  `background` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `background` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sprite_id` int NOT NULL,
   `start_time` int NOT NULL,
-  `points` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Массив точек в формате JSON'
+  `points` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Массив точек в формате JSON'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -151,8 +160,8 @@ CREATE TABLE `map_boss` (
   `boss_id` int NOT NULL,
   `x` float NOT NULL,
   `y` float NOT NULL,
-  `direction` enum('left','right') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('move','jump','stunned') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direction` enum('left','right') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('move','jump','stunned') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `stunned_timestamp` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -190,7 +199,7 @@ CREATE TABLE `map_farm` (
 
 CREATE TABLE `map_items` (
   `id` int NOT NULL,
-  `type` enum('key','market','grave','coin') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('key','market','grave','coin') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `x` float NOT NULL,
   `y` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -205,7 +214,7 @@ CREATE TABLE `map_ladder` (
   `id` int NOT NULL,
   `x` float NOT NULL,
   `y` float NOT NULL,
-  `direction` enum('vertical','horizontal','diagonale-left','diagonale-right') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direction` enum('vertical','horizontal','diagonale-left','diagonale-right') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `timestamp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -219,7 +228,7 @@ CREATE TABLE `map_lopata` (
   `id` int NOT NULL,
   `x` float NOT NULL,
   `y` float NOT NULL,
-  `direction` enum('vertical','horizontal','diagonale-left','diagonale-right') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direction` enum('vertical','horizontal','diagonale-left','diagonale-right') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `timestamp` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -231,9 +240,18 @@ CREATE TABLE `map_lopata` (
 
 CREATE TABLE `market` (
   `id` int NOT NULL,
-  `type_id` int NOT NULL,
+  `type_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cost` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `market`
+--
+
+INSERT INTO `market` (`id`, `type_id`, `cost`) VALUES
+(1, 'Тротил', 2),
+(2, 'Лестница', 1),
+(3, 'Лопата', 1);
 
 -- --------------------------------------------------------
 
@@ -256,7 +274,7 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `sprite` (
   `id` int NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -281,8 +299,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `points`, `lemming_id`) VALUES
-(4, 'testUser0', 'f9fa863ac643f968cafa76d3d49d6713', 'test', '17f84e7df497bd1cb96c31790abf3afa', 0, 0, NULL),
-(5, 'testUser1', 'a09d5c543a0ea0450693792ef5a5ea9e', 'test1', '2f62d51e6bf21d4aa0b34c1606bb6439', 0, 0, NULL);
+(4, 'testUser0', 'f9fa863ac643f968cafa76d3d49d6713', 'test', '32475a95ab2db3515ae92eebd08151db', 0, 0, NULL),
+(5, 'testUser1', 'a09d5c543a0ea0450693792ef5a5ea9e', 'test1', '2f62d51e6bf21d4aa0b34c1606bb6439', 0, 0, NULL),
+(6, 'Alex', 'c356464472c87e97036d5930b1a9060a', 'Alex', 'f8358d85571ba03c46cb0c2993670356', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -296,8 +315,8 @@ CREATE TABLE `user_lemming` (
   `lemming_id` int NOT NULL,
   `x` float NOT NULL,
   `y` float NOT NULL,
-  `direction` enum('left','right') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('move','jump','dead') COLLATE utf8mb4_unicode_ci NOT NULL
+  `direction` enum('left','right') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('move','jump','dead') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -477,7 +496,7 @@ ALTER TABLE `lemming_slot`
 -- AUTO_INCREMENT для таблицы `lemming_type`
 --
 ALTER TABLE `lemming_type`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `map`
@@ -525,7 +544,7 @@ ALTER TABLE `map_lopata`
 -- AUTO_INCREMENT для таблицы `market`
 --
 ALTER TABLE `market`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `messages`
@@ -543,7 +562,7 @@ ALTER TABLE `sprite`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `user_lemming`
