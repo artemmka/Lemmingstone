@@ -87,6 +87,17 @@ class Application {
         return ['error' => 242];
     }
 
+    public function getCatalog($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->shop->getCatalog();
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
     public function startGame($params) {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
