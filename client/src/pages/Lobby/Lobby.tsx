@@ -57,6 +57,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
     }
     const toGameClickHandler = () => setPage(PAGES.GAME);
     const backClickHandler = () => setPage(PAGES.LOGIN);
+    const settingClickHandle = () => setPage(PAGES.SETTINGS);
 
     const selectLemmingHandler = async (lemmingId: number) => {
         const lemming = lemmings.find(lemming => lemming.id === lemmingId);
@@ -83,7 +84,11 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
     
     
     return (<div className='lobby'>
+            <div className='lobby-page'>
             <h1>Выберите класс лемминга</h1>
+            <button onClick={settingClickHandle}> Настройки</button>
+            </div>
+            
 
             <div className='lobby-wrapper'>
                 {lemmings.map((lemming, index) => (<div
@@ -92,14 +97,26 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
                     onClick={() => selectLemmingHandler(lemming.id)}
                 >
                     <span>{lemming.name}</span><br />
-                    <div className='lobby-img1'></div><br />
-                    <div className='lobby-img2'></div><br/>
                     <span>{`Здоровье: ${lemming.hp}`}</span>
                     <span>{`Скорость: ${lemming.speed}`}</span>
                     <span>{`Слот: ${lemming.slots}`}</span>
                 </div>))}
                 
             </div>
+            <div className='lobby-chat'>
+                <h1>Чат</h1>
+                <div className='chat-user-info'>
+                    <span>Привет!</span>
+                    <span>{user.name}</span>
+                </div>
+                <div className='chat-messages'>
+                    {messages.reverse().map((message, index) => <div key={index}>{`${message.author} (${message.created}): ${message.message}`}</div>)}
+                </div>
+                {input}
+                <div className='chat-buttons'>
+                    <button onClick={sendClickHandler}> Отправить </button>
+                </div>
+        </div>
            
     </div>)
 }

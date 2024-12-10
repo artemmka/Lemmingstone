@@ -70,9 +70,8 @@ class Server {
         return this.request<boolean>('registration', { login, hash, name });
     }
 
-    settings(newNick: string, password: string): Promise<boolean | null> {
-        const hash = md5(`${newNick}${password}`);
-        return this.request<boolean>('settings', {newNick, hash});
+    chageName(newName: string): Promise<boolean | null> {
+        return this.request<boolean>('changeName', {newName});
     }
     sendMessage(message: string): void {
         this.request<boolean>('sendMessage', { message });

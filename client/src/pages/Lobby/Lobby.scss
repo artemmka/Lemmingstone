@@ -3,12 +3,30 @@
     flex-direction: column;
     align-items: center;
 
+    &-page{
+        display: flex;
+        flex-direction: row;
+        margin-left: 30% ;
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+        }
 
-
-    h1 {
-        font-size: 55px;
-        font-weight: bold;
+        button{
+            background-color: #DDC2F3;
+            border-radius: 7px;
+            padding: 10px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border: 1px solid black;
+            margin: 0 120px;
+            
+          
+          
+        }
     }
+
+
 
     &-wrapper {
         display: flex;
@@ -47,19 +65,8 @@
         
     }
 
-    &-img1{
-        background-image: url('../../assets/img/lemmings/lemmingbig.png');
-        width: 120px;
-        height: 150px;
-        
-    }
 
-    &-img2{
-        background-image: url('../../assets/img/lemmings/lemmingsmall.png');
-        width: 120px;
-        height: 150px;
-        
-    }
+    
 
  
 }

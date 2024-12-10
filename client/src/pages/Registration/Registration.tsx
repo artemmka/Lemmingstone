@@ -2,9 +2,9 @@ import React, { useRef, useContext } from 'react';
 import { ServerContext } from '../../App';
 import { IBasePage, PAGES } from '../PageManager';
 
-import './Account.scss';
+import './Registration.scss';
 
-const Account: React.FC<IBasePage> = (props: IBasePage) => {
+const Registration: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const server = useContext(ServerContext);
     const loginRef = useRef<HTMLInputElement>(null);
@@ -56,4 +56,4 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
 }
 
 
-export default Account;
+export default Registration;

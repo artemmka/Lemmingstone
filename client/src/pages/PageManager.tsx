@@ -6,14 +6,14 @@ import Chat from './Chat/Chat';
 import GamePage from './Game/Game';
 import NotFound from './NotFound/NotFound';
 import MainPage from './MainPage/MainPage';
-import Account from './Account/Account';
+import Registration from './Registration/Registration';
 import Settings from './Settings/Settings';
 import Lobby from './Lobby/Lobby';
 
 export enum PAGES {
     PRELOADER,
     MAINPAGE,
-    ACCOUNT,
+    REGISTRATION,
     SETTINGS,
     LOGIN,
     CHAT,
@@ -37,7 +37,7 @@ const PageManager: React.FC = () => {
             {page === PAGES.GAME && <GamePage setPage={setPage} />}
             {page === PAGES.NOT_FOUND && <NotFound setPage={setPage} />}
             {page === PAGES.MAINPAGE && <MainPage setPage={setPage} />}
-            {page === PAGES.ACCOUNT && <Account setPage={setPage}/> }
+            {page === PAGES.REGISTRATION && <Registration setPage={setPage}/> }
             {page === PAGES.SETTINGS && <Settings setPage={setPage}/> }
             {page === PAGES.LOBBY && <Lobby setPage={setPage}/> }
         </>
