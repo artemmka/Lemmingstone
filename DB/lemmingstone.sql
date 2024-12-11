@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:8889
--- Время создания: Дек 04 2024 г., 07:15
+-- Время создания: Дек 11 2024 г., 06:43
 -- Версия сервера: 8.0.35
 -- Версия PHP: 8.2.20
 
@@ -299,7 +299,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `points`, `lemming_id`) VALUES
-(4, 'testUser0', 'f9fa863ac643f968cafa76d3d49d6713', 'test', '32475a95ab2db3515ae92eebd08151db', 0, 0, NULL),
+(4, 'testUser0', 'f9fa863ac643f968cafa76d3d49d6713', 'test', '779207ec3cf4e4b3ecb6f81dfb2c8a36', 0, 0, NULL),
 (5, 'testUser1', 'a09d5c543a0ea0450693792ef5a5ea9e', 'test1', '2f62d51e6bf21d4aa0b34c1606bb6439', 0, 0, NULL),
 (6, 'Alex', 'c356464472c87e97036d5930b1a9060a', 'Alex', 'f8358d85571ba03c46cb0c2993670356', NULL, NULL, NULL);
 
@@ -311,13 +311,25 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `point
 
 CREATE TABLE `user_lemming` (
   `id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `lemming_id` int NOT NULL,
   `x` float NOT NULL,
   `y` float NOT NULL,
   `direction` enum('left','right') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` enum('move','jump','dead') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `user_lemming`
+--
+
+INSERT INTO `user_lemming` (`id`, `user_id`, `lemming_id`, `x`, `y`, `direction`, `status`) VALUES
+(10, 'adsaselex', 1, 0, 0, 'right', 'jump'),
+(24, 'ahgvbhjklex', 1, 0, 0, 'right', 'jump'),
+(27, 'arlex', 1, 0, 0, 'right', 'jump'),
+(28, 'alex', 1, 0, 0, 'right', 'jump'),
+(29, 'alehx', 1, 0, 0, 'right', 'jump'),
+(31, 'aaselex', 1, 4, 5, 'right', 'jump');
 
 --
 -- Индексы сохранённых таблиц
@@ -568,7 +580,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `user_lemming`
 --
 ALTER TABLE `user_lemming`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
