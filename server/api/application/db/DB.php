@@ -13,15 +13,7 @@ class DB {
         $this->pdo = new PDO($connect, $user, $pass);
     }
 
-    /*function __construct() {
-        $host = 'localhost';
-        $port = '8889';
-        $user = 'root';
-        $pass = '00000000';
-        $db = 'lemmingstone';
-        $connect = "mysql:host=$host;port=$port;dbname=$db;charset=utf8";
-        $this->pdo = new PDO($connect, $user, $pass);
-    }*/
+
 
     public function __destruct() {
         $this->pdo = null;
@@ -99,6 +91,18 @@ class DB {
     public function getCatalog() {
         $sql = "SELECT id, type_id, cost FROM market";
         return $this->queryAll($sql);
+    }
+
+    public function getPosition($userId) {
+        $sql = "SELECT * FROM user_lemming WHERE user_id = ?";
+        return $this->queryAll($sql, [$userId]);
+    }
+
+    public function givePosition($userId, $lemmingId, $x, $y, $direction, $status) {
+        $this->execute("DELETE FROM user_lemming WHERE user_id = ?", [$userId]);
+        $sql = "INSERT INTO user_lemming (user_id, lemming_id, x, y, direction, status) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $this->execute($sql, [$userId, $lemmingId, $x, $y, $direction, $status]);
     }
 
     public function setLemmingForUser($userId, $lemmingId) {
