@@ -70,9 +70,14 @@ class Server {
         return this.request<boolean>('registration', { login, hash, name });
     }
 
-    chageName(newName: string): Promise<boolean | null> {
-        return this.request<boolean>('changeName', {newName});
+    chageName(name: string): Promise<boolean | null> {
+        return this.request<boolean>('changeName', {name});
     }
+
+    chagePassword(oldPassword: string, newPassword:string): Promise<boolean | null> {
+        return this.request<boolean>('changePassword', { oldPassword, newPassword});
+    }
+
     sendMessage(message: string): void {
         this.request<boolean>('sendMessage', { message });
     }

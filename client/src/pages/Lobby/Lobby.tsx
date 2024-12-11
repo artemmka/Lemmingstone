@@ -82,7 +82,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
         return (<>...Загрузка</>);
     }
     
-    
+    //Кнопку выйти из профиля добавить
     return (<div className='lobby'>
             <div className='lobby-page'>
             <h1>Выберите класс лемминга</h1>
