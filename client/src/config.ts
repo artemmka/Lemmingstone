@@ -18,8 +18,7 @@ export type TWINDOW = {
 }
 
 const CONFIG = {
-    HOST: 'http://lemmingstone.local/api/',
-    //HOST: 'http://localhost:8888/lemmingstone.local/api/',
+    HOST: 'http://lemmingstone.local/api',
 
     CHAT_TIMESTAMP: 200, //ms
 
