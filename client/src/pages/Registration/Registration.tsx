@@ -18,7 +18,7 @@ const Registration: React.FC<IBasePage> = (props: IBasePage) => {
             const password = passwordRef.current.value;
             const repeatedPassword = repeatedPasswordRef.current?.value;
             const name = nameRef.current.value
-            if (repeatedPassword != password || repeatedPassword.length < 8 || repeatedPassword.length > 21 || password.length < 8 || password.length > 21 || login.length < 6 || login.length > 17) {
+            if (repeatedPassword !== password || repeatedPassword.length < 8 || repeatedPassword.length > 21 || password.length < 8 || password.length > 21 || login.length < 6 || login.length > 17) {
             }
             if (login && password && name && await server.registration(login, password, name)) {
                 setPage(PAGES.LOBBY);

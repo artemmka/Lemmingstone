@@ -17,39 +17,44 @@ const Settings: React.FC<IBasePage> = (props: IBasePage) => {
     const newPasswordRef = useRef<HTMLInputElement>(null);
     const idRef = useRef<HTMLInputElement>(null);
     const nameRef = useRef<HTMLInputElement>(null);
-    const repeatNewPasswrdRef = useRef<HTMLInputElement>(null);
+    const repeatNewPasswordRef = useRef<HTMLInputElement>(null);
 
     
 
     const saveClicklHandler = async () => {
-        if (newNameRef.current && passwordRef.current && newPasswordRef && idRef && nameRef.current && repeatNewPasswrdRef.current) {
+        if (newNameRef.current && passwordRef.current && newPasswordRef && idRef && nameRef.current && repeatNewPasswordRef.current) {
             const newName = newNameRef.current.value;
             const oldPassword = passwordRef.current.value;
             const newPassword = String(newPasswordRef.current?.value);
             const name = nameRef.current.value;
-            const repeatNewPasswrd = repeatNewPasswrdRef.current.value;
-
-            if (name != newName && await server.chageName(newName)) {
-                store.setUser({
-                    
-                    name: newName,
-                    token: user?.token || "", // Проверяем наличие token
-                    id: user?.id || "", // Проверяем наличие id, если его нет, используем пустую строку
-                   
-                });
-                if (nameRef.current) {
-                    nameRef.current.value = newName;  // Обновляем реф для текущего компонента
-                }
-                newNameRef.current.value = '';
-
-                //Тута сделай что успешно поменяно
+            const repeatNewPassword = repeatNewPasswordRef.current.value;
+            const token = user?.token;
+            if (!token) {
+                console.log('No token found');
+                return;
             }
-            if (oldPassword != newPassword && repeatNewPasswrd == newPassword && newPassword.length <= 8 && newPassword.length >= 21 && await server.chagePassword(oldPassword, newPassword)) {
-                passwordRef.current.value = '';
-                if (newPasswordRef.current) {
-                    newPasswordRef.current.value = '';
+
+            if (name !== newName && newName) {
+                const nameChanged = await server.changeName(token, newName);
+                if (nameChanged) {
+                    user.name = newName;
+                    nameRef.current.value = newName;
+                    newNameRef.current.value = '';
                 }
-                //И тута сделай что успешно поменяно
+            }
+
+            if (oldPassword !== newPassword && repeatNewPassword === newPassword && newPassword.length >= 8 && newPassword.length <= 21) {
+                const passwordChanged = await server.changePassword(token, oldPassword, newPassword);
+                if (passwordChanged) {
+                    if (newPasswordRef.current) {
+                        passwordRef.current.value = '';
+                        newPasswordRef.current.value = '';
+                        repeatNewPasswordRef.current.value = '';
+                    }
+                    // Сообщение об успешном изменении пароля
+                } else {
+                    
+                }
             }
 
         }
@@ -87,7 +92,7 @@ const Settings: React.FC<IBasePage> = (props: IBasePage) => {
                 </div>
                 <div className='settings-password'>
                     <h1> Повторить новый пароль</h1>
-                    <input id='repeatNewPassword' ref={repeatNewPasswrdRef} type='password'/>
+                    <input id='repeatNewPassword' ref={repeatNewPasswordRef} type='password'/>
                 </div>
                 <div className='settings-button1'>
                     <button id='settings-button-save' onClick={saveClicklHandler}> Сохранить </button>
