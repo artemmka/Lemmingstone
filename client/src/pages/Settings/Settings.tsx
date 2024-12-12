@@ -1,4 +1,4 @@
-import Rect, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { ServerContext, StoreContext } from '../../App';
 import { IBasePage, PAGES } from '../PageManager';
 
@@ -17,15 +17,17 @@ const Settings: React.FC<IBasePage> = (props: IBasePage) => {
     const newPasswordRef = useRef<HTMLInputElement>(null);
     const idRef = useRef<HTMLInputElement>(null);
     const nameRef = useRef<HTMLInputElement>(null);
+    const repeatNewPasswrdRef = useRef<HTMLInputElement>(null);
 
     
 
     const saveClicklHandler = async () => {
-        if (newNameRef.current && passwordRef.current && newPasswordRef && idRef && nameRef.current) {
+        if (newNameRef.current && passwordRef.current && newPasswordRef && idRef && nameRef.current && repeatNewPasswrdRef.current) {
             const newName = newNameRef.current.value;
             const oldPassword = passwordRef.current.value;
             const newPassword = String(newPasswordRef.current?.value);
             const name = nameRef.current.value;
+            const repeatNewPasswrd = repeatNewPasswrdRef.current.value;
 
             if (name != newName && await server.chageName(newName)) {
                 store.setUser({
@@ -42,7 +44,7 @@ const Settings: React.FC<IBasePage> = (props: IBasePage) => {
 
                 //Тута сделай что успешно поменяно
             }
-            if (oldPassword != newPassword && await server.chagePassword(oldPassword, newPassword)) {
+            if (oldPassword != newPassword && repeatNewPasswrd == newPassword && newPassword.length <= 8 && newPassword.length >= 21 && await server.chagePassword(oldPassword, newPassword)) {
                 passwordRef.current.value = '';
                 if (newPasswordRef.current) {
                     newPasswordRef.current.value = '';
@@ -74,13 +76,19 @@ const Settings: React.FC<IBasePage> = (props: IBasePage) => {
                 <input id='nickRef' ref={nameRef} readOnly /> 
             </div>
             <div className='settings-inputs'>
-                <h1> Изменить ник </h1>
-                <input id='newNickRef' ref={newNameRef} />
-                <h1> Старый пароль </h1>
-                <input id='passwordRef' ref={passwordRef} type='password'/>
-                <h1> Новый пароль </h1>
-                <input id='newPasswordRef' ref={newPasswordRef} type='password'/>
-
+                <div className='settings-name'>
+                    <h1> Изменить ник </h1>
+                    <input id='newNickRef' ref={newNameRef} />
+                    <h1> Старый пароль </h1>
+                    <input id='passwordRef' ref={passwordRef} type='password'/>
+                    <h1> Новый пароль </h1>
+                    <input id='newPasswordRef' ref={newPasswordRef} type='password'/>
+                    <h6> *Пароль должен быть не менее 8 и не более 20 символов. Используемые символы: латинские символы верхнего регистра (A-Z), латинские символы нижнего регистра (a-z), цифры (0-9). </h6>
+                </div>
+                <div className='settings-password'>
+                    <h1> Повторить новый пароль</h1>
+                    <input id='repeatNewPassword' ref={repeatNewPasswrdRef} type='password'/>
+                </div>
                 <div className='settings-button1'>
                     <button id='settings-button-save' onClick={saveClicklHandler}> Сохранить </button>
                 </div>

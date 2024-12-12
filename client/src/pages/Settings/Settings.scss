@@ -59,19 +59,35 @@
         align-items: center;
 
         width: 690px;
-        height: 520px;
+        height: 540px;
         background-color: white;
         border: 1px solid black;
         margin: 20px 110px;
         border-radius: 10px;
         margin-left: 5%;     
 
+        
+
+        button {
+            background-color: #BDF3BF;
+            padding: 6px 70px;
+            font-size: 45px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-block-start: 3%;
+            border: 1px solid black;
+        }
+
+
+    }
+
+    &-password{
         h1 {
             font-size: 22px;
             font-weight: bold;
-            margin-block-start: 5%;
-            margin-right: 60%;
-    
+            margin-block-start: 0.5%;
+            margin-right: 43%;
+
         }
 
         input {
@@ -84,17 +100,30 @@
             max-height: 520%;
 
         }
+    }
 
-        button {
-            background-color: #BDF3BF;
-            padding: 6px 70px;
-            font-size: 45px;
+    &-name{
+        h1 {
+            font-size: 22px;
             font-weight: bold;
-            border-radius: 10px;
-            margin-block-start: 3%;
-            border: 1px solid black;
+            margin-block-start: 0.5%;
+            margin-right: 60%;
+
         }
 
+        h6{
+            font-size: 10px;
+        }
+        input {
+            width: 580px;
+            height: 55px;
+            background-color: #D2EEDA;
+            margin: 8px 50px;
+            border: 1px solid black;
+            max-width: 690%;
+            max-height: 520%;
+
+        }
 
     }
 

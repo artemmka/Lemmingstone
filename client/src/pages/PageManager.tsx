@@ -15,7 +15,6 @@ export enum PAGES {
     REGISTRATION,
     SETTINGS,
     LOGIN,
-    CHAT,
     GAME,
     NOT_FOUND,
     LOBBY,

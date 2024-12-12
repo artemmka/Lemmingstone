@@ -58,6 +58,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
     const toGameClickHandler = () => setPage(PAGES.GAME);
     const backClickHandler = () => setPage(PAGES.LOGIN);
     const settingClickHandle = () => setPage(PAGES.SETTINGS);
+    const backPageClickHandler = () => setPage(PAGES.LOGIN);
 
     const selectLemmingHandler = async (lemmingId: number) => {
         const lemming = lemmings.find(lemming => lemming.id === lemmingId);
@@ -84,10 +85,12 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
     
     //Кнопку выйти из профиля добавить
     return (<div className='lobby'>
-            <div className='lobby-page'>
             <h1>Выберите класс лемминга</h1>
-            <button onClick={settingClickHandle}> Настройки</button>
+            <div className='lobby-page'>
+            <button className='lobby-b1' onClick={settingClickHandle}> Настройки</button>
+            <button className='lobby-b2' onClick={backPageClickHandler}> Назад </button>
             </div>
+
             
 
             <div className='lobby-wrapper'>
