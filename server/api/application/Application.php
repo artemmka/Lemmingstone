@@ -6,6 +6,7 @@ require_once('map/Map.php');
 require_once('lobby/Lobby.php');
 require_once('game/Game.php');
 require_once('shop/Shop.php');
+require_once('position/Position.php');
 
 class Application {
     private $user;
@@ -14,6 +15,7 @@ class Application {
     private $lobby;
     private $game;
     private $shop;
+    private $position;
     
     function __construct() {
         $db = new DB();
@@ -23,6 +25,7 @@ class Application {
         $this->lobby = new Lobby($db);
         $this->game = new Game($db);
         $this->shop = new Shop($db);
+        $this->position = new Position($db);
     }
 
     public function login($params) {
@@ -81,6 +84,40 @@ class Application {
             $user = $this->user->getUser($params['token']);
             if ($user) {
                 return $this->lobby->getLemmings();
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function getCatalog($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->shop->getCatalog();
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function getPosition($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->position->getPosition($params['userId']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function givePosition($params) {
+        //
+        if ($params['token']/* && $params['userId'] && $params['lemmingId'] && $params['x'] && $params['y'] && $params['direction'] && $params['status']*/) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
             }
             return ['error' => 705];
         }
