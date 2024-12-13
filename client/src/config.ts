@@ -33,6 +33,8 @@ const CONFIG = {
         HEIGHT: 12,
         WIDTH: 20,
     },
+
+    LOGIN: 'Vovan'
 };
 
 export default CONFIG;

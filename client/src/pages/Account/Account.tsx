@@ -3,6 +3,8 @@ import { ServerContext } from '../../App';
 import { IBasePage, PAGES } from '../PageManager';
 
 import './Account.scss';
+import CONFIG from '../../config';
+import { log } from 'console';
 
 const Account: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
@@ -21,6 +23,7 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
             if (repeatedPassword != password) {
             }
             if (login && password && name && await server.registration(login, password, name)) {
+                CONFIG.LOGIN = login;
                 setPage(PAGES.CHAT);
             }
         }

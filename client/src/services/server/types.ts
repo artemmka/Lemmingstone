@@ -10,6 +10,7 @@ export type TAnswer<T> = {
 }
 
 export type TUser = {
+    login: string;
     token: string;
     name: string;
 }
@@ -42,4 +43,14 @@ export type TPoint = {
 export type TPointsAndSplines = {
     coeffs: TCoeffs,
     points: TPoint[];
+}
+
+export type TLemming = {
+    id: number,
+    user_id: number,
+    lemming_id: number,
+    x: number,
+    y: number,
+    direction: string,
+    status: string
 }

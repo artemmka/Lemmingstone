@@ -4,7 +4,7 @@ class DB {
     private $pdo;
 
     function __construct() {
-        $host = '127.0.0.1';
+        $host = 'mysql-8.2';
         $port = '3306';
         $user = 'root';
         $pass = '';
@@ -94,18 +94,25 @@ class DB {
     }
 
     public function getPosition($userId) {
-        $sql = "SELECT * FROM user_lemming WHERE user_id = ?";
-        return $this->queryAll($sql, [$userId]);
+        $sql = "SELECT * FROM user_lemming";
+        return $this->queryAll($sql);
     }
 
     public function givePosition($userId, $lemmingId, $x, $y, $direction, $status) {
-        $this->execute("DELETE FROM user_lemming WHERE user_id = ?", [$userId]);
+        $this->execute("UPDATE user_lemming SET x=?, y=?, direction=?, status=? WHERE user_id = ?", [$x, $y, $direction, $status, $userId]);
+    }
+
+    public function setLemmingForUser($userId, $lemmingId) {
+        return true;
+    }
+
+    public function addLemming($userId, $lemmingId, $x, $y, $direction, $status) {
         $sql = "INSERT INTO user_lemming (user_id, lemming_id, x, y, direction, status) 
                 VALUES (?, ?, ?, ?, ?, ?)";
         $this->execute($sql, [$userId, $lemmingId, $x, $y, $direction, $status]);
     }
 
-    public function setLemmingForUser($userId, $lemmingId) {
-        return true;
+    public function removeLemming($userId) {
+        $this->execute("DELETE FROM user_lemming WHERE user_id = ?", [$userId]);
     }
 }
