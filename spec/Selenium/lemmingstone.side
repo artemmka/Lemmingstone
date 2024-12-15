@@ -334,7 +334,7 @@
     }]
   }, {
     "id": "76910e9c-8d6b-4964-867f-5e5bac8ddc2b",
-    "name": "TC_AUTH_01",
+    "name": "TC_AUTH_01_with-correct-data",
     "commands": [{
       "id": "62f4afa6-d0ed-4354-acb0-c41b54e06c1c",
       "comment": "",
@@ -362,14 +362,14 @@
       "command": "type",
       "target": "id=login",
       "targets": [],
-      "value": "testUser1"
+      "value": "testUser0"
     }, {
       "id": "34723f98-5301-4c65-b44b-7421d7574434",
       "comment": "",
       "command": "type",
       "target": "id=password",
       "targets": [],
-      "value": "12345678"
+      "value": "123"
     }, {
       "id": "de1d99c1-7335-4ea1-8d3a-3705488443bf",
       "comment": "",
@@ -388,7 +388,7 @@
       "id": "93c5115e-ef85-4adf-89d1-13a7ece1a4b9",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -401,7 +401,7 @@
     }]
   }, {
     "id": "3ea9386c-2906-4d01-a218-adaf0b022e16",
-    "name": "TC_AUTH_02",
+    "name": "TC_AUTH_02_with-empty-field-\"Login\"(negative)",
     "commands": [{
       "id": "c3845678-f03c-4460-8118-50f60616ff4a",
       "comment": "",
@@ -468,7 +468,7 @@
     }]
   }, {
     "id": "f5fa6258-a128-44db-9bfe-ab8dc045ca39",
-    "name": "TC_AUTH_03",
+    "name": "TC_AUTH_03 with-empty-field-\"Password\"(negative)",
     "commands": [{
       "id": "1974701b-ca84-4af5-b534-f55c8f348569",
       "comment": "",
@@ -535,7 +535,7 @@
     }]
   }, {
     "id": "fcb08bbd-8ad9-4a60-8b87-0cb350cfd2df",
-    "name": "TC_AUTH_04",
+    "name": "TC_AUTH_04 with-non-existent-login(negative)",
     "commands": [{
       "id": "e533fa42-5c56-4ba4-af32-87946d591433",
       "comment": "",
@@ -602,7 +602,7 @@
     }]
   }, {
     "id": "c021df4a-aaf4-4a3b-8bb1-16dff2e4f46a",
-    "name": "TC_AUTH_05",
+    "name": "TC_AUTH_05 with-incorrect-password(negative)",
     "commands": [{
       "id": "08b6e9e1-aeca-4f8b-b30e-e66a72a91a6f",
       "comment": "",
@@ -669,7 +669,7 @@
     }]
   }, {
     "id": "6dae6384-708a-41e2-aea1-1450fce3d050",
-    "name": "TC_REG_01",
+    "name": "TC_REG_01_with-correct-data",
     "commands": [{
       "id": "35c1c8ab-bbff-4eec-bba8-7bad0c1ab5de",
       "comment": "",
@@ -723,7 +723,7 @@
       "id": "93cda9f3-3bb5-4c10-aaca-5105b29b767c",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -736,7 +736,7 @@
     }]
   }, {
     "id": "4e401fb9-2446-4fa3-8809-115496f95bbf",
-    "name": "TC_REG_02",
+    "name": "TC_REG_02 with login of maximum length",
     "commands": [{
       "id": "9a3af504-ef9a-43b6-a2b1-b956beab6407",
       "comment": "",
@@ -790,7 +790,7 @@
       "id": "ccca0204-cefc-48b8-80d7-428881234f61",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -803,7 +803,7 @@
     }]
   }, {
     "id": "b3e44a3e-6ce2-4729-ac73-4ca54117bf32",
-    "name": "TC_REG_03",
+    "name": "TC_REG_03 with a login of minimum length",
     "commands": [{
       "id": "7b30a32a-6965-4abf-b8ba-3dde9e1e87bd",
       "comment": "",
@@ -857,7 +857,7 @@
       "id": "8119b123-3afd-46af-a89b-3a77e21f6e91",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -870,7 +870,7 @@
     }]
   }, {
     "id": "481bb881-9058-4d95-8014-050a912027a3",
-    "name": "TC_REG_04",
+    "name": "TC_REG_04 with a nickname of maximum length",
     "commands": [{
       "id": "c6369dbe-219e-47b1-8e15-c10920f2979f",
       "comment": "",
@@ -924,7 +924,7 @@
       "id": "e1ddcc2f-0b8f-4cfa-8957-f32b3389a125",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -937,7 +937,7 @@
     }]
   }, {
     "id": "ef695b15-bc3e-465b-94cc-d770d097fd8a",
-    "name": "TC_REG_05",
+    "name": "TC_REG_05 with a nickname of minimum length",
     "commands": [{
       "id": "9070bbc5-a7e0-4a8f-9f5f-aa1c89f06890",
       "comment": "",
@@ -991,7 +991,7 @@
       "id": "63dc6243-f61a-4a60-8552-96d73727de67",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -1004,7 +1004,7 @@
     }]
   }, {
     "id": "03567029-7621-4e03-b181-32cdf83b9bda",
-    "name": "TC_REG_06",
+    "name": "TC_REG_06 with a password of maximum length",
     "commands": [{
       "id": "5b9e24a0-edf1-4255-a214-bdb80c1611c3",
       "comment": "",
@@ -1058,7 +1058,7 @@
       "id": "f3e11746-eb9d-4835-a12c-72014e32e389",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -1071,7 +1071,7 @@
     }]
   }, {
     "id": "919625cc-65d3-4b1f-8f2a-8d130faa143a",
-    "name": "TC_REG_07",
+    "name": "TC_REG_07 with a password of minimum length",
     "commands": [{
       "id": "be4b6f13-77d6-421f-b8f9-d4441c58c034",
       "comment": "",
@@ -1125,7 +1125,7 @@
       "id": "ac517b0b-b9e3-4c28-ae7d-ef3ef461d848",
       "comment": "",
       "command": "type",
-      "target": "id=test-game-page",
+      "target": "id='test-auth-and-rtegistration-chat'",
       "targets": [],
       "value": ""
     }, {
@@ -1138,7 +1138,7 @@
     }]
   }, {
     "id": "f10aa15e-f51e-4b31-9c17-92f11e55d073",
-    "name": "TC_REG_08",
+    "name": "TC_REG_08 with empty \"Login\" field(negative)",
     "commands": [{
       "id": "ffabcbc9-6cbc-4a82-ae4a-56aebb6d5516",
       "comment": "",
@@ -1205,7 +1205,7 @@
     }]
   }, {
     "id": "bbd94cbc-26d1-47c8-9ce8-2c5e269022d4",
-    "name": "TC_REG_09",
+    "name": "TC_REG_09 with empty field \"Nickname\" (negative)",
     "commands": [{
       "id": "18c69d93-097a-417a-afbc-cd621fb26b5d",
       "comment": "",
@@ -1272,7 +1272,7 @@
     }]
   }, {
     "id": "4f1daccf-8c5a-4665-831a-2bcf321f3ebd",
-    "name": "TC_REG_10",
+    "name": "TC_REG_10 with empty field \"Password\"(negative)",
     "commands": [{
       "id": "0ee1e0d0-469b-40f5-b4c0-9a98b22896d3",
       "comment": "",
@@ -1339,7 +1339,7 @@
     }]
   }, {
     "id": "68223341-5bda-416b-8f15-dc3ba612c0a1",
-    "name": "TC_REG_11",
+    "name": "TC_REG_11 with empty field \"Repeat password\" (negative)",
     "commands": [{
       "id": "40af8681-4312-4bd7-a931-09a7660024fc",
       "comment": "",
@@ -1406,7 +1406,7 @@
     }]
   }, {
     "id": "6202946c-6253-437c-8faa-40f279f58c08",
-    "name": "TC_REG_12",
+    "name": "TC_REG_12 with login less than 6 characters(negative)",
     "commands": [{
       "id": "fe521508-194a-4d20-a1b2-ac9cc78024b1",
       "comment": "",
@@ -1473,7 +1473,7 @@
     }]
   }, {
     "id": "a34f9e88-b295-47e6-85b9-dce0fd97f401",
-    "name": "TC_REG_13",
+    "name": "TC_REG_13 with a login more than 15 characters(negative)",
     "commands": [{
       "id": "5cf4325b-8ca8-4a77-815c-0317c3b39709",
       "comment": "",
@@ -1540,7 +1540,7 @@
     }]
   }, {
     "id": "0868c83c-83d0-48cd-8cae-e415575a2b75",
-    "name": "TC_REG_14",
+    "name": "TC_REG_14 with a nickname less than 3 characters(negative)",
     "commands": [{
       "id": "16f38761-99f3-4ab3-bf3f-19f5275fed10",
       "comment": "",
@@ -1607,7 +1607,7 @@
     }]
   }, {
     "id": "6b7dfd82-80bd-457c-af81-5bacf5e4a70e",
-    "name": "TC_REG_15",
+    "name": "TC_REG_15 with a nickname longer than 16 characters (negative)",
     "commands": [{
       "id": "164495d4-b020-44b2-a910-e048a130d46a",
       "comment": "",
@@ -1674,7 +1674,7 @@
     }]
   }, {
     "id": "3a73b4c9-4ca2-4593-b218-7f3c4528aa87",
-    "name": "TC_REG_16",
+    "name": "TC_REG_16 with a password less than 8 characters(negative)",
     "commands": [{
       "id": "9640efce-b754-4856-af7d-59465ef9455b",
       "comment": "",
@@ -1741,7 +1741,7 @@
     }]
   }, {
     "id": "a11f6a79-a868-4b9d-ad1a-480ecc1b1cc8",
-    "name": "TC_REG_17",
+    "name": "TC_REG_17 with a password longer than 20 characters (negative)",
     "commands": [{
       "id": "298da45a-03f5-4e3b-a747-44cdcf0a11f4",
       "comment": "",
@@ -1808,7 +1808,7 @@
     }]
   }, {
     "id": "8ebfec31-fc03-4254-bb7f-60bcf7693bd6",
-    "name": "TC_REG_18",
+    "name": "TC_REG_18 with mismatched passwords (negative)",
     "commands": [{
       "id": "1bf4b373-f520-4fec-af12-898cb7558431",
       "comment": "",
@@ -1875,7 +1875,7 @@
     }]
   }, {
     "id": "824c9771-71d6-4261-9b7b-edff3e3d930b",
-    "name": "TC_REG_19",
+    "name": "TC_REG_19 with an existing login (negative)",
     "commands": [{
       "id": "dcbdb9bb-a522-40f1-bb79-4c2247a5ca90",
       "comment": "",
@@ -1942,7 +1942,7 @@
     }]
   }, {
     "id": "e0c18690-95dd-4fd4-85ad-a19eb6825d90",
-    "name": "TC_REG_20",
+    "name": "TC_REG_20 using invalid characters in login (negative)",
     "commands": [{
       "id": "b569576f-5677-4388-b804-f3f2a21a6d8c",
       "comment": "",
@@ -2009,7 +2009,7 @@
     }]
   }, {
     "id": "2c71ead0-91cd-4c7d-ad65-7528a8e75f1c",
-    "name": "TC_REG_21",
+    "name": "TC_REG_21 using invalid characters in nickname (negative)",
     "commands": [{
       "id": "6633d175-4d47-493d-876a-cb7408107a94",
       "comment": "",
@@ -2076,7 +2076,7 @@
     }]
   }, {
     "id": "832f3045-be68-4af7-83a9-c276a1f83ddb",
-    "name": "TC_REG_22",
+    "name": "TC_REG_22 using invalid characters in password(negative)",
     "commands": [{
       "id": "a537f605-a49b-4f88-b3e8-311cb2fd03cd",
       "comment": "",
