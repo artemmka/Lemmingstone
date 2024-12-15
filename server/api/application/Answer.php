@@ -18,6 +18,9 @@ class Answer {
         '706' => 'text message is empty',
         '707' => 'could not send message', // e-mail;
         '708' => 'invalid code from E-mail',
+        '710' => 'action is not found',
+        '711' => 'points is not found',
+        '712' => 'death is not found',
         '709' => ' session did not start or you need use previous method',
         '800' => 'not found object',
         '801' => 'unknown state',

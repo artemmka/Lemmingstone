@@ -42,6 +42,7 @@
 | token | string | |
 | money | integer | |
 | points | integer | |
+| death | integer | |
 | lemming_id | integer | can be NULL |
 
 
