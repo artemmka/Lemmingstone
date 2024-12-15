@@ -71,7 +71,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
     }
 
     if (!user) {
-        return (<div className='chat'>
+        return (<div className='chat' id='test-auth-and-rtegistration-chat'>
             <h1>Чат</h1>
             <h1>Что-то пошло не так =(</h1>
             <Button onClick={toGameClickHandler} text='В игру!' />
