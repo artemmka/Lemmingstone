@@ -20,7 +20,7 @@ class Application {
     function __construct() {
         $db = new DB();
         $this->user = new User($db);
-        //$this->chat = new Chat($db);
+        $this->chat = new Chat($db);
         $this->map = new Map();
         $this->lobby = new Lobby($db);
         $this->game = new Game($db);

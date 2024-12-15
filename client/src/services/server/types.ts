@@ -50,5 +50,6 @@ export type TLemming = {
     name: string;
     hp: number;
     speed: number;
-    slots: number;
+    slots_count: number;
+    image: string;
 }

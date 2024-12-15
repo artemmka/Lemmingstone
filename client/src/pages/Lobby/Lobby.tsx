@@ -17,7 +17,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
     const user = store.getUser();
 
     useEffect(() => {
-        // получить леммингов
+        // Получить леммингов с сервера
         (async () => {
             if (!lemmings.length) {
                 const data = await server.getLemmings();
@@ -36,15 +36,15 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
         }
 
         if (user) {
-            //server.startChatMessages(newMessages);
+            server.startChatMessages(newMessages);
         }
 
         return () => {
             server.stopChatMessages();
         }
-    });
+    }, [lemmings, server, store, user]);
 
-    const input = useMemo(() => <input ref={messageRef} placeholder='сообщение' />, []);
+    const input = useMemo(() => <input ref={messageRef} placeholder='Сообщение' />, []);
 
     const sendClickHandler = () => {
         if (messageRef.current) {
@@ -55,6 +55,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
             }
         }
     }
+
     const toGameClickHandler = () => setPage(PAGES.GAME);
     const backClickHandler = () => setPage(PAGES.LOGIN);
     const settingClickHandle = () => setPage(PAGES.SETTINGS);
@@ -82,46 +83,53 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
     if (!lemmings.length) {
         return (<>...Загрузка</>);
     }
-    
-    //Кнопку выйти из профиля добавить
+
     return (<div className='lobby'>
-            <h1>Выберите класс лемминга</h1>
-            <div className='lobby-page'>
-            <button className='lobby-b1' onClick={settingClickHandle}> Настройки</button>
-            <button className='lobby-b2' onClick={backPageClickHandler}> Назад </button>
-            </div>
+        <h1>Выберите класс лемминга</h1>
 
-            
+        <div className='lobby-page'>
+            <button className='lobby-b1' onClick={settingClickHandle}>Настройки</button>
+            <button className='lobby-b2' onClick={backPageClickHandler}>Назад</button>
+        </div>
 
-            <div className='lobby-wrapper'>
-                {lemmings.map((lemming, index) => (<div
+        <div className='lobby-wrapper'>
+            {lemmings.map((lemming, index) => (
+                <div
                     key={index}
                     className='lemming'
                     onClick={() => selectLemmingHandler(lemming.id)}
                 >
                     <span>{lemming.name}</span><br />
-                    <span>{`Здоровье: ${lemming.hp}`}</span>
-                    <span>{`Скорость: ${lemming.speed}`}</span>
-                    <span>{`Слот: ${lemming.slots}`}</span>
-                </div>))}
-                
-            </div>
-            <div className='lobby-chat'>
-                <h1>Чат</h1>
-                <div className='chat-user-info'>
-                    <span>Привет!</span>
-                    <span>{user.name}</span>
+                    {lemming.image ? (
+                        <img src={`data:image/png;base64,${lemming.image}`} alt={lemming.name} className="lemming-img" />
+                    ) : (
+                        <div className='lobby-img1'></div>
+                    )}
+                    <br />
+                    <span>{`Здоровье: ${lemming.hp}`}</span><br />
+                    <span>{`Скорость: ${lemming.speed}`}</span><br />
+                    <span>{`Слотов: ${lemming.slots_count}`}</span>
                 </div>
-                <div className='chat-messages'>
-                    {messages.reverse().map((message, index) => <div key={index}>{`${message.author} (${message.created}): ${message.message}`}</div>)}
-                </div>
-                {input}
-                <div className='chat-buttons'>
-                    <button onClick={sendClickHandler}> Отправить </button>
-                </div>
+            ))}
         </div>
-           
-    </div>)
+
+        <div className='lobby-chat'>
+            <h1>Чат</h1>
+            <div className='chat-user-info'>
+                <span>Привет!</span>
+                <span>{user.name}</span>
+            </div>
+            <div className='chat-messages'>
+                {messages.reverse().map((message, index) => (
+                    <div key={index}>{`${message.author} (${message.created}): ${message.message}`}</div>
+                ))}
+            </div>
+            {input}
+            <div className='chat-buttons'>
+                <button onClick={sendClickHandler}>Отправить</button>
+            </div>
+        </div>
+    </div>);
 }
 
 export default Lobby;
