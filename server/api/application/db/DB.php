@@ -116,4 +116,19 @@ class DB {
     public function removeLemming($userId) {
         $this->execute("DELETE FROM user_lemming WHERE user_id = ?", [$userId]);
     }
+    public function getStatus($userId) {
+        return $this->query("SELECT status FROM user_lemming WHERE id=?", [$userId]);
+    }
+
+    public function updateDeath($userId, $deathCount) {
+        $this->execute("UPDATE users SET death=? WHERE id=?", [$deathCount, $userId]);
+    }
+
+    public function getPoints($userId) {
+        return $this->query("SELECT points FROM users WHERE id=?", [$userId]);
+    }
+
+    public function updatePoints($userId, $pointsCount) {
+        $this->execute("UPDATE users SET death=? WHERE id=?", [$pointsCount, $userId]);
+    }
 }
