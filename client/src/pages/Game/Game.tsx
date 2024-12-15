@@ -14,6 +14,7 @@ const GREEN = '#00e81c';
 const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     const { WINDOW, SPRITE_SIZE } = CONFIG;
     const { setPage } = props;
+    const [showButtons, setShowButtons] = useState(false);
     const server = useContext(ServerContext);
     let pointsToDraw: TPoint[];
     let game: Game | null = null;
@@ -97,8 +98,12 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             canvas.render();
         }
     }
-
-    const backClickHandler = () => setPage(PAGES.CHAT);
+   
+    const showButtonsClickHandler = () => {
+        setShowButtons(!showButtons);
+    }
+    const backClickHandler = () => setPage(PAGES.LOBBY);
+    const settingsClickHandler = () => setPage(PAGES.SETTINGS);
 
     /****************/
     /* Mouse Events */
@@ -202,8 +207,17 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     });
 
     return (<div className='game' id='test-game-page'>
-        <h1>Игра</h1>
-        <Button onClick={backClickHandler} text='Назад' />
+        
+        <div>
+            <button onClick={showButtonsClickHandler}> + </button>
+
+            {showButtons &&( 
+                <div>
+                    <button onClick={backClickHandler}> Назад </button>
+                    <button onClick={settingsClickHandler}> Настройки </button>
+                </div>)}
+        </div>
+    
         <div id={GAME_FIELD} className={GAME_FIELD}></div>
     </div>)
 }

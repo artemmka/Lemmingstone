@@ -13,6 +13,7 @@ export type TUser = {
     login: string;
     token: string;
     name: string;
+    id: string;
 }
 
 export type TMessage = {
@@ -46,11 +47,10 @@ export type TPointsAndSplines = {
 }
 
 export type TLemming = {
-    id: number,
-    user_id: number,
-    lemming_id: number,
-    x: number,
-    y: number,
-    direction: string,
-    status: string
+    id: number;
+    name: string;
+    hp: number;
+    speed: number;
+    slots_count: number;
+    image: string;
 }
