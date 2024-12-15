@@ -53,6 +53,7 @@ class DB {
 
     public function registration($login, $hash, $name) {
         $this->execute("INSERT INTO users (login,password,name) VALUES (?, ?, ?)",[$login, $hash, $name]);
+        return $this->getUserByLogin($login);
     }
 
     public function changeName($userId, $name){

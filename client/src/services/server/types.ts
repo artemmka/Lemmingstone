@@ -54,3 +54,13 @@ export type TLemming = {
     slots_count: number;
     image: string;
 }
+
+export type TLemmingStatus = {
+    id: number,
+    user_id: number,
+    lemming_id: number,
+    x: number,
+    y: number,
+    direction: string,
+    status: string
+}

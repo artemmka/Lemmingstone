@@ -21,7 +21,7 @@ const Account: React.FC<IBasePage> = (props: IBasePage) => {
             if (repeatedPassword != password) {
             }
             if (login && password && name && await server.registration(login, password, name)) {
-                setPage(PAGES.CHAT);
+                setPage(PAGES.LOBBY);
             }
         }
     }

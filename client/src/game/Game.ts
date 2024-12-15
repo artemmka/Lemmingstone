@@ -1,6 +1,7 @@
 import CONFIG, { TPoint } from "../config";
 import { Canvas } from "../services/canvas";
-import { TLemming } from "../services/server/types";
+import { TLemming, TLemmingStatus } from "../services/server/types";
+import Store from "../services/store/Store";
 const { WIDTH, HEIGHT } = CONFIG;
 
 class Game {
@@ -20,8 +21,9 @@ class Game {
     private canvas: Canvas | null;
     private server: any;
     private WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number };
-    private lemmings: TLemming[];
-    private login: string;
+    private lemmings: TLemmingStatus[];
+    private login: string | undefined;
+    private store: Store;
 
     constructor(canvas: Canvas, WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number }, server:any) {
         this.kapitoshka = { x: 2, y: -5 };
@@ -32,7 +34,8 @@ class Game {
         this.server = server;
         this.explosions = [];
         this.lemmings = [];
-        this.login = CONFIG.LOGIN;
+        this.store = this.server.store;
+        this.login = this.store.user?.login;
         server.addLemming(this.login, '2', 2, -5, 'right', 'move')
     }
 
@@ -174,7 +177,6 @@ class Game {
         if (lemmings) {
             this.lemmings = lemmings;
         }
-        console.log(lemmings);
     }
 
 }
