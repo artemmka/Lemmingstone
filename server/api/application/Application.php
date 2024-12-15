@@ -7,6 +7,7 @@ require_once('lobby/Lobby.php');
 require_once('game/Game.php');
 require_once('shop/Shop.php');
 require_once('position/Position.php');
+require_once('scores/Scores.php');
 
 class Application {
     private $user;
@@ -16,6 +17,7 @@ class Application {
     private $game;
     private $shop;
     private $position;
+    private $scores;
     
     function __construct() {
         $db = new DB();
@@ -26,6 +28,7 @@ class Application {
         $this->game = new Game($db);
         $this->shop = new Shop($db);
         $this->position = new Position($db);
+        $this->scores = new Scores($db);
     }
 
     public function login($params) {
@@ -157,4 +160,23 @@ class Application {
         return ['error' => 242];
     }
 
+    public function getScores($params) {
+        if ($params['token'] && $params['action']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                switch ($params['action']) {
+                    case 'addGold':
+                        return $this->scores->addPointsbyGoldCoin($params['token']);
+                    case 'addLevel':
+                        return $this->scores->addPointsbyFinishLevel($params['token']);
+                    case 'addDeath':
+                        return $this->scores->addDeath($params['token']);
+                    default:
+                        return ['error' => 710];
+                }
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 }

@@ -333,6 +333,7 @@ CREATE TABLE `users` (
   `token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `money` int DEFAULT 0,
   `points` int DEFAULT 0,
+  `death` int DEFAULT 0,
   `lemming_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
