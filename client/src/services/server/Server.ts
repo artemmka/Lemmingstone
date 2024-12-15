@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser } from "./types";
+import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser, TLemming } from "./types";
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -70,6 +70,14 @@ class Server {
         return this.request<boolean>('registration', { login, hash, name });
     }
 
+    changeName(token: string, name: string): Promise<boolean | null> {
+        return this.request<boolean>('changeName', { token, name });
+    }
+
+    changePassword(token: string, oldPassword: string, newPassword: string): Promise<boolean | null> {
+        return this.request<boolean>('changePassword', { token, oldPassword, newPassword });
+    }
+
     sendMessage(message: string): void {
         this.request<boolean>('sendMessage', { message });
     }
@@ -107,6 +115,14 @@ class Server {
     async generateMap(): Promise<TPointsAndSplines | null> {
         const coeffs = await this.request<TPointsAndSplines>('generateMap');
         return coeffs 
+    }
+
+    getLemmings(): Promise<TLemming[] | null> {
+        return this.request<TLemming[]>('getLemmings');
+    }
+
+    startGame(lemmingId: number): Promise<boolean | null> {
+        return this.request('startGame', { lemmingId: `${lemmingId}` })
     }
 }
 

@@ -38,6 +38,9 @@ function result($params) {
             // shop
             case 'getCatalog': return $app->getCatalog($params);
             case 'buy': return $app->buy($params);
+            //Position
+            case 'getPosition': return $app->getPosition($params);
+            case 'givePosition': return $app->givePosition($params);
             // score
             case 'getScores': return $app->getScores($params);
 
