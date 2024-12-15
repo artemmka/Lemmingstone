@@ -84,7 +84,7 @@ class DB {
     }
 
     public function getLemmings() {
-        $sql = "SELECT id, name, hp, speed, slots_count AS slots, image FROM lemming_type";
+        $sql = "SELECT id, name, hp, speed, slots_count, image FROM lemming_type";
         return $this->queryAll($sql);
     }
 
