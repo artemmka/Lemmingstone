@@ -1,5 +1,7 @@
 import CONFIG, { TPoint } from "../config";
 import { Canvas } from "../services/canvas";
+import { TLemming, TLemmingStatus } from "../services/server/types";
+import Store from "../services/store/Store";
 const { WIDTH, HEIGHT } = CONFIG;
 
 class Game {
@@ -15,27 +17,41 @@ class Game {
     public dx = 0;
     public dy = 0;
     private moving: NodeJS.Timer;
+    private playersInterval: NodeJS.Timer;
     private canvas: Canvas | null;
+    private server: any;
     private WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number };
+    private lemmings: TLemmingStatus[];
+    private login: string | undefined;
+    private store: Store;
 
-    constructor(canvas: Canvas, WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number }) {
+    constructor(canvas: Canvas, WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number }, server:any) {
         this.kapitoshka = { x: 2, y: -5 };
         this.canvas = canvas;
         this.moving = setInterval(() => this.velocity(), 5);
+        this.playersInterval = setInterval(() => this.updateLemmingsStatus(), 25);
         this.WINDOW = WINDOW;
+        this.server = server;
         this.explosions = [];
+        this.lemmings = [];
+        this.store = this.server.store;
+        this.login = this.store.user?.login;
+        server.addLemming(this.login, '2', 2, -5, 'right', 'move')
     }
 
     destructor() {
         clearInterval(this.moving);
+        clearInterval(this.playersInterval);
         this.WINDOW.LEFT = 0;
         this.WINDOW.TOP = 0;
+        this.server.removeLemming('Vovan');
     }
 
     getScene() {
         return {
             kapitoshka: this.kapitoshka,
             explosions: this.explosions,
+            lemmings: this.lemmings
         };
     }
 
@@ -152,6 +168,14 @@ class Game {
                 }
                 break;
             }
+        }
+    }
+
+    async updateLemmingsStatus() {
+        this.server.givePosition(this.login, '2', this.kapitoshka.x, this.kapitoshka.y, 'right', 'move');
+        const lemmings = await this.server.getPosition(this.login);
+        if (lemmings) {
+            this.lemmings = lemmings;
         }
     }
 

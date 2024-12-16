@@ -73,13 +73,16 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         if (canvas && game) {
             canvas.clear();
             canvas.clearMap();
-            const { kapitoshka } = game.getScene();
-
+            const { kapitoshka, lemmings } = game.getScene();
             /************************/
             /* нарисовать Капитошку */
             /************************/
             const { x, y } = kapitoshka;
-            printKapitoshka(canvas, { x, y }, getSprite(1));
+            lemmings.forEach(lemming => {
+                const {x, y} = lemming;
+                printKapitoshka(canvas, { x, y }, getSprite(1));
+
+            })
 
             /******************/
             /* нарисовать FPS */
@@ -128,7 +131,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                 mouseRightClick,
             },
         });
-        game = new Game(canvas, WINDOW);
+        game = new Game(canvas, WINDOW, server);
         printMap(canvas);
         return () => {
             // деинициализировать все экземпляры

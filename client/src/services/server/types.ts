@@ -10,6 +10,7 @@ export type TAnswer<T> = {
 }
 
 export type TUser = {
+    login: string;
     token: string;
     name: string;
     id: string;
@@ -52,4 +53,14 @@ export type TLemming = {
     speed: number;
     slots_count: number;
     image: string;
+}
+
+export type TLemmingStatus = {
+    id: number,
+    user_id: number,
+    lemming_id: number,
+    x: number,
+    y: number,
+    direction: string,
+    status: string
 }

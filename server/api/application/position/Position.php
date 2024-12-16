@@ -16,4 +16,12 @@ class Position {
         return true;
     }
 
+    public function addLemming($params) {
+        $this->db->addLemming($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
+    }
+    
+    public function removeLemming($params) {
+        $this->db->removeLemming($params['userId']);
+    }
+
 }

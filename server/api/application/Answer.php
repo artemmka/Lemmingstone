@@ -32,7 +32,7 @@ class Answer {
         '4001' => 'an incorrect array of points was passed',
         '4002' => 'insufficient number of points to build a spline', 
         '2001' => 'error to set lemming for user',
-        '9000' => 'unknown error'
+        '9000' => 'unknown error',
     );
 
     static function response($data) {

@@ -105,10 +105,10 @@ class Application {
     }
 
     public function getPosition($params) {
+        return $this->position->getPosition($params['userId']);
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->position->getPosition($params['userId']);
             }
             return ['error' => 705];
         }
@@ -117,14 +117,22 @@ class Application {
 
     public function givePosition($params) {
         //
+        return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
         if ($params['token']/* && $params['userId'] && $params['lemmingId'] && $params['x'] && $params['y'] && $params['direction'] && $params['status']*/) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
-                return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
             }
             return ['error' => 705];
         }
         return ['error' => 242];
+    }
+
+    public function addLemming($params) {
+        return $this->position->addLemming($params);
+    }
+    
+    public function removeLemming($params) {
+        return $this->position->removeLemming($params);
     }
 
     public function startGame($params) {
