@@ -23,7 +23,7 @@ class Application {
         $db = new DB();
         $this->user = new User($db);
         $this->chat = new Chat($db);
-        $this->map = new Map();
+        $this->map = new Map($db);
         $this->lobby = new Lobby($db);
         $this->game = new Game($db);
         $this->shop = new Shop($db);
@@ -116,7 +116,6 @@ class Application {
     }
 
     public function givePosition($params) {
-        //
         return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
         if ($params['token']/* && $params['userId'] && $params['lemmingId'] && $params['x'] && $params['y'] && $params['direction'] && $params['status']*/) {
             $user = $this->user->getUser($params['token']);
@@ -126,6 +125,18 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function saveMap($params) {
+        if ($params['token'] && $params['startTime'] && $params['points'] && $params['coeffs']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->map->saveMap($params['startTime'], $params['points'], $params['coeffs']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+    
 
     public function addLemming($params) {
         return $this->position->addLemming($params);

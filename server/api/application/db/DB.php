@@ -78,8 +78,9 @@ class DB {
 
     public function getMessages() {
         return $this->queryAll("SELECT u.name AS author, m.message AS message,
-                                to_char(m.created, 'yyyy-mm-dd hh24:mi:ss') AS created FROM messages as m 
-                                LEFT JOIN users as u on u.id = m.user_id 
+                                DATE_FORMAT(m.created, '%Y-%m-%d %H:%i:%s') AS created 
+                                FROM messages as m 
+                                LEFT JOIN users as u ON u.id = m.user_id 
                                 ORDER BY m.created DESC"
         );
     }
@@ -131,4 +132,22 @@ class DB {
     public function updatePoints($userId, $pointsCount) {
         $this->execute("UPDATE users SET death=? WHERE id=?", [$pointsCount, $userId]);
     }
+
+    public function saveMap($startTime, $points, $coeffs) {
+        $this->execute("INSERT INTO map (start_time, points, coefs) VALUES (?, ?, ?)",[$startTime, $points, $coeffs]
+        );
+        return true; 
+    }
+
+    public function updateMap($startTime, $points, $coeffs) {
+        $this->execute("UPDATE map SET points = ?, coefs = ? WHERE start_time = ?", [$points, $coeffs, $startTime]);
+        return true;
+    }
+    
+
+    public function checkMap($startTime) {
+        return $this->query("SELECT id FROM map WHERE start_time = ?", [$startTime]);
+        
+    }
+    
 }

@@ -2,6 +2,10 @@
 
 
 class Map {
+    private $db;
+    function __construct($db) {
+        $this->db = $db;
+    }
     private function generateRandomPoints($numPoints, $xMin, $xMax, $yMin, $yMax) {
         $points = [];
         for ($i = 0; $i < $numPoints; $i++) {
@@ -60,6 +64,23 @@ class Map {
             'coeffs' => $coeffs,
             'points' => $points
         ];
+    }
+
+    public function saveMap($startTime, $points, $coeffs) {
+       $map = $this->db->checkMap($startTime);
+        if ($map) {
+            $result = $this->db->updateMap($startTime, $points, $coeffs);
+        } else {
+            $generatedMap = $this->generateMap(); 
+            $pointsJson = json_encode($generatedMap['points']);
+            $coeffsJson = json_encode($generatedMap['coeffs']);
+            $result = $this->db->saveMap($startTime, $pointsJson, $coeffsJson);
+        }
+    
+        if ($result) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Failed to save map'];
     }
 
     public function respawnObjects($existingObjects, $numNewObjects, $xMin, $xMax, $yMin, $yMax) {
