@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Origin: *');
 
 require_once('application/Answer.php');
 require_once('application/Application.php');
@@ -38,6 +38,11 @@ function result($params) {
             // shop
             case 'getCatalog': return $app->getCatalog($params);
             case 'buy': return $app->buy($params);
+            //Position
+            case 'getPosition': return $app->getPosition($params);
+            case 'givePosition': return $app->givePosition($params);
+            case 'addLemming': return $app->addLemming($params);
+            case 'removeLemming': return $app->removeLemming($params);
             // score
             case 'getScores': return $app->getScores($params);
 

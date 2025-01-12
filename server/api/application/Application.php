@@ -6,6 +6,8 @@ require_once('map/Map.php');
 require_once('lobby/Lobby.php');
 require_once('game/Game.php');
 require_once('shop/Shop.php');
+require_once('position/Position.php');
+require_once('scores/Scores.php');
 
 class Application {
     private $user;
@@ -14,15 +16,19 @@ class Application {
     private $lobby;
     private $game;
     private $shop;
+    private $position;
+    private $scores;
     
     function __construct() {
         $db = new DB();
         $this->user = new User($db);
-        //$this->chat = new Chat($db);
+        $this->chat = new Chat($db);
         $this->map = new Map();
         $this->lobby = new Lobby($db);
         $this->game = new Game($db);
         $this->shop = new Shop($db);
+        $this->position = new Position($db);
+        $this->scores = new Scores($db);
     }
 
     public function login($params) {
@@ -47,14 +53,8 @@ class Application {
     }
 
     public function registration($params) {
-        if ($params['login'] && $params['password'] && $params['name']) {
-            if(strlen($params['login']) < 6 || strlen($params['login']) > 15){
-                return['error' => 802];
-            }
-            if(strlen($params['password']) < 8  || strlen($params['password']) > 20){
-                return['error' => 803];
-            }
-            return $this->user->registration($params['login'], $params['password'], $params['name']);
+        if ($params['login'] && $params['hash'] && $params['name']) {
+            return $this->user->registration($params['login'], $params['hash'], $params['name']);
         }
         return ['error' => 242];
     }
@@ -96,6 +96,48 @@ class Application {
         return ['error' => 242];
     }
 
+    public function getCatalog($params) {
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->shop->getCatalog();
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function getPosition($params) {
+        return $this->position->getPosition($params['userId']);
+        if ($params['token']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function givePosition($params) {
+        //
+        return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
+        if ($params['token']/* && $params['userId'] && $params['lemmingId'] && $params['x'] && $params['y'] && $params['direction'] && $params['status']*/) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function addLemming($params) {
+        return $this->position->addLemming($params);
+    }
+    
+    public function removeLemming($params) {
+        return $this->position->removeLemming($params);
+    }
+
     public function startGame($params) {
         if ($params['token']) {
             $user = $this->user->getUser($params['token']);
@@ -129,4 +171,23 @@ class Application {
         return ['error' => 242];
     }
 
+    public function getScores($params) {
+        if ($params['token'] && $params['action']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                switch ($params['action']) {
+                    case 'addGold':
+                        return $this->scores->addPointsbyGoldCoin($params['token']);
+                    case 'addLevel':
+                        return $this->scores->addPointsbyFinishLevel($params['token']);
+                    case 'addDeath':
+                        return $this->scores->addDeath($params['token']);
+                    default:
+                        return ['error' => 710];
+                }
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 }

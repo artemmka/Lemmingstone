@@ -19,6 +19,9 @@ class Answer {
         '706' => 'text message is empty',
         '707' => 'could not send message', // e-mail;
         '708' => 'invalid code from E-mail',
+        '710' => 'action is not found',
+        '711' => 'points is not found',
+        '712' => 'death is not found',
         '709' => ' session did not start or you need use previous method',
         '800' => 'not found object',
         '801' => 'unknown state',
@@ -29,7 +32,7 @@ class Answer {
         '4001' => 'an incorrect array of points was passed',
         '4002' => 'insufficient number of points to build a spline', 
         '2001' => 'error to set lemming for user',
-        '9000' => 'unknown error'
+        '9000' => 'unknown error',
     );
 
     static function response($data) {

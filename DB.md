@@ -42,6 +42,7 @@
 | token | string | |
 | money | integer | |
 | points | integer | |
+| death | integer | |
 | lemming_id | integer | can be NULL |
 
 
@@ -55,6 +56,7 @@
 | speed | float | |
 | slots_count | integer | 1 by default |
 | image | string | |
+| hp | integer | |
 
 
 **Таблица user_lemming**
@@ -207,5 +209,5 @@
 | Название | Тип | Комментарий |
 | - | - | - |
 | id | integer | PK |
-| type_id | integer | |
+| type_id | string | |
 | cost | integer | |

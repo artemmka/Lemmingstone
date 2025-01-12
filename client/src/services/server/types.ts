@@ -10,8 +10,10 @@ export type TAnswer<T> = {
 }
 
 export type TUser = {
+    login: string;
     token: string;
     name: string;
+    id: string;
 }
 
 export type TMessage = {
@@ -42,4 +44,23 @@ export type TPoint = {
 export type TPointsAndSplines = {
     coeffs: TCoeffs,
     points: TPoint[];
+}
+
+export type TLemming = {
+    id: number;
+    name: string;
+    hp: number;
+    speed: number;
+    slots_count: number;
+    image: string;
+}
+
+export type TLemmingStatus = {
+    id: number,
+    user_id: number,
+    lemming_id: number,
+    x: number,
+    y: number,
+    direction: string,
+    status: string
 }

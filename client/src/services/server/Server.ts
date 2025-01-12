@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser } from "./types";
+import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser, TLemming, TLemmingStatus } from "./types";
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -51,6 +51,7 @@ class Server {
         const rnd = Math.round(Math.random() * 100000);
         const hash = md5(`${md5(`${login}${password}`)}${rnd}`);
         const user = await this.request<TUser>('login', { login, hash, rnd: `${rnd}` });
+        console.log(user);
         if (user) {
             this.store.setUser(user);
             return true;
@@ -65,9 +66,23 @@ class Server {
         }
     }
 
-    registration(login: string, password: string, name: string): Promise<boolean | null> {
+    async registration(login: string, password: string, name: string): Promise<boolean | null> {
         const hash = md5(`${login}${password}`);
-        return this.request<boolean>('registration', { login, hash, name });
+        const user =  await this.request<TUser>('registration', { login, hash, name });
+        if (user) {
+            console.log(user);
+            this.store.setUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    changeName(token: string, name: string): Promise<boolean | null> {
+        return this.request<boolean>('changeName', { token, name });
+    }
+
+    changePassword(token: string, oldPassword: string, newPassword: string): Promise<boolean | null> {
+        return this.request<boolean>('changePassword', { token, oldPassword, newPassword });
     }
 
     sendMessage(message: string): void {
@@ -107,6 +122,30 @@ class Server {
     async generateMap(): Promise<TPointsAndSplines | null> {
         const coeffs = await this.request<TPointsAndSplines>('generateMap');
         return coeffs 
+    }
+
+    givePosition(userId: string, lemmingId: string, x: string, y: string, direction: string, status: string) {
+        this.request('givePosition', {userId, lemmingId, x, y, direction, status});
+    }
+    
+    async getPosition(userId:string): Promise<TLemmingStatus | null> {
+        return await this.request<TLemmingStatus>('getPosition', {userId});
+    }
+
+    addLemming(userId: string, lemmingId: string, x: string, y: string, direction: string, status: string) {
+        this.request('addLemming', {userId, lemmingId, x, y, direction, status});
+    }
+    
+    removeLemming(userId: string) {
+        this.request('removeLemming', {userId});
+    }
+    
+    getLemmings(): Promise<TLemming[] | null> {
+        return this.request<TLemming[]>('getLemmings');
+    }
+
+    startGame(lemmingId: number): Promise<boolean | null> {
+        return this.request('startGame', { lemmingId: `${lemmingId}` })
     }
 }
 

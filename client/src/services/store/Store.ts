@@ -1,4 +1,4 @@
-import { TMessages, TUser } from "../server/types";
+import { TMessages, TUser, TLemming } from "../server/types";
 
 const TOKEN = 'token';
 
@@ -6,6 +6,7 @@ class Store {
     user: TUser | null = null;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
+    lemming: TLemming = null!
 
     setToken(token: string): void {
         localStorage.setItem(TOKEN, token);
@@ -31,11 +32,8 @@ class Store {
     }
 
     addMessages(messages: TMessages): void {
-        // TODO сделать, чтобы работало вот так
-        //this.messages.concat(messages);
-        // а вот это - плохой код!
         if (messages?.length) {
-            this.messages = messages;
+            this.messages = this.messages.concat(messages);  // Добавление новых сообщений
         }
     }
 
@@ -53,6 +51,13 @@ class Store {
 
     setChatHash(hash: string): void {
         this.chatHash = hash;
+    }
+
+    getLemming(): TLemming {
+        return this.lemming;
+    }
+    setLemming(lemming: TLemming): void {
+        this.lemming = lemming;
     }
 }
 

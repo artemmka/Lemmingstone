@@ -14,6 +14,7 @@ const GREEN = '#00e81c';
 const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     const { WINDOW, SPRITE_SIZE } = CONFIG;
     const { setPage } = props;
+    const [showButtons, setShowButtons] = useState(false);
     const server = useContext(ServerContext);
     let pointsToDraw: TPoint[];
     let game: Game | null = null;
@@ -72,13 +73,16 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         if (canvas && game) {
             canvas.clear();
             canvas.clearMap();
-            const { kapitoshka } = game.getScene();
-
+            const { kapitoshka, lemmings } = game.getScene();
             /************************/
             /* нарисовать Капитошку */
             /************************/
             const { x, y } = kapitoshka;
-            printKapitoshka(canvas, { x, y }, getSprite(1));
+            lemmings.forEach(lemming => {
+                const {x, y} = lemming;
+                printKapitoshka(canvas, { x, y }, getSprite(1));
+
+            })
 
             /******************/
             /* нарисовать FPS */
@@ -95,8 +99,12 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             canvas.render();
         }
     }
-
-    const backClickHandler = () => setPage(PAGES.CHAT);
+   
+    const showButtonsClickHandler = () => {
+        setShowButtons(!showButtons);
+    }
+    const backClickHandler = () => setPage(PAGES.LOBBY);
+    const settingsClickHandler = () => setPage(PAGES.SETTINGS);
 
     /****************/
     /* Mouse Events */
@@ -124,7 +132,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                 mouseRightClick,
             },
         });
-        game = new Game(canvas, WINDOW);
+        game = new Game(canvas, WINDOW, server);
         printMap(canvas);
         return () => {
             // деинициализировать все экземпляры
@@ -199,9 +207,18 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         }
     });
 
-    return (<div className='game'>
-        <h1>Игра</h1>
-        <Button onClick={backClickHandler} text='Назад' />
+    return (<div className='game' id='test-game-page'>
+        
+        <div>
+            <button onClick={showButtonsClickHandler}> + </button>
+
+            {showButtons &&( 
+                <div>
+                    <button onClick={backClickHandler}> Назад </button>
+                    <button onClick={settingsClickHandler}> Настройки </button>
+                </div>)}
+        </div>
+    
         <div id={GAME_FIELD} className={GAME_FIELD}></div>
     </div>)
 }
