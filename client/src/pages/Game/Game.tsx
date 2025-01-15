@@ -42,7 +42,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             const coeffs = coeffsAndPoints.coeffs;
             const points = coeffsAndPoints.points;
             pointsToDraw = calcSplines(points, coeffs);
-            canvas.drawSpline(pointsToDraw);
+            await canvas.drawSpline(pointsToDraw);
         }
     }
 
@@ -61,6 +61,8 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         return pointsToDraw;
     }
 
+
+
     function printExplosions () {
         if (game) {
             const explosions = game.explosions;
@@ -72,17 +74,22 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     function render(FPS: number): void {
         if (canvas && game) {
             canvas.clear();
-            canvas.clearMap();
             const { kapitoshka, lemmings } = game.getScene();
             /************************/
             /* нарисовать Капитошку */
             /************************/
             const { x, y } = kapitoshka;
-            lemmings.forEach(lemming => {
-                const {x, y} = lemming;
-                printKapitoshka(canvas, { x, y }, getSprite(1));
+            printKapitoshka(canvas, { x, y }, getSprite(1));
+            
+            
+            
+            // for (let i = 0; i < lemmings.length; i++) {
+            //         const {x, y} = lemmings[i];
+            //         printKapitoshka(canvas, { x, y }, getSprite(1));
+            // }
 
-            })
+
+
 
             /******************/
             /* нарисовать FPS */
@@ -91,10 +98,6 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
             /* отрендерить картинку */
             /************************/
-
-            canvas.drawSpline(pointsToDraw);
-            printExplosions();
-            canvas.printGround(WINDOW.LEFT, WINDOW.TOP);
 
             canvas.render();
         }

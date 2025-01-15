@@ -1,6 +1,6 @@
 import CONFIG from '../../../config';
 
-import sprites from '../../../assets/img/sprites64x64.png';
+import sprites from '../../../assets/img/lemmingssprite.png';
 
 // взять спрайт для обычной анимации
 const getSpritesFromFrame = (frame: number[]) => {
