@@ -36,7 +36,7 @@ class Game {
         this.lemmings = [];
         this.store = this.server.store;
         this.login = this.store.user?.login;
-        server.addLemming(this.login, '2', 2, -5, 'right', 'move')
+        server.addLemming(this.login, this.store.lemming.id, 2, -5, 'right', 'move')
     }
 
     destructor() {
@@ -82,6 +82,7 @@ class Game {
 
     explode() {
         this.explosions.push({ x: this.kapitoshka.x, y: this.kapitoshka.y });
+        this.canvas?.printExplosion(this.kapitoshka.x, this.kapitoshka. y, 250);
     }
 
 
@@ -132,10 +133,12 @@ class Game {
     }
 
     checkCollision(x = 0, y = 0, dir: string) {
+        x += this.WINDOW.LEFT;
+        y += this.WINDOW.TOP;
         switch (dir) {
             case 'right': {
                 for (let i = 0; i < 64; i++) {
-                    if (this.canvas?.getPixelColor(this.canvas.xs(x) + 64, this.canvas.ys(y) + i)[0] === 255) {
+                    if (this.canvas?.getPixelColor(this.canvas.xs(x) + 64, this.canvas.ys(y) + i)[3] === 255) {
                         return true;
                     }
                 }
@@ -143,7 +146,7 @@ class Game {
             }
             case 'left': {
                 for (let i = 0; i < 64; i++) {
-                    if (this.canvas?.getPixelColor(this.canvas.xs(x), this.canvas.ys(y) + i)[0] === 255) {
+                    if (this.canvas?.getPixelColor(this.canvas.xs(x), this.canvas.ys(y) + i)[3] === 255) {
                         return true;
                     }
                 }
@@ -151,7 +154,7 @@ class Game {
             }
             case 'up': {
                 for (let i = 0; i < 64; i++) {
-                    if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y))[0] === 255) {
+                    if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y))[3] === 255) {
                         return true;
                     }
                 }
@@ -161,7 +164,7 @@ class Game {
                 for (let j = 0; j < 2; j++) {
                     for (let i = 0; i < 64; i++) {
                         this.canvas?.text(x, y, '1', 'white');
-                        if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y) + 64 - j)[0] === 255) {
+                        if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y) + 64 - j)[3] === 255) {
                             return true;
                         }
                     }
@@ -172,7 +175,14 @@ class Game {
     }
 
     async updateLemmingsStatus() {
-        this.server.givePosition(this.login, '2', this.kapitoshka.x, this.kapitoshka.y, 'right', 'move');
+        let direction = 'right';
+        let status = 'move';
+        if (this.dx < 0) {
+            direction = 'left';
+        } else if (this.dx > 0) {
+            direction = 'right';
+        }
+        this.server.givePosition(this.login, this.store.lemming.id, this.kapitoshka.x, this.kapitoshka.y, direction, status);
         const lemmings = await this.server.getPosition(this.login);
         if (lemmings) {
             this.lemmings = lemmings;

@@ -1,5 +1,6 @@
 import { TPoint, TWINDOW } from "../../config";
 import { TCoeffs } from "../server/types";
+import groundSprite from "../../assets/img/ground.png"
 
 enum EDIRECTION {
     UP,
@@ -29,6 +30,8 @@ class Canvas {
     contextV: CanvasRenderingContext2D;
     canvasMap: HTMLCanvasElement;
     contextMap: CanvasRenderingContext2D;
+    canvasGround: HTMLCanvasElement;
+    contextGround: CanvasRenderingContext2D;
     // общая ширина и высота канвасов
     WIDTH: number;
     HEIGHT: number;
@@ -71,9 +74,14 @@ class Canvas {
         this.contextV = this.canvasV.getContext('2d')!;
         // Map canvas
         this.canvasMap = document.createElement('canvas');
-        this.canvasMap.width = this.WIDTH;
-        this.canvasMap.height = this.HEIGHT;
+        this.canvasMap.width = this.WIDTH*10;
+        this.canvasMap.height = this.HEIGHT*2;
         this.contextMap = this.canvasMap.getContext('2d')!;
+        // Ground canvas
+        this.canvasGround = document.createElement('canvas');
+        this.canvasGround.width = this.WIDTH;
+        this.canvasGround.height = this.HEIGHT;
+        this.contextGround = this.canvasGround.getContext('2d')!;
         // задаем окошко
         this.WINDOW = WINDOW;
         this.callbacks = callbacks;
@@ -177,7 +185,7 @@ class Canvas {
         this.contextMap.fillStyle = '#305160';
         this.contextMap.globalCompositeOperation = 'destination-out';
         this.contextMap.beginPath();
-        this.contextMap.arc(this.xs(x), this.ys(y), radius, 0, 2 * Math.PI);
+        this.contextMap.arc(this.xs(x+this.WINDOW.LEFT), this.ys(y+this.WINDOW.TOP), radius, 0, 2 * Math.PI);
         this.contextMap.fill();
         this.contextMap.stroke();
         this.contextMap.closePath();
@@ -216,30 +224,52 @@ class Canvas {
         this.contextV.fillRect(this.xs(x), this.ys(y), width, height);
     }
 
-    spriteFull(image: HTMLImageElement, dx: number, dy: number, sx: number, sy: number, size: number): void {
-        this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx), this.ys(dy), size, size);
+    spriteFull(image: HTMLImageElement, dx: number, dy: number, sx: number, sy: number, size: number, direction = 'right'): void {
+        if (direction === 'left') {
+            this.contextV.save();
+            this.contextV.scale(-1, 1);
+            this.contextV.drawImage(image, sx, sy, size, size, -this.xs(dx), this.ys(dy), -size, size);
+            this.contextV.restore();
+        } else {
+            this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx), this.ys(dy), size, size);
+        }
     }
 
 
     drawSpline(points: TPoint[]): void {
-        this.contextMap.strokeStyle = 'red';
+        this.contextMap.fillStyle = 'rgba(0, 0, 0, 0)';
+        this.contextMap.fillRect(0, 0, this.canvasMap.width, this.canvasMap.height);
+        this.contextMap.strokeStyle = 'green';
         this.contextMap.lineWidth = 10;
-        this.contextMap.fillStyle = 'red';
+        this.contextMap.fillStyle = 'rgb(118, 47, 0)';
+        const ground = new Image();
+        ground.src = groundSprite;
+        const groundPattern = this.contextMap.createPattern(ground, 'repeat');
+        if (groundPattern) {
+            console.log('a');
+            this.contextMap.fillStyle = groundPattern;
+        }
 
         this.contextMap.beginPath();
         for (let i = 0; i < points.length - 1; i++) {
-            this.contextMap.lineTo(this.xs(points[i].x), this.ys(points[i].y));
+            this.contextMap.lineTo(this.xs(points[i].x + this.WINDOW.LEFT), this.ys(points[i].y + this.WINDOW.TOP));
         }
-        this.contextMap.lineTo(this.xs(points[points.length - 1].x), this.ys(50));
-        this.contextMap.lineTo(this.xs(points[0].x), this.ys(50));
-        this.contextMap.lineTo(this.xs(points[0].x), this.ys(points[0].y));
+        this.contextMap.lineTo(this.xs(points[points.length - 1].x + this.WINDOW.LEFT), this.ys(50 + this.WINDOW.TOP));
+        this.contextMap.lineTo(this.xs(points[0].x + this.WINDOW.LEFT), this.ys(50 + this.WINDOW.TOP));
+        this.contextMap.lineTo(this.xs(points[0].x + this.WINDOW.LEFT), this.ys(points[0].y + this.WINDOW.TOP));
+        // if (groundPattern) {
+        //     console.log('a');
+        //     this.contextMap.fillStyle = groundPattern;
+        // }
         this.contextMap.fill();
-
+        
         // this.line(points[points.length-1].x, points[points.length-1].y, points[points.length-1].x, -50, 'red', 10);
         // this.line(points[points.length-1].x, -50, points[0].x, -50, 'red', 10);
         // this.line(points[0].x, -50, points[0].x, points[0].y, 'red', 10);
+        
         this.contextMap.stroke();
         this.contextMap.closePath();
+        this.contextMap.fillStyle = 'brown';
     }
 
     getPixelColor(x: number, y: number) {
@@ -249,10 +279,8 @@ class Canvas {
 
     // копируем изображение с виртуального канваса на основной
     render(): void {
-        //this.contextV.globalCompositeOperation = 'lighter';
-        this.contextV.drawImage(this.canvasMap, 0, 0);
+        this.contextV.drawImage(this.canvasMap, this.xs(this.WINDOW.LEFT*2), this.WINDOW.TOP * this.HEIGHT / this.WINDOW.HEIGHT, this.canvasV.width,  this.canvasV.height, 0, 0, this.canvasV.width, this.canvasV.height);
         this.context.drawImage(this.canvasV, 0, 0);
-        //this.contextV.globalCompositeOperation = 'source-over';
     }
 }
 

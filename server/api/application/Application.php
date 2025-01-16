@@ -33,6 +33,9 @@ class Application {
 
     public function login($params) {
         if ($params['login'] && $params['hash'] && $params['rnd']) {
+            if(strlen($params['login']) < 6 || strlen($params['login']) > 15){
+                return['error' => 802];
+            }
             return $this->user->login($params['login'], $params['hash'], $params['rnd']);
         }
         return ['error' => 242];
