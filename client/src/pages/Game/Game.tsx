@@ -86,8 +86,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             
             for (let i = 0; i < lemmings.length; i++) {
                     const {x, y, direction, lemming_id} = lemmings[i];
-                    console.log(lemming_id);
-                    printKapitoshka(canvas, { x, y }, getSprite(getSpritesFromFrame([3 + 3 * (lemming_id-1), 4 + 3 * (lemming_id-1), 5 + 3 * (lemming_id-1)])), direction);
+                    printKapitoshka(canvas, { x, y }, getSprite(getSpritesFromFrame([4 + 3 * (lemming_id-1), 5 + 3 * (lemming_id-1), 6 + 3 * (lemming_id-1)])), direction);
             }
 
 

@@ -8,17 +8,18 @@ const count = {
     timestamp: Date.now(),
 };
 export const getSpritesFromFrame = (frame: number[]) => {
-        const currentTimestamp = Date.now();
-        if (currentTimestamp - count.timestamp >= 100) {
-            count.timestamp = currentTimestamp;
-            if (count.frame >= 0) {
-                count.frame++;
-                if (count.frame === frame.length) {
-                    count.frame = 0;
-                }
+    const currentTimestamp = Date.now();
+    if (currentTimestamp - count.timestamp >= 100) {
+        count.timestamp = currentTimestamp;
+        if (count.frame >= 0) {
+            count.frame++;
+            if (count.frame >= frame.length) {
+                count.frame = 0;
             }
         }
-        return frame[count.frame];
+    }
+    console.log(frame[count.frame])
+    return frame[count.frame];
 }
 
 export const useSprites = (): [HTMLImageElement[], (spriteNo: number) => number[], Array<() => number>] => {
@@ -27,8 +28,9 @@ export const useSprites = (): [HTMLImageElement[], (spriteNo: number) => number[
     spritesImage.src = sprites;
 
     const getSprite = (spriteNo: number): number[] => {
-        const y = Math.trunc(spriteNo / LINE_OF_SPRITES) * SPRITE_SIZE;
-        const x = (spriteNo % LINE_OF_SPRITES - 1) * SPRITE_SIZE;
+        const y = Math.trunc((spriteNo - 1) / LINE_OF_SPRITES) * SPRITE_SIZE;
+        const x = spriteNo % LINE_OF_SPRITES !== 0 ? (spriteNo % LINE_OF_SPRITES - 1) * SPRITE_SIZE : (LINE_OF_SPRITES - 1) * SPRITE_SIZE;
+        console.log(x, y);
         return [x, y, SPRITE_SIZE];
     }
 
