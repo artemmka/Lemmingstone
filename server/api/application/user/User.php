@@ -65,7 +65,7 @@ class User {
                 'name' => $name
             ];
         }
-        return ['error => 705'];
+        return ['error' => 705];
     }
 
     public function changePassword($token,$oldPassword,$newPassword){

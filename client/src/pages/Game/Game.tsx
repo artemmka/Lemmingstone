@@ -4,8 +4,8 @@ import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../PageManager';
 import Game from '../../game/Game';
 import { Canvas, useCanvas } from '../../services/canvas';
-import useSprites from './hooks/useSprites';
-import { ServerContext } from '../../App';
+import { useSprites, getSpritesFromFrame } from './hooks/useSprites';
+import { ServerContext, StoreContext } from '../../App';
 import { TCoeffs } from '../../services/server/types';
 
 const GAME_FIELD = 'game-field';
@@ -16,6 +16,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     const { setPage } = props;
     const [showButtons, setShowButtons] = useState(false);
     const server = useContext(ServerContext);
+    const store = useContext(StoreContext);
     let pointsToDraw: TPoint[];
     let game: Game | null = null;
     // инициализация канваса
@@ -28,12 +29,12 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         getSprite,
     ] = useSprites();
 
-    function printFillSprite(image: HTMLImageElement, canvas: Canvas, { x = 0, y = 0 }, points: number[]): void {
-        canvas.spriteFull(image, x, y, points[0], points[1], points[2]);
+    function printFillSprite(image: HTMLImageElement, canvas: Canvas, { x = 0, y = 0 }, points: number[], direction = 'right'): void {
+        canvas.spriteFull(image, x, y, points[0], points[1], points[2], direction);
     }
 
-    function printKapitoshka(canvas: Canvas, { x = 0, y = 0 }, points: number[]): void {
-        printFillSprite(spritesImage, canvas, { x, y }, points);
+    function printKapitoshka(canvas: Canvas, { x = 0, y = 0 }, points: number[], direction = 'right'): void {
+        printFillSprite(spritesImage, canvas, { x, y }, points, direction);
     }
 
     async function printMap(canvas: Canvas): Promise<any> {
@@ -42,7 +43,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             const coeffs = coeffsAndPoints.coeffs;
             const points = coeffsAndPoints.points;
             pointsToDraw = calcSplines(points, coeffs);
-            canvas.drawSpline(pointsToDraw);
+            await canvas.drawSpline(pointsToDraw);
         }
     }
 
@@ -61,6 +62,8 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         return pointsToDraw;
     }
 
+
+
     function printExplosions () {
         if (game) {
             const explosions = game.explosions;
@@ -72,17 +75,22 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     function render(FPS: number): void {
         if (canvas && game) {
             canvas.clear();
-            canvas.clearMap();
             const { kapitoshka, lemmings } = game.getScene();
             /************************/
             /* нарисовать Капитошку */
             /************************/
-            const { x, y } = kapitoshka;
-            lemmings.forEach(lemming => {
-                const {x, y} = lemming;
-                printKapitoshka(canvas, { x, y }, getSprite(1));
+            //  const { x, y } = kapitoshka;
+            //  printKapitoshka(canvas, { x, y }, getSprite(1));
+            
+            
+            
+            for (let i = 0; i < lemmings.length; i++) {
+                    const {x, y, direction, lemming_id} = lemmings[i];
+                    printKapitoshka(canvas, { x, y }, getSprite(getSpritesFromFrame([4 + 3 * (lemming_id-1), 5 + 3 * (lemming_id-1), 6 + 3 * (lemming_id-1)])), direction);
+            }
 
-            })
+
+
 
             /******************/
             /* нарисовать FPS */
@@ -91,9 +99,6 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
             /* отрендерить картинку */
             /************************/
-
-            canvas.drawSpline(pointsToDraw);
-            printExplosions();
 
             canvas.render();
         }
