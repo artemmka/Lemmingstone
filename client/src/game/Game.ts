@@ -36,7 +36,7 @@ class Game {
         this.lemmings = [];
         this.store = this.server.store;
         this.login = this.store.user?.login;
-        server.addLemming(this.login, '2', 2, -5, 'right', 'move')
+        server.addLemming(this.login, this.store.lemming.id, 2, -5, 'right', 'move')
     }
 
     destructor() {
@@ -175,7 +175,14 @@ class Game {
     }
 
     async updateLemmingsStatus() {
-        this.server.givePosition(this.login, '2', this.kapitoshka.x, this.kapitoshka.y, 'right', 'move');
+        let direction = 'right';
+        let status = 'move';
+        if (this.dx < 0) {
+            direction = 'left';
+        } else if (this.dx > 0) {
+            direction = 'right';
+        }
+        this.server.givePosition(this.login, this.store.lemming.id, this.kapitoshka.x, this.kapitoshka.y, direction, status);
         const lemmings = await this.server.getPosition(this.login);
         if (lemmings) {
             this.lemmings = lemmings;

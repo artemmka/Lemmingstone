@@ -3,28 +3,25 @@ import CONFIG from '../../../config';
 import sprites from '../../../assets/img/lemmingssprite.png';
 
 // взять спрайт для обычной анимации
-const getSpritesFromFrame = (frame: number[]) => {
-    const count = {
-        frame: 0,
-        timestamp: Date.now(),
-    };
-
-    return (): number => {
+const count = {
+    frame: 0,
+    timestamp: Date.now(),
+};
+export const getSpritesFromFrame = (frame: number[]) => {
         const currentTimestamp = Date.now();
         if (currentTimestamp - count.timestamp >= 100) {
             count.timestamp = currentTimestamp;
             if (count.frame >= 0) {
                 count.frame++;
-                if (count.frame >= frame.length) {
+                if (count.frame === frame.length) {
                     count.frame = 0;
                 }
             }
         }
         return frame[count.frame];
-    }
 }
 
-const useSprites = (): [HTMLImageElement[], (spriteNo: number) => number[], Array<() => number>] => {
+export const useSprites = (): [HTMLImageElement[], (spriteNo: number) => number[], Array<() => number>] => {
     const { SPRITE_SIZE, LINE_OF_SPRITES } = CONFIG;
     const spritesImage = new Image();
     spritesImage.src = sprites;
@@ -41,5 +38,3 @@ const useSprites = (): [HTMLImageElement[], (spriteNo: number) => number[], Arra
         [] // для анимации
     ];
 }
-
-export default useSprites;

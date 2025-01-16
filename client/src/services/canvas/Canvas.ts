@@ -224,8 +224,15 @@ class Canvas {
         this.contextV.fillRect(this.xs(x), this.ys(y), width, height);
     }
 
-    spriteFull(image: HTMLImageElement, dx: number, dy: number, sx: number, sy: number, size: number): void {
-        this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx), this.ys(dy), size, size);
+    spriteFull(image: HTMLImageElement, dx: number, dy: number, sx: number, sy: number, size: number, direction = 'right'): void {
+        if (direction === 'left') {
+            this.contextV.save();
+            this.contextV.scale(-1, 1);
+            this.contextV.drawImage(image, sx, sy, size, size, -this.xs(dx), this.ys(dy), -size, size);
+            this.contextV.restore();
+        } else {
+            this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx), this.ys(dy), size, size);
+        }
     }
 
 
