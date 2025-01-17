@@ -36,7 +36,7 @@ class Game {
         this.lemmings = [];
         this.store = this.server.store;
         this.login = this.store.user?.login;
-        server.addLemming(this.login, this.store.lemming.id, 2, -5, 'right', 'move')
+        server.addLemming(this.store.user?.id, this.store.lemming.id, 2, -5, 'right', 'move')
     }
 
     destructor() {
@@ -44,7 +44,7 @@ class Game {
         clearInterval(this.playersInterval);
         this.WINDOW.LEFT = 0;
         this.WINDOW.TOP = 0;
-        this.server.removeLemming('Vovan');
+        this.server.removeLemming(this.store.user?.id);
     }
 
     getScene() {
@@ -182,8 +182,8 @@ class Game {
         } else if (this.dx > 0) {
             direction = 'right';
         }
-        this.server.givePosition(this.login, this.store.lemming.id, this.kapitoshka.x, this.kapitoshka.y, direction, status);
-        const lemmings = await this.server.getPosition(this.login);
+        this.server.givePosition(this.store.user?.id, this.store.lemming.id, this.kapitoshka.x, this.kapitoshka.y, direction, status);
+        const lemmings = await this.server.getPosition(this.store.user?.id);
         if (lemmings) {
             this.lemmings = lemmings;
         }
