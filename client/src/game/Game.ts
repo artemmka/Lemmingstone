@@ -29,7 +29,7 @@ class Game {
         this.kapitoshka = { x: 2, y: -5 };
         this.canvas = canvas;
         this.moving = setInterval(() => this.velocity(), 5);
-        this.playersInterval = setInterval(() => this.updateLemmingsStatus(), 25);
+        this.playersInterval = setInterval(() => this.updateLemmingsStatus(), 30);
         this.WINDOW = WINDOW;
         this.server = server;
         this.explosions = [];
@@ -82,7 +82,8 @@ class Game {
 
     explode() {
         this.explosions.push({ x: this.kapitoshka.x, y: this.kapitoshka.y });
-        this.canvas?.printExplosion(this.kapitoshka.x, this.kapitoshka. y, 250);
+        //this.canvas?.printExplosion(this.kapitoshka.x, this.kapitoshka. y, 250);
+        this.server.setMapChange('explosion', `${this.kapitoshka.x}`, `${this.kapitoshka.y}`)
     }
 
 

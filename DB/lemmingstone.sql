@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql-8.2
--- Время создания: Янв 17 2025 г., 16:49
+-- Время создания: Янв 17 2025 г., 23:54
 -- Версия сервера: 8.2.0
 -- Версия PHP: 8.3.6
 
@@ -82,7 +82,7 @@ CREATE TABLE `hashes` (
 --
 
 INSERT INTO `hashes` (`id`, `chat_hash`, `game_hash`, `game_timestamp`, `other_hashes`) VALUES
-(1, '1bc4b3499dc9aee24ed0e328ef44a751', '', 0, '');
+(1, '1bc4b3499dc9aee24ed0e328ef44a751', 'd1f6968dc4d1b1bd26ae72678d0cbc53', 0, '');
 
 -- --------------------------------------------------------
 
@@ -177,8 +177,8 @@ CREATE TABLE `map` (
   `background` blob,
   `sprite_id` int DEFAULT NULL,
   `start_time` int DEFAULT NULL,
-  `points` text COLLATE utf8mb4_unicode_ci COMMENT 'Массив точек в формате JSON',
-  `coefficients` text COLLATE utf8mb4_unicode_ci
+  `points` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'Массив точек в формате JSON',
+  `coefficients` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -196,6 +196,21 @@ CREATE TABLE `map_boss` (
   `status` enum('move','jump','stunned') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `stunned_timestamp` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `map_changes`
+--
+
+CREATE TABLE `map_changes` (
+  `id` int NOT NULL,
+  `timestamp` datetime DEFAULT NULL,
+  `type` text NOT NULL,
+  `x` float NOT NULL,
+  `y` float NOT NULL,
+  `direction` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -335,7 +350,8 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `point
 (1, 'testUser0', 'a977b2b3d142a8616748eac72e28c5b6', 'test1', '259e49b9c919680214f4b11632497d14', 0, 0, 0, NULL),
 (2, 'testUser1', 'a09d5c543a0ea0450693792ef5a5ea9e', 'test3', '7366792e3df26b19ad9d8a2e98e2dd52', 0, 0, 0, NULL),
 (3, 'Alex', 'c356464472c87e97036d5930b1a9060a', 'Alex', 'f8358d85571ba03c46cb0c2993670356', NULL, NULL, 0, NULL),
-(4, 'Vovan2018', '0e362c56fc982ef5a8f6b63e201522fa', 'Vovan2018', '9c8d5e230db52cff382bc89f5685af28', 0, 0, 0, NULL);
+(4, 'Vovan2018', '0e362c56fc982ef5a8f6b63e201522fa', 'Vovan2018', '4bfae7a6c17487945d580c322da238c3', 0, 0, 0, NULL),
+(5, 'Vovan II', 'c2900b1797cc0b754f2be96a643a4c37', 'Vovan2018', '6d16a3b74ff7deee3e4217863c646f61', 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -416,6 +432,12 @@ ALTER TABLE `map`
 -- Индексы таблицы `map_boss`
 --
 ALTER TABLE `map_boss`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `map_changes`
+--
+ALTER TABLE `map_changes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -536,13 +558,19 @@ ALTER TABLE `lemming_type`
 -- AUTO_INCREMENT для таблицы `map`
 --
 ALTER TABLE `map`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT для таблицы `map_boss`
 --
 ALTER TABLE `map_boss`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `map_changes`
+--
+ALTER TABLE `map_changes`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT для таблицы `map_damage`
@@ -596,13 +624,13 @@ ALTER TABLE `sprite`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `user_lemming`
 --
 ALTER TABLE `user_lemming`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

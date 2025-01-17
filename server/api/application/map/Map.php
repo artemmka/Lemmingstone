@@ -103,4 +103,23 @@ class Map {
         $this->generateMap();
         return $this->getMap();
     }
+
+    public function setMapChange($params) {
+        $this->db->setMapChange($params);
+        $this->db->updateMapHash(md5(rand()));
+    }
+
+    public function getMapChanges($hash) {
+        $currentHash = $this->db->getChatHash();
+        if ($hash === $currentHash->game_hash) {
+            return [
+                'hash' => $hash
+            ];
+        }
+        $changes = $this->db->getMapChanges();
+        return [
+            'changes' => $changes,
+            'hash' => $currentHash->game_hash
+        ];
+    }
 }

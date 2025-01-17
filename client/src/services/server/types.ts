@@ -64,3 +64,15 @@ export type TLemmingStatus = {
     direction: string,
     status: string
 }
+
+export type TMapChange = {
+    timeStamp: Date,
+    type: string,
+    x: number,
+    y: number,
+    direction?: string,
+}
+export type TMapChanges = {
+    changes: TMapChange[],
+    hash: string
+}

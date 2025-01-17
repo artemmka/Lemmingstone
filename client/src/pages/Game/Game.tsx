@@ -45,19 +45,20 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             pointsToDraw = calcSplines(points, coeffs);
             await canvas.drawSpline(pointsToDraw);
         }
+        updateMap();
     }
 
-    function calcSplines(points:TPoint[], coeffs:TCoeffs): TPoint[] {
+    function calcSplines(points: TPoint[], coeffs: TCoeffs): TPoint[] {
         points = JSON.parse(String(points));
         coeffs = JSON.parse(String(coeffs));
         const dx = WINDOW.WIDTH / 1200;
         const pointsToDraw: TPoint[] = [];
-        
+
         for (let i = 0; i < points.length - 1; i++) {
             for (let x = points[i].x; x <= points[i + 1].x; x += dx) {
                 const t = x - points[i].x;
                 const y = coeffs.a[i] + coeffs.b[i] * t + coeffs.c[i] * t ** 2 + coeffs.d[i] * t ** 3;
-                pointsToDraw.push({x: x, y: y});
+                pointsToDraw.push({ x: x, y: y });
             }
         }
         return pointsToDraw;
@@ -65,11 +66,23 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
 
 
 
-    function printExplosions () {
-        if (game) {
-            const explosions = game.explosions;
-            explosions.forEach(explosion => canvas?.printExplosion(explosion.x, explosion.y, 250));
+    async function updateMap() {
+        const changes = await server.getMapChanges();
+        console.log(changes);
+        if (changes?.changes) {
+
+            for (let i = 0; i < changes?.changes.length; i++) {
+                const change = changes.changes[i];
+                switch (change.type) {
+                    case 'explosion':
+                        canvas?.printExplosion(change.x, change.y, 250);
+                        break;
+                }
+            }
         }
+        setTimeout(() => {
+            updateMap();
+        }, 300);
     }
 
     // функция отрисовки одного кадра сцены
@@ -82,12 +95,12 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
             //  const { x, y } = kapitoshka;
             //  printKapitoshka(canvas, { x, y }, getSprite(1));
-            
-            
-            
+
+
+
             for (let i = 0; i < lemmings.length; i++) {
-                    const {x, y, direction, lemming_id} = lemmings[i];
-                    printKapitoshka(canvas, { x, y }, getSprite(getSpritesFromFrame([4 + 3 * (lemming_id-1), 5 + 3 * (lemming_id-1), 6 + 3 * (lemming_id-1)])), direction);
+                const { x, y, direction, lemming_id } = lemmings[i];
+                printKapitoshka(canvas, { x, y }, getSprite(getSpritesFromFrame([4 + 3 * (lemming_id - 1), 5 + 3 * (lemming_id - 1), 6 + 3 * (lemming_id - 1)])), direction);
             }
 
 
@@ -104,7 +117,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             canvas.render();
         }
     }
-   
+
     const showButtonsClickHandler = () => {
         setShowButtons(!showButtons);
     }
@@ -213,17 +226,17 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     });
 
     return (<div className='game' id='test-game-page'>
-        
+
         <div>
             <button onClick={showButtonsClickHandler}> + </button>
 
-            {showButtons &&( 
+            {showButtons && (
                 <div>
                     <button onClick={backClickHandler}> Назад </button>
                     <button onClick={settingsClickHandler}> Настройки </button>
                 </div>)}
         </div>
-    
+
         <div id={GAME_FIELD} className={GAME_FIELD}></div>
     </div>)
 }

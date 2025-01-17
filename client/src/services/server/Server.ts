@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
-import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser, TLemming, TLemmingStatus } from "./types";
+import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser, TLemming, TLemmingStatus, TMapChanges } from "./types";
 import { error } from 'console';
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
@@ -122,6 +122,24 @@ class Server {
     async getMap(): Promise<TPointsAndSplines | null> {
         const coeffs = await this.request<TPointsAndSplines>('getMap');
         return coeffs 
+    }
+
+    setMapChange(type: string, x: string, y: string, direction?: string) {
+        if (direction) {
+            this.request('setMapChange', {type, x, y, direction});
+        } else {
+            this.request('setMapChange', {type, x, y});
+        }
+    }
+
+    async getMapChanges(): Promise<TMapChanges | null> {
+        const hash = this.store.getMapHash();
+        const result = await this.request<TMapChanges>('getMapChanges', { hash });
+        if (result) {
+            this.store.setMapHash(result.hash);
+            return result;
+        }
+        return null;
     }
 
     givePosition(userId: string, lemmingId: string, x: string, y: string, direction: string, status: string) {

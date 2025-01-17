@@ -143,6 +143,7 @@ class DB {
 
     public function deleteMap() {
         $this->execute("DELETE FROM map");
+        $this->execute("DELETE FROM map_changes");
     }
 
     public function updateMap($startTime, $points, $coeffs) {
@@ -159,6 +160,26 @@ class DB {
     public function getMap() {
         $answ = $this->query("SELECT points, coefficients FROM map");
         return (array) $answ;
+    }
+
+    public function setMapChange($params) {
+        if (isset($params['direction'])) {
+            $this->execute("INSERT INTO map_changes (timestamp, type, x, y, direction) VALUES (NOW(), ?, ?, ?, ?)", [$params['type'], $params['x'], $params['y'], $params['direction']]);
+        } else {
+            $this->execute("INSERT INTO map_changes (timestamp, type, x, y) VALUES (CURRENT_TIMESTAMP, ?, ?, ?)", [$params['type'], $params['x'], $params['y']]);
+        }
+    }
+
+    public function getMapChanges() {
+        return $this->queryAll("SELECT timestamp, type, x, y, direction FROM map_changes");
+    }
+
+    public function updateMapHash($hash) {
+        $this->execute("UPDATE hashes SET game_hash=? WHERE id=1", [$hash]);
+    }
+
+    public function getMapHash() {
+        return $this->query("SELECT * FROM hashes WHERE id=1");
     }
     
 }
