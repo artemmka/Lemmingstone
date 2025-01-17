@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql-8.2
--- Время создания: Янв 17 2025 г., 15:58
+-- Время создания: Янв 17 2025 г., 16:49
 -- Версия сервера: 8.2.0
 -- Версия PHP: 8.3.6
 
@@ -297,16 +297,6 @@ CREATE TABLE `messages` (
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Дамп данных таблицы `messages`
---
-
-INSERT INTO `messages` (`id`, `user_id`, `message`, `created`) VALUES
-(1, 4, '1', '2024-12-15 11:14:35'),
-(2, 4, 'a', '2025-01-16 18:57:25'),
-(3, 4, 'писька', '2025-01-17 10:44:48'),
-(4, 4, 'чоу', '2025-01-17 10:44:55');
 
 -- --------------------------------------------------------
 
