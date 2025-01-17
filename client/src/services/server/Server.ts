@@ -2,6 +2,7 @@ import md5 from 'md5';
 import CONFIG from "../../config";
 import Store from "../store/Store";
 import { TAnswer, TCoeffs, TError, TMessagesResponse, TPointsAndSplines, TUser, TLemming, TLemmingStatus } from "./types";
+import { error } from 'console';
 
 const { CHAT_TIMESTAMP, HOST } = CONFIG;
 
@@ -51,7 +52,6 @@ class Server {
         const rnd = Math.round(Math.random() * 100000);
         const hash = md5(`${md5(`${login}${password}`)}${rnd}`);
         const user = await this.request<TUser>('login', { login, hash, rnd: `${rnd}` });
-        console.log(user);
         if (user) {
             this.store.setUser(user);
             return true;
@@ -119,8 +119,8 @@ class Server {
         }
     }
 
-    async generateMap(): Promise<TPointsAndSplines | null> {
-        const coeffs = await this.request<TPointsAndSplines>('generateMap');
+    async getMap(): Promise<TPointsAndSplines | null> {
+        const coeffs = await this.request<TPointsAndSplines>('getMap');
         return coeffs 
     }
 

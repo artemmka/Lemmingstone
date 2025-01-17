@@ -18,7 +18,6 @@ export const getSpritesFromFrame = (frame: number[]) => {
             }
         }
     }
-    console.log(frame[count.frame])
     return frame[count.frame];
 }
 
@@ -30,7 +29,6 @@ export const useSprites = (): [HTMLImageElement[], (spriteNo: number) => number[
     const getSprite = (spriteNo: number): number[] => {
         const y = Math.trunc((spriteNo - 1) / LINE_OF_SPRITES) * SPRITE_SIZE;
         const x = spriteNo % LINE_OF_SPRITES !== 0 ? (spriteNo % LINE_OF_SPRITES - 1) * SPRITE_SIZE : (LINE_OF_SPRITES - 1) * SPRITE_SIZE;
-        console.log(x, y);
         return [x, y, SPRITE_SIZE];
     }
 

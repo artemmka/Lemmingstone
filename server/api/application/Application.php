@@ -129,15 +129,19 @@ class Application {
         return ['error' => 242];
     }
 
-    public function saveMap($params) {
-        if ($params['token'] && $params['startTime'] && $params['points'] && $params['coeffs']) {
-            $user = $this->user->getUser($params['token']);
-            if ($user) {
-                return $this->map->saveMap($params['startTime'], $params['points'], $params['coeffs']);
-            }
-            return ['error' => 705];
-        }
-        return ['error' => 242];
+    // public function saveMap($params) {
+    //     if ($params['token'] && $params['startTime'] && $params['points'] && $params['coeffs']) {
+    //         $user = $this->user->getUser($params['token']);
+    //         if ($user) {
+    //             return $this->map->saveMap($params['startTime'], $params['points'], $params['coeffs']);
+    //         }
+    //         return ['error' => 705];
+    //     }
+    //     return ['error' => 242];
+    // }
+
+    public function getMap($params) {
+        return $this->map->getMap();
     }
     
 

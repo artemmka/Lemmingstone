@@ -116,6 +116,10 @@ class DB {
 
     public function removeLemming($userId) {
         $this->execute("DELETE FROM user_lemming WHERE user_id = ?", [$userId]);
+        $tab = $this->queryAll("SELECT * from user_lemming");
+        if (empty($tab)) {
+            $this->deleteMap();
+        }
     }
     public function getStatus($userId) {
         return $this->query("SELECT status FROM user_lemming WHERE id=?", [$userId]);
@@ -133,10 +137,12 @@ class DB {
         $this->execute("UPDATE users SET death=? WHERE id=?", [$pointsCount, $userId]);
     }
 
-    public function saveMap($startTime, $points, $coeffs) {
-        $this->execute("INSERT INTO map (start_time, points, coefs) VALUES (?, ?, ?)",[$startTime, $points, $coeffs]
-        );
-        return true; 
+    public function saveMap($points, $coeffs) {
+        $this->execute("INSERT INTO map (points, coefficients) VALUES (?, ?)", [$points, $coeffs]);
+    }
+
+    public function deleteMap() {
+        $this->execute("DELETE FROM map");
     }
 
     public function updateMap($startTime, $points, $coeffs) {
@@ -145,9 +151,14 @@ class DB {
     }
     
 
-    public function checkMap($startTime) {
-        return $this->query("SELECT id FROM map WHERE start_time = ?", [$startTime]);
+    public function checkMap() {
+        return $this->query("SELECT * FROM map");
         
+    }
+
+    public function getMap() {
+        $answ = $this->query("SELECT points, coefficients FROM map");
+        return (array) $answ;
     }
     
 }

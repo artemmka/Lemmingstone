@@ -38,9 +38,9 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     }
 
     async function printMap(canvas: Canvas): Promise<any> {
-        const coeffsAndPoints = await server.generateMap();
+        const coeffsAndPoints = await server.getMap();
         if (coeffsAndPoints) {
-            const coeffs = coeffsAndPoints.coeffs;
+            const coeffs = coeffsAndPoints.coefficients;
             const points = coeffsAndPoints.points;
             pointsToDraw = calcSplines(points, coeffs);
             await canvas.drawSpline(pointsToDraw);
@@ -48,7 +48,8 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     }
 
     function calcSplines(points:TPoint[], coeffs:TCoeffs): TPoint[] {
-        
+        points = JSON.parse(String(points));
+        coeffs = JSON.parse(String(coeffs));
         const dx = WINDOW.WIDTH / 1200;
         const pointsToDraw: TPoint[] = [];
         

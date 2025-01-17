@@ -42,8 +42,8 @@ export type TPoint = {
 }
 
 export type TPointsAndSplines = {
-    coeffs: TCoeffs,
     points: TPoint[];
+    coefficients: TCoeffs,
 }
 
 export type TLemming = {

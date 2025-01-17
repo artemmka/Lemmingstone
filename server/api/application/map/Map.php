@@ -60,14 +60,17 @@ class Map {
     function generateMap() {
         $points = $this->generateRandomPoints(50, 0, 100, 5, 10);
         $coeffs = $this->getSpline($points);
-        return [
-            'coeffs' => $coeffs,
-            'points' => $points
-        ];
+        $pointsJson = json_encode($points);
+        $coeffsJson = json_encode($coeffs);
+        $this->db->saveMap($pointsJson, $coeffsJson);
+        // return [
+        //     'coeffs' => $coeffs,
+        //     'points' => $points
+        // ];
     }
 
     public function saveMap($startTime, $points, $coeffs) {
-       $map = $this->db->checkMap($startTime);
+       $map = $this->db->checkMap();
         if ($map) {
             $result = $this->db->updateMap($startTime, $points, $coeffs);
         } else {
@@ -93,4 +96,11 @@ class Map {
         return array_merge($existingObjects, $newObjects);
     }
 
+    public function getMap() {
+        if(!empty($this->db->checkMap())) {
+            return $this->db->getMap();
+        }
+        $this->generateMap();
+        return $this->getMap();
+    }
 }
