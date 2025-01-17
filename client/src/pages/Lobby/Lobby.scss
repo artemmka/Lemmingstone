@@ -7,6 +7,7 @@
     h1 {
         font-size: 40px;
         font-weight: bold;
+      
     } 
     &-page{
         display: flex;
@@ -90,7 +91,42 @@
     border-radius: 5px;
     margin: 0 100px;
 
+  
+    span {
+        margin-block-start: -20%;
+    }
+
     &:hover {
         background-color: #D2EEDA;
     }
+}
+
+.chat{
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: #D2EEDA;
+    border: 1px solid black;
+    border-radius: 5px;
+ 
+
+    input{
+        background-color: white;
+        font-size: 25px;
+
+    }
+    button{
+        background-color: #D2EEDA;
+        border-radius: 7px;
+        padding: 10px 40px;
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid black;
+        margin: 0 120px;
+      
+    }
+
+    
+    
 }
