@@ -143,6 +143,14 @@ class Application {
     public function getMap($params) {
         return $this->map->getMap();
     }
+
+    public function setMapChange($params) {
+        return $this->map->setMapChange($params);
+    }
+
+    public function getMapChanges($params) {
+        return $this->map->getMapChanges($params['hash']);
+    }
     
 
     public function addLemming($params) {
