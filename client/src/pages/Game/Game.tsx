@@ -8,13 +8,15 @@ import { useSprites, getSpritesFromFrame } from './hooks/useSprites';
 import { ServerContext, StoreContext } from '../../App';
 import { TCoeffs } from '../../services/server/types';
 
+import './Game.scss';
+
+
 const GAME_FIELD = 'game-field';
 const GREEN = '#00e81c';
 
 const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     const { WINDOW, SPRITE_SIZE } = CONFIG;
     const { setPage } = props;
-    const [showButtons, setShowButtons] = useState(false);
     const server = useContext(ServerContext);
     const store = useContext(StoreContext);
     let pointsToDraw: TPoint[];
@@ -28,6 +30,8 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         [spritesImage],
         getSprite,
     ] = useSprites();
+
+    
 
     function printFillSprite(image: HTMLImageElement, canvas: Canvas, { x = 0, y = 0 }, points: number[], direction = 'right'): void {
         canvas.spriteFull(image, x, y, points[0], points[1], points[2], direction);
@@ -117,10 +121,10 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             canvas.render();
         }
     }
+   
+   
 
-    const showButtonsClickHandler = () => {
-        setShowButtons(!showButtons);
-    }
+    
     const backClickHandler = () => setPage(PAGES.LOBBY);
     const settingsClickHandler = () => setPage(PAGES.SETTINGS);
 
@@ -227,16 +231,16 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
 
     return (<div className='game' id='test-game-page'>
 
-        <div>
-            <button onClick={showButtonsClickHandler}> + </button>
-
-            {showButtons && (
-                <div>
-                    <button onClick={backClickHandler}> Назад </button>
-                    <button onClick={settingsClickHandler}> Настройки </button>
-                </div>)}
+        <div className="dropdown">
+            <button className="dropbtn">Меню</button>
+            <div className="dropdown-content">
+                <button  onClick={settingsClickHandler}>Настройки</button>
+                <button  onClick={backClickHandler}>Назад</button>
+            </div>
         </div>
-
+       
+                    
+    
         <div id={GAME_FIELD} className={GAME_FIELD}></div>
     </div>)
 }
