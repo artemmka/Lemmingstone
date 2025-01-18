@@ -17,10 +17,7 @@ const Preloader: React.FC<IBasePage> = (props: IBasePage) => {
                 <div className="preloader__dots" />
             </div>
             <span>Загрузка...</span>
-            <section className="preloader__authors">
-                <h1>Автор:</h1>
-                <div className="authors_name alex"><span>Трусов Алексей</span></div>
-            </section>
+            
         </div>
     );
 }
