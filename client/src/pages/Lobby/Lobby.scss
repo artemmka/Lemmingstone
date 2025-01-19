@@ -24,6 +24,15 @@
         font-weight: bold;
         border: 1px solid black;
         margin: 0 120px;
+
+        &:hover{
+            background: #cfa0f5;
+        }
+
+        &:active{
+            transform: scale(0.98);
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        }
     }
    
     &-b2{
@@ -34,7 +43,16 @@
         font-weight: bold;
         border: 1px solid black;
         margin: 0 120px;
-        margin-block-start: 100%
+        margin-block-start: 100%;
+
+        &:hover{
+            background: #cfa0f5;
+        }
+
+        &:active{
+            transform: scale(0.98);
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        }
     }
 
 
@@ -125,6 +143,15 @@
         border: 1px solid black;
         margin: 0 120px;
       
+        &:hover {
+            background: #91edab;
+
+        }
+
+        &:active{
+            transform: scale(0.98);
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        }
     }
 
     
