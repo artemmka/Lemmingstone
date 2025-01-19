@@ -119,10 +119,11 @@ class Application {
     }
 
     public function givePosition($params) {
-        return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
-        if ($params['token']/* && $params['userId'] && $params['lemmingId'] && $params['x'] && $params['y'] && $params['direction'] && $params['status']*/) {
+        //return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
+        if ($params['token'] && $params['userId'] && $params['lemmingId'] && $params['x'] && $params['y'] && $params['direction'] && $params['status']) {
             $user = $this->user->getUser($params['token']);
             if ($user) {
+                return $this->position->givePosition($params['userId'], $params['lemmingId'], $params['x'], $params['y'], $params['direction'], $params['status']);
             }
             return ['error' => 705];
         }
