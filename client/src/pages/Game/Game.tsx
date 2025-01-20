@@ -122,7 +122,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
 
             if (game.shovelAiming) {
-                canvas.line(x, y, x + 10*Math.cos(game.shovelDirection), y + 10*Math.sin(game.shovelDirection), '#0055FF', 100);
+                canvas.line(x, y, x + 10*Math.cos(game.shovelDirection), y + 10*Math.sin(game.shovelDirection), 'rgba(255, 0, 0, 0.32)', 100);
             }
 
             canvas.render();

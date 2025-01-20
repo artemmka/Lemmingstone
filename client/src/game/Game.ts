@@ -118,7 +118,7 @@ class Game {
 
     //Надо будет как-то разнести на несколько функций
     move(dx: number, dy: number): void {
-        if ((this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right') || this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'left')) && this.dx != 0) {
+        if ((this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right') || this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'left')) && this.dx != 0 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'waist')) {
             this.dy = 0;
             this.dy -= 0.04;
         }
@@ -197,6 +197,14 @@ class Game {
                         if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y) + 64 - j)[3] === 255) {
                             return true;
                         }
+                    }
+                }
+                break;
+            }
+            case 'waist': {
+                for (let i = -20; i < 84; i++) {
+                    if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y))[3] === 255) {
+                        return true;
                     }
                 }
                 break;
