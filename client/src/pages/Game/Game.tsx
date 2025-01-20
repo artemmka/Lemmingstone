@@ -31,7 +31,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         getSprite,
     ] = useSprites();
 
-    
+
 
     function printFillSprite(image: HTMLImageElement, canvas: Canvas, { x = 0, y = 0 }, points: number[], direction = 'right'): void {
         canvas.spriteFull(image, x, y, points[0], points[1], points[2], direction);
@@ -72,7 +72,6 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
 
     async function updateMap() {
         const changes = await server.getMapChanges();
-        console.log(changes);
         if (changes?.changes) {
 
             for (let i = 0; i < changes?.changes.length; i++) {
@@ -81,6 +80,10 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                     case 'explosion':
                         canvas?.printExplosion(change.x, change.y, 250);
                         break;
+                    case 'shovel':
+                            const x = change.x + WINDOW.LEFT;
+                            const y = change.y + WINDOW.TOP;
+                            canvas?.mapCutLine(x, y, x + 10*Math.cos(Number(change.direction)), y + 10*Math.sin(Number(change.direction)), 'red', 100);
                 }
             }
         }
@@ -97,7 +100,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
             /* нарисовать Капитошку */
             /************************/
-            //  const { x, y } = kapitoshka;
+            const { x, y } = kapitoshka;
             //  printKapitoshka(canvas, { x, y }, getSprite(1));
 
 
@@ -118,13 +121,17 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /* отрендерить картинку */
             /************************/
 
+            if (game.shovelAiming) {
+                canvas.line(x, y, x + 10*Math.cos(game.shovelDirection), y + 10*Math.sin(game.shovelDirection), '#0055FF', 100);
+            }
+
             canvas.render();
         }
     }
-   
-   
 
-    
+
+
+
     const backClickHandler = () => setPage(PAGES.LOBBY);
     const settingsClickHandler = () => setPage(PAGES.SETTINGS);
 
@@ -190,6 +197,10 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                         game.jump();
                         game.actions.jump = false;
                         break
+                    case 37: //left arrow
+                        break
+                    case 39: //right arrow
+                        break
                 }
             }
         }
@@ -215,6 +226,15 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
                     case 88: // x
                         game.explode();
                         break
+                    case 67: //C
+                        game.aimingShovel();
+                        break
+                    case 37: //left arrow
+                        game.changeShovelDirection('up');
+                        break
+                    case 39: //right arrow
+                        game.changeShovelDirection('down');
+                        break
                 }
             }
         }
@@ -234,13 +254,13 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         <div className="dropdown">
             <button className="dropbtn">Меню</button>
             <div className="dropdown-content">
-                <button  onClick={settingsClickHandler}>Настройки</button>
-                <button  onClick={backClickHandler}>Назад</button>
+                <button onClick={settingsClickHandler}>Настройки</button>
+                <button onClick={backClickHandler}>Назад</button>
             </div>
         </div>
-       
-                    
-    
+
+
+
         <div id={GAME_FIELD} className={GAME_FIELD}></div>
     </div>)
 }

@@ -124,7 +124,7 @@ class Server {
         return coeffs 
     }
 
-    setMapChange(type: string, x: string, y: string, direction?: string) {
+    setMapChange(type: string, x: string, y: string, direction = '0') {
         if (direction) {
             this.request('setMapChange', {type, x, y, direction});
         } else {

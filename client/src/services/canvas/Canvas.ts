@@ -207,6 +207,18 @@ class Canvas {
         this.contextV.closePath();
     }
 
+    mapCutLine(x1: number, y1: number, x2: number, y2: number, color = '#0f0', width = 2): void {
+        this.contextMap.globalCompositeOperation = 'destination-out';
+        this.contextMap.beginPath();
+        this.contextMap.strokeStyle = color;
+        this.contextMap.lineWidth = width;
+        this.contextMap.moveTo(this.xs(x1), this.ys(y1));
+        this.contextMap.lineTo(this.xs(x2), this.ys(y2));
+        this.contextMap.stroke();
+        this.contextMap.closePath();
+        this.contextMap.globalCompositeOperation = 'source-over';
+    }
+
     text(x: number, y: number, text: string, color = '#fff', font = 'bold 1rem Arial'): void {
         this.contextV.fillStyle = color;
         this.contextV.font = font;
