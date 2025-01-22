@@ -1,6 +1,7 @@
 import { TPoint, TWINDOW } from "../../config";
 import { TCoeffs } from "../server/types";
-import groundSprite from "../../assets/img/ground.png"
+import groundImage from "../../assets/img/rock.png"
+import backgroundImage from "../../assets/img/caveBright.jpg"
 
 enum EDIRECTION {
     UP,
@@ -32,6 +33,8 @@ class Canvas {
     contextMap: CanvasRenderingContext2D;
     canvasGround: HTMLCanvasElement;
     contextGround: CanvasRenderingContext2D;
+    background: HTMLImageElement;
+    ground: HTMLImageElement;
     // общая ширина и высота канвасов
     WIDTH: number;
     HEIGHT: number;
@@ -97,6 +100,10 @@ class Canvas {
             this.WINDOW.LEFT += this.dx;
             this.WINDOW.TOP += this.dy;
         }, 200);
+        this.background = new Image();
+        this.background.src = backgroundImage;
+        this.ground = new Image();
+        this.ground.src = groundImage;
     }
 
     destructor() {
@@ -174,6 +181,7 @@ class Canvas {
     clear(): void {
         this.contextV.fillStyle = '#305160';
         this.contextV.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+        this.contextV.drawImage(this.background, 0, 0, this.WIDTH, this.HEIGHT);
     }
 
     clearMap(): void {
@@ -207,6 +215,18 @@ class Canvas {
         this.contextV.closePath();
     }
 
+    mapCutLine(x1: number, y1: number, x2: number, y2: number, color = '#0f0', width = 2): void {
+        this.contextMap.globalCompositeOperation = 'destination-out';
+        this.contextMap.beginPath();
+        this.contextMap.strokeStyle = color;
+        this.contextMap.lineWidth = width;
+        this.contextMap.moveTo(this.xs(x1), this.ys(y1));
+        this.contextMap.lineTo(this.xs(x2), this.ys(y2));
+        this.contextMap.stroke();
+        this.contextMap.closePath();
+        this.contextMap.globalCompositeOperation = 'source-over';
+    }
+
     text(x: number, y: number, text: string, color = '#fff', font = 'bold 1rem Arial'): void {
         this.contextV.fillStyle = color;
         this.contextV.font = font;
@@ -235,18 +255,21 @@ class Canvas {
         }
     }
 
+    printExplosionSprite(image: HTMLImageElement, dx: number, dy: number, sx: number, sy: number, size: number): void {
+        this.contextV.drawImage(image, sx, sy, size, size, this.xs(dx)-size, this.ys(dy)-size, size*2, size*2);
+    }
+
 
     drawSpline(points: TPoint[]): void {
         this.contextMap.fillStyle = 'rgba(0, 0, 0, 0)';
         this.contextMap.fillRect(0, 0, this.canvasMap.width, this.canvasMap.height);
-        this.contextMap.strokeStyle = 'green';
-        this.contextMap.lineWidth = 10;
-        this.contextMap.fillStyle = 'rgb(118, 47, 0)';
-        const ground = new Image();
-        ground.src = groundSprite;
-        const groundPattern = this.contextMap.createPattern(ground, 'repeat');
+        this.contextMap.strokeStyle = 'rgb(47, 47, 47)';
+        this.contextMap.lineWidth = 5;
+        this.contextMap.fillStyle = 'rgb(123, 123, 123)';
+        // const ground = new Image();
+        // ground.src = groundImage;
+        const groundPattern = this.contextMap.createPattern(this.ground, 'repeat');
         if (groundPattern) {
-            console.log('a');
             this.contextMap.fillStyle = groundPattern;
         }
 
