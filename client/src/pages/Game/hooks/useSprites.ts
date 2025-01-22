@@ -1,6 +1,11 @@
 import CONFIG from '../../../config';
 
 import sprites from '../../../assets/img/lemmingssprite.png';
+import spritesMap from "../../../assets/img/spritemap.png"
+
+const explosionSprites = new Image();
+explosionSprites.src = spritesMap;
+
 
 // взять спрайт для обычной анимации
 const count = {
@@ -33,8 +38,14 @@ export const useSprites = (): [HTMLImageElement[], (spriteNo: number) => number[
     }
 
     return [
-        [spritesImage],
+        [spritesImage, explosionSprites],
         getSprite,
-        [] // для анимации
+        [], // для анимации
     ];
+}
+
+export const getExplosionFrame = (frame: number) => {
+    const x = (frame-1)*250;
+    const y = 750;
+    return [x, y];
 }

@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button';
 import { IBasePage, PAGES } from '../PageManager';
 import Game from '../../game/Game';
 import { Canvas, useCanvas } from '../../services/canvas';
-import { useSprites, getSpritesFromFrame } from './hooks/useSprites';
+import { useSprites, getSpritesFromFrame, getExplosionFrame } from './hooks/useSprites';
 import { ServerContext, StoreContext } from '../../App';
 import { TCoeffs } from '../../services/server/types';
 
@@ -27,9 +27,11 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
     let interval: NodeJS.Timer | null = null;
     // инициализация карты спрайтов
     const [
-        [spritesImage],
+        [spritesImage, explosionSprites],
         getSprite,
     ] = useSprites();
+    let countOfDrawnChanges = -1;
+    let explosions: { x: number, y: number, radius: number, time: number }[] = [];
 
 
 
@@ -74,17 +76,20 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
         const changes = await server.getMapChanges();
         if (changes?.changes) {
 
-            for (let i = 0; i < changes?.changes.length; i++) {
+            for (let i = countOfDrawnChanges + 1; i < changes?.changes.length; i++) {
                 const change = changes.changes[i];
                 switch (change.type) {
                     case 'explosion':
                         canvas?.printExplosion(change.x, change.y, 250);
+                        explosions.push({ x: change.x, y: change.y, radius: 250, time: Date.now() })
+                        setTimeout(() => explosions.shift(), 1000);
                         break;
                     case 'shovel':
-                            const x = change.x + WINDOW.LEFT;
-                            const y = change.y + WINDOW.TOP;
-                            canvas?.mapCutLine(x, y, x + 10*Math.cos(Number(change.direction)), y + 10*Math.sin(Number(change.direction)), 'red', 100);
+                        const x = change.x + WINDOW.LEFT;
+                        const y = change.y + WINDOW.TOP;
+                        canvas?.mapCutLine(x, y, x + 10 * Math.cos(Number(change.direction)), y + 10 * Math.sin(Number(change.direction)), 'red', 100);
                 }
+                countOfDrawnChanges = i;
             }
         }
         setTimeout(() => {
@@ -103,14 +108,17 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             const { x, y } = kapitoshka;
             //  printKapitoshka(canvas, { x, y }, getSprite(1));
 
-
-
             for (let i = 0; i < lemmings.length; i++) {
                 const { x, y, direction, lemming_id } = lemmings[i];
                 printKapitoshka(canvas, { x, y }, getSprite(getSpritesFromFrame([4 + 3 * (lemming_id - 1), 5 + 3 * (lemming_id - 1), 6 + 3 * (lemming_id - 1)])), direction);
             }
 
 
+            explosions.forEach(explosion => {
+                const frame = 1 + Math.floor((Date.now() - explosion.time) / 250);
+                const xy = getExplosionFrame(frame);
+                canvas?.printExplosionSprite(explosionSprites, explosion.x, explosion.y, xy[0], xy[1], 250);
+            })
 
 
             /******************/
@@ -122,7 +130,7 @@ const GamePage: React.FC<IBasePage> = (props: IBasePage) => {
             /************************/
 
             if (game.shovelAiming) {
-                canvas.line(x, y, x + 10*Math.cos(game.shovelDirection), y + 10*Math.sin(game.shovelDirection), 'rgba(255, 0, 0, 0.32)', 100);
+                canvas.line(x, y, x + 10 * Math.cos(game.shovelDirection), y + 10 * Math.sin(game.shovelDirection), 'rgba(255, 0, 0, 0.32)', 100);
             }
 
             canvas.render();

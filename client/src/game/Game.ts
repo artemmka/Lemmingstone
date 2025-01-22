@@ -91,7 +91,6 @@ class Game {
     }
 
     aimingShovel() {
-        console.log('aaa');
         if (this.shovelAiming) {
             this.useShovel(this.shovelDirection);
             this.shovelAiming = false;
@@ -223,6 +222,7 @@ class Game {
         this.server.givePosition(this.store.user?.id, this.store.lemming.id, this.kapitoshka.x, this.kapitoshka.y, direction, status);
         const lemmings = await this.server.getPosition(this.store.user?.id);
         if (lemmings) {
+            this.lemmings = [];
             this.lemmings = lemmings;
         }
     }
