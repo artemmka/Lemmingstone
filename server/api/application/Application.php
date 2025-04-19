@@ -239,4 +239,15 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function teleportLemming($params) {
+        if ($params['token'] && $params['lemmingId']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->map->teleportLemming($params['lemmingId']);
+            }
+            return ['error' => 705]; 
+        }
+        return ['error' => 242];
+    }
 }

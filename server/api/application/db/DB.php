@@ -208,4 +208,20 @@ class DB {
         }
         return ['error' => 'Не удалось изменить предмет'];
     }
+
+    public function teleportLemming($lemmingId){
+        $x = rand(0, 100);
+        $y = rand(0, 100);
+        $sql = "UPDATE user_lemming SET x = ?, y = ? WHERE lemming_id = ?";
+        $result = $this->execute($sql, [$x, $y, $lemmingId]);
+        if ($result) {
+            return[
+                'success' => true,
+                'message' => 'телепортирован на случайные координаты',
+                'newPosition' => ['x' => $x, 'y' => $y]
+            ];
+        } else {
+            return ['error' => 'телепортация не удалась'];
+        }
+    }
 }

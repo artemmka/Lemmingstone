@@ -39,6 +39,7 @@ function result($params) {
             case 'endGame': return $app->endGame($params);
             case 'changeClass': return $app->changeClass($params);
             case 'changeItem': return $app->changeItem($params);
+            case 'teleportLemming': return $app->teleportLemming($params);
             // shop
             case 'getCatalog': return $app->getCatalog($params);
             case 'buy': return $app->buy($params);

@@ -26,17 +26,17 @@ class Lobby {
         return ['error' => 2001];
     }
 
+    public function setlemmingForUser($userId, $lemmingId) {
+        $lemming = $this->db->getlemmingById($lemmingId);
+        if (!$lemming) {
+            return false;
+        }
+        $sql = "UPDATE users SET lemming_id = ? WHERE id = ?";
+        return $this->db->execute($sql, [$lemmingId, $userId]);
+    }
+
     public function changeClass($userId, $lemmingId, $newClass) {
         $result = $this->db->changeClass($userId, $lemmingId, $newClass);
         return $result;
     }
-
-    // public function setlemmingForUser($userId, $lemmingId) {
-    //     $lemming = $this->db->getlemmingById($lemmingId);
-    //     if (!$lemming) {
-    //         return false;
-    //     }
-    //     $sql = "UPDATE users SET lemming_id = ? WHERE id = ?";
-    //     return $this->db->execute($sql, [$lemmingId, $userId]);
-    // }
 }

@@ -122,4 +122,9 @@ class Map {
             'hash' => $currentHash->game_hash
         ];
     }
+
+    public function teleportLemming($lemmingId){
+        $result = $this->db->teleportLemming($lemmingId);
+        return $result;
+    }
 }
