@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 
 header('Content-Type: application/json; charset=utf-8');
-//header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: *');
 
 require_once('application/Answer.php');
 require_once('application/Application.php');
@@ -30,6 +30,8 @@ function result($params) {
             case 'changePassword': return $app->changePassword($params);
             // game
             case 'getMap': return $app->getMap($params);
+            case 'setMapChange': return $app->setMapChange($params);
+            case 'getMapChanges': return $app->getMapChanges($params);
             case 'updateScene': return $app->updateScene($params); // loop
             case 'move': return $app->move($params);
             case 'action': return $app->action($params); // подорваться или построить мост

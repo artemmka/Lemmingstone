@@ -56,6 +56,16 @@
         margin-block-start: 2%;
         max-width: 680%;
         max-height: 500%;
+
+        &:hover {
+            background: #91edab;
+
+        }
+
+        &:active{
+            transform: scale(0.98);
+            box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        }
         }
 
     }
@@ -73,6 +83,14 @@
             white-space: nowrap;
             text-align: center;
 
+            &:hover{
+                background: #cfa0f5;
+            }
+    
+            &:active{
+                transform: scale(0.98);
+                box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            }
 
         }
     }

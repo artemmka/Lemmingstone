@@ -4,7 +4,7 @@ class DB {
     private $pdo;
 
     function __construct() {
-        $host = 'mysql-8.2';
+        $host = 'localhost';
         $port = '3306';
         $user = 'root';
         $pass = '';
@@ -78,8 +78,9 @@ class DB {
 
     public function getMessages() {
         return $this->queryAll("SELECT u.name AS author, m.message AS message,
-                                to_char(m.created, 'yyyy-mm-dd hh24:mi:ss') AS created FROM messages as m 
-                                LEFT JOIN users as u on u.id = m.user_id 
+                                DATE_FORMAT(m.created, '%Y-%m-%d %H:%i:%s') AS created 
+                                FROM messages as m 
+                                LEFT JOIN users as u ON u.id = m.user_id 
                                 ORDER BY m.created DESC"
         );
     }
@@ -115,6 +116,10 @@ class DB {
 
     public function removeLemming($userId) {
         $this->execute("DELETE FROM user_lemming WHERE user_id = ?", [$userId]);
+        $tab = $this->queryAll("SELECT * from user_lemming");
+        if (empty($tab)) {
+            $this->deleteMap();
+        }
     }
     public function getStatus($userId) {
         return $this->query("SELECT status FROM user_lemming WHERE id=?", [$userId]);
@@ -131,4 +136,50 @@ class DB {
     public function updatePoints($userId, $pointsCount) {
         $this->execute("UPDATE users SET death=? WHERE id=?", [$pointsCount, $userId]);
     }
+
+    public function saveMap($points, $coeffs) {
+        $this->execute("INSERT INTO map (points, coefficients) VALUES (?, ?)", [$points, $coeffs]);
+    }
+
+    public function deleteMap() {
+        $this->execute("DELETE FROM map");
+        $this->execute("DELETE FROM map_changes");
+    }
+
+    public function updateMap($startTime, $points, $coeffs) {
+        $this->execute("UPDATE map SET points = ?, coefs = ? WHERE start_time = ?", [$points, $coeffs, $startTime]);
+        return true;
+    }
+    
+
+    public function checkMap() {
+        return $this->query("SELECT * FROM map");
+        
+    }
+
+    public function getMap() {
+        $answ = $this->query("SELECT points, coefficients FROM map");
+        return (array) $answ;
+    }
+
+    public function setMapChange($params) {
+        if (isset($params['direction'])) {
+            $this->execute("INSERT INTO map_changes (timestamp, type, x, y, direction) VALUES (NOW(), ?, ?, ?, ?)", [$params['type'], $params['x'], $params['y'], $params['direction']]);
+        } else {
+            $this->execute("INSERT INTO map_changes (timestamp, type, x, y) VALUES (CURRENT_TIMESTAMP, ?, ?, ?)", [$params['type'], $params['x'], $params['y']]);
+        }
+    }
+
+    public function getMapChanges() {
+        return $this->queryAll("SELECT timestamp, type, x, y, direction FROM map_changes");
+    }
+
+    public function updateMapHash($hash) {
+        $this->execute("UPDATE hashes SET game_hash=? WHERE id=1", [$hash]);
+    }
+
+    public function getMapHash() {
+        return $this->query("SELECT * FROM hashes WHERE id=1");
+    }
+    
 }

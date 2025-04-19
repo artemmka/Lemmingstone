@@ -44,7 +44,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
         }
     }, [lemmings, server, store, user]);
 
-    const input = useMemo(() => <input ref={messageRef} placeholder='Сообщение' />, []);
+    const input = useMemo(() => <input ref={messageRef} placeholder='Введите сообщение...' />, []);
 
     const sendClickHandler = () => {
         if (messageRef.current) {
@@ -115,9 +115,11 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
 
         <div className='lobby-chat'>
             <h1>Чат</h1>
+            <div className='chat'>
             <div className='chat-user-info'>
-                <span>Привет!</span>
                 <span>{user.name}</span>
+                <span>Привет всем!</span><br />
+                
             </div>
             <div className='chat-messages'>
                 {messages.reverse().map((message, index) => (
@@ -127,6 +129,7 @@ const Lobby: React.FC<IBasePage> = (props: IBasePage) => {
             {input}
             <div className='chat-buttons'>
                 <button onClick={sendClickHandler}>Отправить</button>
+            </div>
             </div>
         </div>
     </div>);

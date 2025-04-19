@@ -24,19 +24,23 @@ class Game {
     private lemmings: TLemmingStatus[];
     private login: string | undefined;
     private store: Store;
+    public shovelAiming: boolean;
+    public shovelDirection: number;
 
     constructor(canvas: Canvas, WINDOW: { LEFT: number, TOP: number, HEIGHT: number, WIDTH: number }, server:any) {
         this.kapitoshka = { x: 2, y: -5 };
         this.canvas = canvas;
         this.moving = setInterval(() => this.velocity(), 5);
-        this.playersInterval = setInterval(() => this.updateLemmingsStatus(), 25);
+        this.playersInterval = setInterval(() => this.updateLemmingsStatus(), 30);
         this.WINDOW = WINDOW;
         this.server = server;
         this.explosions = [];
         this.lemmings = [];
+        this.shovelAiming = false;
+        this.shovelDirection = 0;
         this.store = this.server.store;
         this.login = this.store.user?.login;
-        server.addLemming(this.login, this.store.lemming.id, 2, -5, 'right', 'move')
+        server.addLemming(this.store.user?.id, this.store.lemming.id, 2, -5, 'right', 'move');
     }
 
     destructor() {
@@ -44,7 +48,7 @@ class Game {
         clearInterval(this.playersInterval);
         this.WINDOW.LEFT = 0;
         this.WINDOW.TOP = 0;
-        this.server.removeLemming('Vovan');
+        this.server.removeLemming(this.store.user?.id);
     }
 
     getScene() {
@@ -82,13 +86,38 @@ class Game {
 
     explode() {
         this.explosions.push({ x: this.kapitoshka.x, y: this.kapitoshka.y });
-        this.canvas?.printExplosion(this.kapitoshka.x, this.kapitoshka. y, 250);
+        //this.canvas?.printExplosion(this.kapitoshka.x, this.kapitoshka. y, 250);
+        this.server.setMapChange('explosion', `${this.kapitoshka.x}`, `${this.kapitoshka.y}`)
+    }
+
+    aimingShovel() {
+        if (this.shovelAiming) {
+            this.useShovel(this.shovelDirection);
+            this.shovelAiming = false;
+        } else {
+            this.shovelAiming = true;
+        }
+    }
+
+    changeShovelDirection(side: string) {
+        switch (side) {
+            case 'up':
+                this.shovelDirection -= Math.PI/8;
+                break
+            case 'down':
+                this.shovelDirection += Math.PI/8;
+                break
+        }
+    }
+
+    useShovel(direction: number) {
+        this.server.setMapChange('shovel', `${this.kapitoshka.x}`, `${this.kapitoshka.y}`, `${direction}`);
     }
 
 
     //Надо будет как-то разнести на несколько функций
     move(dx: number, dy: number): void {
-        if ((this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right') || this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'left')) && this.dx != 0) {
+        if ((this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'right') || this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'left')) && this.dx != 0 && !this.checkCollision(this.kapitoshka.x, this.kapitoshka.y, 'waist')) {
             this.dy = 0;
             this.dy -= 0.04;
         }
@@ -115,13 +144,13 @@ class Game {
     velocity() {
         this.doActions();
         if (this.dx > 0) {
-            this.dx = this.dx - 0.007;
+            this.dx = this.dx - 0.005;
             if (this.dx < 0) {
                 this.dx = 0;
             }
         }
         if (this.dx < 0) {
-            this.dx = this.dx + 0.007;
+            this.dx = this.dx + 0.005;
             if (this.dx > 0) {
                 this.dx = 0;
             }
@@ -171,6 +200,14 @@ class Game {
                 }
                 break;
             }
+            case 'waist': {
+                for (let i = -20; i < 84; i++) {
+                    if (this.canvas?.getPixelColor(this.canvas.xs(x) + i, this.canvas.ys(y))[3] === 255) {
+                        return true;
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -182,9 +219,10 @@ class Game {
         } else if (this.dx > 0) {
             direction = 'right';
         }
-        this.server.givePosition(this.login, this.store.lemming.id, this.kapitoshka.x, this.kapitoshka.y, direction, status);
-        const lemmings = await this.server.getPosition(this.login);
+        this.server.givePosition(this.store.user?.id, this.store.lemming.id, this.kapitoshka.x, this.kapitoshka.y, direction, status);
+        const lemmings = await this.server.getPosition(this.store.user?.id);
         if (lemmings) {
+            this.lemmings = [];
             this.lemmings = lemmings;
         }
     }

@@ -42,8 +42,8 @@ export type TPoint = {
 }
 
 export type TPointsAndSplines = {
-    coeffs: TCoeffs,
     points: TPoint[];
+    coefficients: TCoeffs,
 }
 
 export type TLemming = {
@@ -63,4 +63,16 @@ export type TLemmingStatus = {
     y: number,
     direction: string,
     status: string
+}
+
+export type TMapChange = {
+    timeStamp: Date,
+    type: string,
+    x: number,
+    y: number,
+    direction?: string,
+}
+export type TMapChanges = {
+    changes: TMapChange[],
+    hash: string
 }

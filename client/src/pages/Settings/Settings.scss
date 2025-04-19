@@ -76,6 +76,16 @@
             border-radius: 10px;
             margin-block-start: 3%;
             border: 1px solid black;
+
+            &:hover {
+                background: #91edab;
+    
+            }
+    
+            &:active{
+                transform: scale(0.98);
+                box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            }
         }
 
 
@@ -140,6 +150,15 @@
             margin-right: 1100px;
             white-space: nowrap;
             text-align: center;
+
+            &:hover{
+                background: #cfa0f5;
+            }
+    
+            &:active{
+                transform: scale(0.98);
+                box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+            }
         
         }
 

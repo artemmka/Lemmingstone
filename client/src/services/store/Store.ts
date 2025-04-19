@@ -6,6 +6,7 @@ class Store {
     user: TUser | null = null;
     messages: TMessages = [];
     chatHash: string = 'empty chat hash';
+    mapHash: string = 'empty map hash';
     lemming: TLemming = null!
 
     setToken(token: string): void {
@@ -51,6 +52,14 @@ class Store {
 
     setChatHash(hash: string): void {
         this.chatHash = hash;
+    }
+    
+    getMapHash(): string {
+        return this.mapHash;
+    }
+
+    setMapHash(hash: string): void {
+        this.mapHash = hash;
     }
 
     getLemming(): TLemming {

@@ -2,6 +2,10 @@
 
 
 class Map {
+    private $db;
+    function __construct($db) {
+        $this->db = $db;
+    }
     private function generateRandomPoints($numPoints, $xMin, $xMax, $yMin, $yMax) {
         $points = [];
         for ($i = 0; $i < $numPoints; $i++) {
@@ -56,10 +60,30 @@ class Map {
     function generateMap() {
         $points = $this->generateRandomPoints(50, 0, 100, 5, 10);
         $coeffs = $this->getSpline($points);
-        return [
-            'coeffs' => $coeffs,
-            'points' => $points
-        ];
+        $pointsJson = json_encode($points);
+        $coeffsJson = json_encode($coeffs);
+        $this->db->saveMap($pointsJson, $coeffsJson);
+        // return [
+        //     'coeffs' => $coeffs,
+        //     'points' => $points
+        // ];
+    }
+
+    public function saveMap($startTime, $points, $coeffs) {
+       $map = $this->db->checkMap();
+        if ($map) {
+            $result = $this->db->updateMap($startTime, $points, $coeffs);
+        } else {
+            $generatedMap = $this->generateMap(); 
+            $pointsJson = json_encode($generatedMap['points']);
+            $coeffsJson = json_encode($generatedMap['coeffs']);
+            $result = $this->db->saveMap($startTime, $pointsJson, $coeffsJson);
+        }
+    
+        if ($result) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Failed to save map'];
     }
 
     public function respawnObjects($existingObjects, $numNewObjects, $xMin, $xMax, $yMin, $yMax) {
@@ -72,4 +96,30 @@ class Map {
         return array_merge($existingObjects, $newObjects);
     }
 
+    public function getMap() {
+        if(!empty($this->db->checkMap())) {
+            return $this->db->getMap();
+        }
+        $this->generateMap();
+        return $this->getMap();
+    }
+
+    public function setMapChange($params) {
+        $this->db->setMapChange($params);
+        $this->db->updateMapHash(md5(rand()));
+    }
+
+    public function getMapChanges($hash) {
+        $currentHash = $this->db->getChatHash();
+        if ($hash === $currentHash->game_hash) {
+            return [
+                'hash' => $hash
+            ];
+        }
+        $changes = $this->db->getMapChanges();
+        return [
+            'changes' => $changes,
+            'hash' => $currentHash->game_hash
+        ];
+    }
 }
