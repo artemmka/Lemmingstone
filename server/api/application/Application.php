@@ -250,4 +250,11 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function adminLogoutUser($params) {
+        if ($params['token'] && $params['login']) {
+            return $this->user->adminLogoutUser($params['token'], $params['login']);
+        }
+        return ['error' => 242]; 
+    }
 }

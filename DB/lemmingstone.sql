@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql-8.2
--- Время создания: Янв 17 2025 г., 23:54
+-- Время создания: Апр 19 2025 г., 20:45
 -- Версия сервера: 8.2.0
 -- Версия PHP: 8.3.6
 
@@ -95,6 +95,13 @@ CREATE TABLE `inventory` (
   `user_id` int NOT NULL,
   `type_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `user_id`, `type_id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -339,19 +346,21 @@ CREATE TABLE `users` (
   `money` int DEFAULT '0',
   `points` int DEFAULT '0',
   `death` int DEFAULT '0',
-  `lemming_id` int DEFAULT NULL
+  `lemming_id` int DEFAULT NULL,
+  `admin` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `points`, `death`, `lemming_id`) VALUES
-(1, 'testUser0', 'a977b2b3d142a8616748eac72e28c5b6', 'test1', '259e49b9c919680214f4b11632497d14', 0, 0, 0, NULL),
-(2, 'testUser1', 'a09d5c543a0ea0450693792ef5a5ea9e', 'test3', '7366792e3df26b19ad9d8a2e98e2dd52', 0, 0, 0, NULL),
-(3, 'Alex', 'c356464472c87e97036d5930b1a9060a', 'Alex', 'f8358d85571ba03c46cb0c2993670356', NULL, NULL, 0, NULL),
-(4, 'Vovan2018', '0e362c56fc982ef5a8f6b63e201522fa', 'Vovan2018', '4bfae7a6c17487945d580c322da238c3', 0, 0, 0, NULL),
-(5, 'Vovan II', 'c2900b1797cc0b754f2be96a643a4c37', 'Vovan2018', '6d16a3b74ff7deee3e4217863c646f61', 0, 0, 0, NULL);
+INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `points`, `death`, `lemming_id`, `admin`) VALUES
+(1, 'testUser0', 'a977b2b3d142a8616748eac72e28c5b6', 'test1', '259e49b9c919680214f4b11632497d14', 0, 0, 0, 1, 1),
+(2, 'testUser1', 'a09d5c543a0ea0450693792ef5a5ea9e', 'test3', '7366792e3df26b19ad9d8a2e98e2dd52', 0, 0, 0, NULL, 0),
+(3, 'Alex', 'c356464472c87e97036d5930b1a9060a', 'Alex', 'f8358d85571ba03c46cb0c2993670356', NULL, NULL, 0, NULL, 0),
+(4, 'Vovan2018', '0e362c56fc982ef5a8f6b63e201522fa', 'Vovan2018', '4bfae7a6c17487945d580c322da238c3', 0, 0, 0, NULL, 0),
+(5, 'Vovan II', 'c2900b1797cc0b754f2be96a643a4c37', 'Vovan2018', '6d16a3b74ff7deee3e4217863c646f61', 0, 0, 0, NULL, 0),
+(6, 'testlogin', 'testpass', 'testname', '213123123213212', 0, 0, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -368,6 +377,13 @@ CREATE TABLE `user_lemming` (
   `direction` enum('left','right') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` enum('move','jump','dead') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `user_lemming`
+--
+
+INSERT INTO `user_lemming` (`id`, `user_id`, `lemming_id`, `x`, `y`, `direction`, `status`) VALUES
+(1, '1', 1, 13, 11, 'left', 'move');
 
 --
 -- Индексы сохранённых таблиц
@@ -528,7 +544,7 @@ ALTER TABLE `hashes`
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `items`
@@ -624,7 +640,7 @@ ALTER TABLE `sprite`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `user_lemming`
