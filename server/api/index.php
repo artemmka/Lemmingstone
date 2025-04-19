@@ -35,6 +35,7 @@ function result($params) {
             case 'action': return $app->action($params); // подорваться или построить мост
             case 'respawn': return $app->respawn($params);
             case 'endGame': return $app->endGame($params);
+            case 'changeClass': return $app->changeClass($params);
             // shop
             case 'getCatalog': return $app->getCatalog($params);
             case 'buy': return $app->buy($params);

@@ -190,4 +190,15 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function changeClass($params) {
+        if ($params['token'] && $params['lemmingId'] && $params['newClass']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->changeClass($user->id, $params['lemmingId'], $params['newClass']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
 }
