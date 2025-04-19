@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql-8.2
--- Время создания: Апр 19 2025 г., 20:45
+-- Время создания: Апр 19 2025 г., 23:13
 -- Версия сервера: 8.2.0
 -- Версия PHP: 8.3.6
 
@@ -101,7 +101,9 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`id`, `user_id`, `type_id`) VALUES
-(1, 1, 1);
+(1, 1, 0),
+(2, 1, 3),
+(3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -355,7 +357,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `points`, `death`, `lemming_id`, `admin`) VALUES
-(1, 'testUser0', 'a977b2b3d142a8616748eac72e28c5b6', 'test1', '259e49b9c919680214f4b11632497d14', 0, 0, 0, 1, 1),
+(1, 'testUser0', 'a977b2b3d142a8616748eac72e28c5b6', 'test1', '259e49b9c919680214f4b11632497d14', 0, 880, 0, 1, 1),
 (2, 'testUser1', 'a09d5c543a0ea0450693792ef5a5ea9e', 'test3', '7366792e3df26b19ad9d8a2e98e2dd52', 0, 0, 0, NULL, 0),
 (3, 'Alex', 'c356464472c87e97036d5930b1a9060a', 'Alex', 'f8358d85571ba03c46cb0c2993670356', NULL, NULL, 0, NULL, 0),
 (4, 'Vovan2018', '0e362c56fc982ef5a8f6b63e201522fa', 'Vovan2018', '4bfae7a6c17487945d580c322da238c3', 0, 0, 0, NULL, 0),
@@ -544,7 +546,7 @@ ALTER TABLE `hashes`
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `items`
