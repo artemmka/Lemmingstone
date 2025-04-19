@@ -38,6 +38,7 @@ function result($params) {
             case 'respawn': return $app->respawn($params);
             case 'endGame': return $app->endGame($params);
             case 'changeClass': return $app->changeClass($params);
+            case 'changeItem': return $app->changeItem($params);
             // shop
             case 'getCatalog': return $app->getCatalog($params);
             case 'buy': return $app->buy($params);
