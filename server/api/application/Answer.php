@@ -24,6 +24,7 @@ class Answer {
         '712' => 'death is not found',
         '709' => ' session did not start or you need use previous method',
         '720' => 'admin not found',
+        '721' => 'item not found',
         '800' => 'not found object',
         '801' => 'unknown state',
         '802' => 'Invalid login length. It must be between 6 and 15 characters.',

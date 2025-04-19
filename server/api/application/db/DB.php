@@ -224,4 +224,21 @@ class DB {
             return ['error' => 'телепортация не удалась'];
         }
     }
+
+    public function getItemInfo($itemId) {
+        return $this->query("SELECT id, value FROM item_type WHERE id=?", [$itemId]);
+    }
+    
+    public function getUserPoints($userId) {
+        $user = $this->query("SELECT points FROM users WHERE id=?", [$userId]);
+        return $user ? $user->points : 0;
+    }
+    
+    public function addItemToInventory($userId, $itemId) {
+        return $this->execute("INSERT INTO inventory (user_id, type_id) VALUES (?, ?)", [$userId, $itemId]);
+    }
+    
+    public function updateUserPoints($userId, $amount) {
+        return $this->execute("UPDATE users SET points = points + ? WHERE id = ?", [$amount, $userId]);
+    }
 }

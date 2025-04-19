@@ -43,7 +43,7 @@ function result($params) {
             case 'teleportLemming': return $app->teleportLemming($params);
             // shop
             case 'getCatalog': return $app->getCatalog($params);
-            case 'buy': return $app->buy($params);
+            case 'buyItem': return $app->buyItem($params);
             //Position
             case 'getPosition': return $app->getPosition($params);
             case 'givePosition': return $app->givePosition($params);

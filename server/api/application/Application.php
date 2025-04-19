@@ -257,4 +257,11 @@ class Application {
         }
         return ['error' => 242]; 
     }
+
+    public function buyItem($params) {
+        if ($params['token'] && $params['itemId']) {
+            return $this->shop->buyItem($params['token'], $params['itemId']);
+        }
+        return ['error' => 242];
+    }
 }
