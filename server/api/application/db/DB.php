@@ -182,4 +182,30 @@ class DB {
         return $this->query("SELECT * FROM hashes WHERE id=1");
     }
     
+    public function getlemmingById($lemmingId) {
+        $sql = "SELECT * FROM lemming_type WHERE id = ?";
+        return $this->query($sql, [$lemmingId]);
+    }
+
+    public function changeClass($userId, $lemmingId, $newClass) {
+        $result = $this->execute(
+            "UPDATE user_lemming SET lemming_id = ? WHERE user_id = ? AND lemming_id = ?",
+            [$newClass, $userId, $lemmingId]
+        );    
+        if ($result) {
+            return ['success' => true, 'message' => 'Класс лемминга успешно изменён'];
+        }
+        return ['error' => 'Не удалось изменить класс лемминга'];
+    }
+
+    public function changeItem($userId, $oldTypeId, $newTypeId) {
+        $result = $this->execute(
+            "UPDATE inventory SET type_id = ? WHERE user_id = ? AND type_id = ?", 
+            [$newTypeId, $userId, $oldTypeId]
+        );
+        if ($result) {
+            return ['success' => true, 'message' => 'Предмет успешно изменён'];
+        }
+        return ['error' => 'Не удалось изменить предмет'];
+    }
 }

@@ -8,6 +8,7 @@ require_once('game/Game.php');
 require_once('shop/Shop.php');
 require_once('position/Position.php');
 require_once('scores/Scores.php');
+require_once('inventory/Inventory.php');
 
 class Application {
     private $user;
@@ -18,6 +19,7 @@ class Application {
     private $shop;
     private $position;
     private $scores;
+    private $inventory;
     
     function __construct() {
         $db = new DB();
@@ -29,6 +31,7 @@ class Application {
         $this->shop = new Shop($db);
         $this->position = new Position($db);
         $this->scores = new Scores($db);
+        $this->inventory = new Inventory($db);
     }
 
     public function login($params) {
@@ -209,6 +212,28 @@ class Application {
                     default:
                         return ['error' => 710];
                 }
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function changeClass($params) {
+        if ($params['token'] && $params['lemmingId'] && $params['newClass']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->lobby->changeClass($user->id, $params['lemmingId'], $params['newClass']);
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 242];
+    }
+
+    public function changeItem($params) {
+        if ($params['token'] && $params['userId'] && $params['oldTypeId'] && $params['newTypeId']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->inventory->changeItem($params['userId'], $params['oldTypeId'], $params['newTypeId']);
             }
             return ['error' => 705];
         }
