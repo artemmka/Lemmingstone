@@ -239,4 +239,44 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function teleportLemming($params) {
+        if ($params['token'] && $params['lemmingId']) {
+            $user = $this->user->getUser($params['token']);
+            if ($user) {
+                return $this->map->teleportLemming($params['lemmingId']);
+            }
+            return ['error' => 705]; 
+        }
+        return ['error' => 242];
+    }
+
+    public function adminLogoutUser($params) {
+        if ($params['token'] && $params['login']) {
+            return $this->user->adminLogoutUser($params['token'], $params['login']);
+        }
+        return ['error' => 242]; 
+    }
+
+    public function buyItem($params) {
+        if ($params['token'] && $params['itemId']) {
+            return $this->shop->buyItem($params['token'], $params['itemId']);
+        }
+        return ['error' => 242];
+    }
+
+    public function spawnGate($params) {
+        return $this->map->spawnGate($params);
+    }
+
+    public function spawnKey($params) {
+        return $this->map->spawnKey($params);
+    }
+
+    public function checkKeyAndOpenGate($params) {
+        if ($params['token']) {
+            return $this->map->checkKeyAndOpenGate($params['token']);
+        }
+        return ['error' => 242];
+    }
 }

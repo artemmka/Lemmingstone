@@ -81,4 +81,27 @@ class User {
         return ['error' => 705];
     }
     
+    public function getUserByLogin($login) {
+        return $this->db->getUserByLogin($login);
+    }
+
+    public function isAdmin($token) {
+        $user = $this->db->getUserByToken($token);
+        if ($user) {
+            return $user->admin == 1;
+        }
+        return false;
+    }
+
+    public function adminLogoutUser($adminToken, $login) {
+        if ($this -> isAdmin($adminToken)) {
+            $userToLogout = $this->getUserByLogin($login);
+            if ($userToLogout) {
+                $this->db->updateToken($userToLogout->id, null);
+                return true;
+            }
+            return ['error' => 705];
+        }
+        return ['error' => 720];
+    }
 }

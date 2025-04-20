@@ -208,4 +208,63 @@ class DB {
         }
         return ['error' => 'Не удалось изменить предмет'];
     }
+
+    public function teleportLemming($lemmingId){
+        $x = rand(0, 100);
+        $y = rand(0, 100);
+        $sql = "UPDATE user_lemming SET x = ?, y = ? WHERE lemming_id = ?";
+        $result = $this->execute($sql, [$x, $y, $lemmingId]);
+        if ($result) {
+            return[
+                'success' => true,
+                'message' => 'телепортирован на случайные координаты',
+                'newPosition' => ['x' => $x, 'y' => $y]
+            ];
+        } else {
+            return ['error' => 'телепортация не удалась'];
+        }
+    }
+
+    public function getItemInfo($itemId) {
+        return $this->query("SELECT id, value FROM item_type WHERE id=?", [$itemId]);
+    }
+    
+    public function getUserPoints($userId) {
+        $user = $this->query("SELECT points FROM users WHERE id=?", [$userId]);
+        return $user ? $user->points : 0;
+    }
+    
+    public function addItemToInventory($userId, $itemId) {
+        return $this->execute("INSERT INTO inventory (user_id, type_id) VALUES (?, ?)", [$userId, $itemId]);
+    }
+    
+    public function updateUserPoints($userId, $amount) {
+        return $this->execute("UPDATE users SET points = points + ? WHERE id = ?", [$amount, $userId]);
+    }
+
+    public function spawnGate() {
+        $x = rand(90, 100);
+        $y = rand(5, 15);
+        $this->execute("INSERT INTO gate (x, y, status) VALUES (?, ?, 'closed')", [$x, $y]);
+        return ['x' => $x, 'y' => $y];
+    }
+
+    public function spawnKey() {
+        $x = rand(0, 100);
+        $y = rand(5, 20);
+        $this->execute("INSERT INTO gate_key (x, y) VALUES (?, ?)", [$x, $y]);
+        return ['x' => $x, 'y' => $y];
+    }
+    
+    public function getUserCoordinatesById($userId) {
+        return $this->query("SELECT x, y FROM user_lemming WHERE user_id = ?", [$userId]);
+    }
+
+    public function getKeyCoordinates() {
+        return $this->query("SELECT x, y FROM gate_key LIMIT 1");
+    }
+
+    public function openGate() {
+        $this->execute("UPDATE gate SET status = 'open' WHERE status = 'closed'");
+    }
 }

@@ -16,6 +16,7 @@ function result($params) {
             case 'login': return $app->login($params);
             case 'logout': return $app->logout($params);
             case 'registration': return $app->registration($params);
+            case 'adminLogoutUser': return $app->adminLogoutUser($params);
             // chat
             case 'sendMessage': return $app->sendMessage($params);
             case 'getMessages': return $app->getMessages($params); // loop
@@ -39,9 +40,13 @@ function result($params) {
             case 'endGame': return $app->endGame($params);
             case 'changeClass': return $app->changeClass($params);
             case 'changeItem': return $app->changeItem($params);
+            case 'teleportLemming': return $app->teleportLemming($params);
+            case 'spawnGate': return $app->spawnGate($params);
+            case 'spawnKey': return $app->spawnKey($params);
+            case 'checkKeyAndOpenGate': return $app->checkKeyAndOpenGate($params);
             // shop
             case 'getCatalog': return $app->getCatalog($params);
-            case 'buy': return $app->buy($params);
+            case 'buyItem': return $app->buyItem($params);
             //Position
             case 'getPosition': return $app->getPosition($params);
             case 'givePosition': return $app->givePosition($params);
