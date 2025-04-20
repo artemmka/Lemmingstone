@@ -241,4 +241,30 @@ class DB {
     public function updateUserPoints($userId, $amount) {
         return $this->execute("UPDATE users SET points = points + ? WHERE id = ?", [$amount, $userId]);
     }
+
+    public function spawnGate() {
+        $x = rand(90, 100);
+        $y = rand(5, 15);
+        $this->execute("INSERT INTO gate (x, y, status) VALUES (?, ?, 'closed')", [$x, $y]);
+        return ['x' => $x, 'y' => $y];
+    }
+
+    public function spawnKey() {
+        $x = rand(0, 100);
+        $y = rand(5, 20);
+        $this->execute("INSERT INTO gate_key (x, y) VALUES (?, ?)", [$x, $y]);
+        return ['x' => $x, 'y' => $y];
+    }
+    
+    public function getUserCoordinatesById($userId) {
+        return $this->query("SELECT x, y FROM user_lemming WHERE user_id = ?", [$userId]);
+    }
+
+    public function getKeyCoordinates() {
+        return $this->query("SELECT x, y FROM gate_key LIMIT 1");
+    }
+
+    public function openGate() {
+        $this->execute("UPDATE gate SET status = 'open' WHERE status = 'closed'");
+    }
 }

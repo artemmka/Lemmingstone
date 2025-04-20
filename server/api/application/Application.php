@@ -264,4 +264,19 @@ class Application {
         }
         return ['error' => 242];
     }
+
+    public function spawnGate($params) {
+        return $this->map->spawnGate($params);
+    }
+
+    public function spawnKey($params) {
+        return $this->map->spawnKey($params);
+    }
+
+    public function checkKeyAndOpenGate($params) {
+        if ($params['token']) {
+            return $this->map->checkKeyAndOpenGate($params['token']);
+        }
+        return ['error' => 242];
+    }
 }

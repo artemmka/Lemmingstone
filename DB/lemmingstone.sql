@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql-8.2
--- Время создания: Апр 19 2025 г., 23:13
+-- Время создания: Апр 20 2025 г., 19:51
 -- Версия сервера: 8.2.0
 -- Версия PHP: 8.3.6
 
@@ -42,6 +42,45 @@ CREATE TABLE `boss_type` (
 
 INSERT INTO `boss_type` (`id`, `name`, `image`, `width`, `height`, `speed`) VALUES
 (1, 'Босс', '', 100, 500, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `gate`
+--
+
+CREATE TABLE `gate` (
+  `id` int NOT NULL,
+  `x` int NOT NULL,
+  `y` int NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'closed'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `gate`
+--
+
+INSERT INTO `gate` (`id`, `x`, `y`, `status`) VALUES
+(1, 93, 7, 'closed');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `gate_key`
+--
+
+CREATE TABLE `gate_key` (
+  `id` int NOT NULL,
+  `x` int NOT NULL,
+  `y` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `gate_key`
+--
+
+INSERT INTO `gate_key` (`id`, `x`, `y`) VALUES
+(1, 84, 8);
 
 -- --------------------------------------------------------
 
@@ -362,7 +401,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `name`, `token`, `money`, `point
 (3, 'Alex', 'c356464472c87e97036d5930b1a9060a', 'Alex', 'f8358d85571ba03c46cb0c2993670356', NULL, NULL, 0, NULL, 0),
 (4, 'Vovan2018', '0e362c56fc982ef5a8f6b63e201522fa', 'Vovan2018', '4bfae7a6c17487945d580c322da238c3', 0, 0, 0, NULL, 0),
 (5, 'Vovan II', 'c2900b1797cc0b754f2be96a643a4c37', 'Vovan2018', '6d16a3b74ff7deee3e4217863c646f61', 0, 0, 0, NULL, 0),
-(6, 'testlogin', 'testpass', 'testname', '213123123213212', 0, 0, 0, NULL, 0);
+(6, 'testlogin', 'testpass', 'testname', '1231231231', 0, 0, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -385,7 +424,7 @@ CREATE TABLE `user_lemming` (
 --
 
 INSERT INTO `user_lemming` (`id`, `user_id`, `lemming_id`, `x`, `y`, `direction`, `status`) VALUES
-(1, '1', 1, 13, 11, 'left', 'move');
+(1, '1', 1, 84, 8, 'left', 'move');
 
 --
 -- Индексы сохранённых таблиц
@@ -395,6 +434,18 @@ INSERT INTO `user_lemming` (`id`, `user_id`, `lemming_id`, `x`, `y`, `direction`
 -- Индексы таблицы `boss_type`
 --
 ALTER TABLE `boss_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `gate`
+--
+ALTER TABLE `gate`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `gate_key`
+--
+ALTER TABLE `gate_key`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -531,6 +582,18 @@ ALTER TABLE `boss_type`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT для таблицы `gate`
+--
+ALTER TABLE `gate`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `gate_key`
+--
+ALTER TABLE `gate_key`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT для таблицы `global_settings`
 --
 ALTER TABLE `global_settings`
@@ -546,7 +609,7 @@ ALTER TABLE `hashes`
 -- AUTO_INCREMENT для таблицы `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `items`

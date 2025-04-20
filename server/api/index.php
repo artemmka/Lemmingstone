@@ -41,6 +41,9 @@ function result($params) {
             case 'changeClass': return $app->changeClass($params);
             case 'changeItem': return $app->changeItem($params);
             case 'teleportLemming': return $app->teleportLemming($params);
+            case 'spawnGate': return $app->spawnGate($params);
+            case 'spawnKey': return $app->spawnKey($params);
+            case 'checkKeyAndOpenGate': return $app->checkKeyAndOpenGate($params);
             // shop
             case 'getCatalog': return $app->getCatalog($params);
             case 'buyItem': return $app->buyItem($params);

@@ -25,6 +25,8 @@ class Answer {
         '709' => ' session did not start or you need use previous method',
         '720' => 'admin not found',
         '721' => 'item not found',
+        '722' => 'key coordinates do not match',
+        '723' => 'User coordinates not found',
         '800' => 'not found object',
         '801' => 'unknown state',
         '802' => 'Invalid login length. It must be between 6 and 15 characters.',

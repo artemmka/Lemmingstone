@@ -127,4 +127,36 @@ class Map {
         $result = $this->db->teleportLemming($lemmingId);
         return $result;
     }
+
+    public function spawnGate() {
+        return $this->db->spawnGate();
+    }
+
+    public function spawnKey() {
+        return $this->db->spawnKey();
+    }
+
+    public function checkKeyAndOpenGate($token) {
+        $user = $this->db->getUserByToken($token);
+        if ($user) {
+            $userId = $user->id;
+            $userCoordinates = $this->db->getUserCoordinatesById($userId);
+            if ($userCoordinates) {
+                $userX = $userCoordinates->x;
+                $userY = $userCoordinates->y;
+                $keyCoordinates = $this->db->getKeyCoordinates();
+                if ($keyCoordinates) {
+                    $keyX = $keyCoordinates->x;
+                    $keyY = $keyCoordinates->y;
+                    if ($userX == $keyX && $userY == $keyY) {
+                        $this->db->openGate();
+                        return true;
+                    }
+                }
+                return ['error' => 722];
+            }
+            return ['error' => 723];
+        }
+        return ['error' => 705];
+    }
 }

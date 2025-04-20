@@ -22,10 +22,10 @@ class Shop {
                     $this->db->updateUserPoints($user->id, -$item->value);
                     return true;
                 }
-                return ['error' => 711]; // points is not found
+                return ['error' => 711]; 
             }
-            return ['error' => 721]; // Skin is not found
+            return ['error' => 721]; 
         }
-        return ['error' => 705]; // User is not found
+        return ['error' => 705]; 
     }
 }
